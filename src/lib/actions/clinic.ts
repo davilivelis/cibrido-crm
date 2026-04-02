@@ -105,17 +105,32 @@ export async function inviteUser(data: {
   if (!clinicId) throw new Error('Clínica não encontrada')
 
   const admin = createAdminClient()
-  const { error } = await admin.auth.admin.createUser({
-    email: data.email.trim(),
-    email_confirm: true,
-    user_metadata: {
-      name:      data.name.trim(),
-      role:      data.role,
-      clinic_id: clinicId,
-    },
-  })
+
+  // Envia email de convite (magic link) via Supabase Admin
+  const { data: invited, error } = await admin.auth.admin.inviteUserByEmail(
+    data.email.trim(),
+    {
+      data: {
+        full_name: data.name.trim(),
+        name:      data.name.trim(),
+        role:      data.role,
+        clinic_id: clinicId,
+      },
+    }
+  )
 
   if (error) throw new Error(error.message)
+  if (!invited.user) throw new Error('Erro ao criar convite')
+
+  // Cria registro na tabela users vinculando à clínica
+  await admin.from('users').upsert({
+    id:        invited.user.id,
+    clinic_id: clinicId,
+    name:      data.name.trim(),
+    email:     data.email.trim(),
+    role:      data.role,
+    is_active: true,
+  })
 
   revalidatePath('/configuracoes')
 }

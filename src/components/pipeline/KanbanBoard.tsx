@@ -47,19 +47,20 @@ function LeadCard({
       {...listeners}
       onClick={() => !isDragging && onClick(lead)}
       className={cn(
-        'bg-white rounded-xl border border-gray-100 p-3 select-none cursor-grab',
+        'bg-white rounded-xl border p-4 select-none cursor-grab transition-all duration-150',
+        'border-[#E2E5EA] shadow-[0_2px_8px_rgba(0,0,0,0.06)]',
         isDragging || isBeingDragged
           ? 'opacity-40 cursor-grabbing'
-          : 'hover:shadow-sm hover:border-indigo-200 transition-all'
+          : 'hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:border-[#C5CAD3]'
       )}
     >
-      <p className="text-sm font-medium text-gray-900 mb-1.5">{lead.name}</p>
-      <div className="flex items-center gap-1 text-xs text-gray-400">
+      <p className="text-sm font-semibold text-gray-900 mb-2">{lead.name}</p>
+      <div className="flex items-center gap-1.5 text-xs text-gray-400">
         <Phone className="w-3 h-3" />
         {lead.phone}
       </div>
       {lead.source && (
-        <span className="mt-2 inline-block text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded capitalize">
+        <span className="mt-2.5 inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full capitalize">
           {lead.source}
         </span>
       )}
@@ -83,11 +84,18 @@ function KanbanColumn({
   const { setNodeRef, isOver } = useDroppable({ id: stage.id, data: { type: 'column', stageId: stage.id } })
 
   return (
-    <div className="flex-shrink-0 w-60">
-      <div className="flex items-center gap-2 mb-3 px-1">
-        <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: stage.color }} />
-        <span className="text-sm font-medium text-gray-700 truncate">{stage.name}</span>
-        <span className="ml-auto text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5 shrink-0">
+    <div className="flex-shrink-0 w-64">
+      {/* Header da coluna — estilo Trello */}
+      <div
+        className="flex items-center gap-2 px-3 py-2.5 rounded-t-xl mb-0"
+        style={{ backgroundColor: `${stage.color}18` }}
+      >
+        <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: stage.color }} />
+        <span className="text-sm font-semibold text-gray-800 truncate flex-1">{stage.name}</span>
+        <span
+          className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0 text-white"
+          style={{ backgroundColor: stage.color }}
+        >
           {leads.length}
         </span>
       </div>
@@ -95,10 +103,10 @@ function KanbanColumn({
       <div
         ref={setNodeRef}
         className={cn(
-          'min-h-[140px] rounded-xl p-2 transition-colors',
+          'min-h-[200px] rounded-b-xl p-2.5 transition-colors',
           isOver
             ? 'bg-indigo-50 border-2 border-dashed border-indigo-300'
-            : 'bg-[#F8F9FB]'
+            : 'bg-[#F1F3F5]'
         )}
       >
         <SortableContext items={leads.map((l) => l.id)} strategy={verticalListSortingStrategy}>
@@ -115,7 +123,7 @@ function KanbanColumn({
         </SortableContext>
 
         {leads.length === 0 && !isOver && (
-          <p className="text-xs text-gray-300 text-center pt-4">Solte aqui</p>
+          <p className="text-xs text-gray-300 text-center pt-6">Solte aqui</p>
         )}
       </div>
     </div>

@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Users, KanbanSquare, MessageSquare,
@@ -54,14 +53,14 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-white/8">
         <div className="flex items-center gap-2.5">
-          <Image
-            src="/logo.png"
-            alt="CibridoCRM"
-            width={120}
-            height={40}
-            style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
-            priority
-          />
+          {/* Recorta apenas os balões (parte superior da imagem) */}
+          <div style={{ width: 36, height: 36, overflow: 'hidden', flexShrink: 0, borderRadius: 6 }}>
+            <img
+              src="/logo.png"
+              alt="CibridoCRM"
+              style={{ width: '36px', height: 'auto', display: 'block', objectPosition: 'top' }}
+            />
+          </div>
           <span className="text-white font-bold text-sm leading-none" translate="no">CibridoCRM</span>
         </div>
       </div>

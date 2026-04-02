@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -55,26 +54,26 @@ export default function LoginPage() {
         className="hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 p-12"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
-        {/* Logo centralizado */}
+        {/* Logo centralizado — recorta apenas os balões */}
         <div className="flex flex-col items-center gap-4 mb-12">
-          <Image
-            src="/logo.png"
-            alt="CibridoCRM"
-            width={200}
-            height={80}
-            style={{ height: '72px', width: 'auto', objectFit: 'contain' }}
-            priority
-          />
+          <div style={{ height: '80px', overflow: 'hidden', borderRadius: 8 }}>
+            <img
+              src="/logo.png"
+              alt="CibridoCRM"
+              style={{ height: '180px', width: 'auto', display: 'block', objectPosition: 'top' }}
+            />
+          </div>
           <span className="text-white font-bold text-2xl tracking-tight">CibridoCRM</span>
         </div>
 
-        {/* Headline centralizado */}
+        {/* Headline em 3 linhas */}
         <div className="text-center max-w-sm">
-          <h1 className="font-bold leading-tight mb-5" style={{ fontSize: '38px', color: '#f8fafc' }}>
-            Te entregamos um Sistema de IA que organiza e acompanha{' '}
-            <span style={{ color: '#E91E7B' }}>seu futuro paciente</span>
+          <h1 className="font-bold mb-5" style={{ fontSize: '34px', lineHeight: '1.3', color: '#f8fafc' }}>
+            Te entregamos um Sistema de IA<br />
+            que organiza e acompanha<br />
+            <span style={{ color: '#E91E7B' }}>seu futuro e atual paciente.</span>
           </h1>
-          <p style={{ fontSize: '18px', color: '#94a3b8', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '16px', color: '#94a3b8', lineHeight: '1.6' }}>
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>
@@ -89,8 +88,9 @@ export default function LoginPage() {
 
           {/* Logo mobile */}
           <div className="flex items-center gap-2.5 mb-8 lg:hidden">
-            <Image src="/logo.png" alt="CibridoCRM" width={120} height={40}
-              style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+            <div style={{ width: 36, height: 36, overflow: 'hidden', borderRadius: 6, flexShrink: 0 }}>
+              <img src="/logo.png" alt="CibridoCRM" style={{ width: '36px', height: 'auto', display: 'block' }} />
+            </div>
             <span className="font-bold text-gray-900 text-lg">CibridoCRM</span>
           </div>
 

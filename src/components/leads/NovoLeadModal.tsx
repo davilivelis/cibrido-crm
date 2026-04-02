@@ -140,7 +140,10 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
               <Label>Etapa</Label>
               <Select value={form.stage_id} onValueChange={(v) => set('stage_id', v)}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
+                  <span className="flex flex-1 text-left text-sm truncate">
+                    {stages.find((s) => s.id === form.stage_id)?.name
+                      ?? <span className="text-muted-foreground">Selecione</span>}
+                  </span>
                 </SelectTrigger>
                 <SelectContent>
                   {stages.map((s) => (

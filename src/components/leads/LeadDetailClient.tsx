@@ -199,7 +199,12 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                 </Label>
                 {editMode ? (
                   <Select value={form.stage_id} onValueChange={(v) => set('stage_id', v)}>
-                    <SelectTrigger><SelectValue placeholder="Selecione" /></SelectTrigger>
+                    <SelectTrigger>
+                      <span className="flex flex-1 text-left text-sm truncate">
+                        {stages.find((s) => s.id === form.stage_id)?.name
+                          ?? <span className="text-muted-foreground">Selecione</span>}
+                      </span>
+                    </SelectTrigger>
                     <SelectContent>
                       {stages.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
                     </SelectContent>

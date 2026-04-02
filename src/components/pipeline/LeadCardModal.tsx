@@ -320,7 +320,14 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Etapa do funil</p>
                 <Select value={stageId} onValueChange={handleStageChange}>
                   <SelectTrigger className="h-9">
-                    <SelectValue placeholder="Selecione a etapa" />
+                    <span className="flex flex-1 items-center gap-2 text-sm truncate">
+                      {(() => {
+                        const s = stages.find((s) => s.id === stageId)
+                        return s
+                          ? <><span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: s.color }} />{s.name}</>
+                          : <span className="text-muted-foreground">Selecione a etapa</span>
+                      })()}
+                    </span>
                   </SelectTrigger>
                   <SelectContent>
                     {stages.map((s) => (
