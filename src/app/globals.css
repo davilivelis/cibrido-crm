@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Tokens Cíbrido ─────────────────────────────────────────────
+   Magenta  #E91E7B  → primary / CTA / active states
+   Gold     #F5A623  → destaques / badges de alerta
+   Purple   #7B2D8E  → terciário / etapas / ícones
+   Navy     #1E2A3A  → sidebar / fundo escuro
+──────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-background:              var(--background);
+  --color-foreground:              var(--foreground);
+  --font-sans:                     var(--font-sans);
+  --font-mono:                     var(--font-geist-mono);
+  --font-heading:                  var(--font-sans);
+  --color-ring:                    var(--ring);
+  --color-input:                   var(--input);
+  --color-border:                  var(--border);
+  --color-destructive:             var(--destructive);
+  --color-accent-foreground:       var(--accent-foreground);
+  --color-accent:                  var(--accent);
+  --color-muted-foreground:        var(--muted-foreground);
+  --color-muted:                   var(--muted);
+  --color-secondary-foreground:    var(--secondary-foreground);
+  --color-secondary:               var(--secondary);
+  --color-primary-foreground:      var(--primary-foreground);
+  --color-primary:                 var(--primary);
+  --color-popover-foreground:      var(--popover-foreground);
+  --color-popover:                 var(--popover);
+  --color-card-foreground:         var(--card-foreground);
+  --color-card:                    var(--card);
+  --radius-sm:  calc(var(--radius) * 0.6);
+  --radius-md:  calc(var(--radius) * 0.8);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Tokens de marca disponíveis como classes Tailwind */
+  --color-brand-magenta: #E91E7B;
+  --color-brand-gold:    #F5A623;
+  --color-brand-purple:  #7B2D8E;
+  --color-brand-navy:    #1E2A3A;
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Superfícies */
+  --background:        #ffffff;
+  --foreground:        #0f1923;
+  --card:              #ffffff;
+  --card-foreground:   #0f1923;
+  --popover:           #ffffff;
+  --popover-foreground:#0f1923;
+
+  /* Primary → Magenta Cíbrido */
+  --primary:           #E91E7B;
+  --primary-foreground:#ffffff;
+
+  /* Secondary → Navy claro */
+  --secondary:         #f1f4f8;
+  --secondary-foreground: #1E2A3A;
+
+  /* Muted */
+  --muted:             #f4f6f9;
+  --muted-foreground:  #6b7a8d;
+
+  /* Accent → toque de magenta suave */
+  --accent:            #fce8f2;
+  --accent-foreground: #E91E7B;
+
+  /* Bordas e inputs */
+  --border:            #e5e9ef;
+  --input:             #e5e9ef;
+  --ring:              #E91E7B;
+
+  /* Destructive */
+  --destructive:       oklch(0.577 0.245 27.325);
+
+  /* Marca */
+  --brand-magenta: #E91E7B;
+  --brand-gold:    #F5A623;
+  --brand-purple:  #7B2D8E;
+  --brand-navy:    #1E2A3A;
+}
+
+.dark {
+  --background:        #0f1923;
+  --foreground:        #f0f4f8;
+  --card:              #1a2535;
+  --card-foreground:   #f0f4f8;
+  --popover:           #1a2535;
+  --popover-foreground:#f0f4f8;
+  --primary:           #E91E7B;
+  --primary-foreground:#ffffff;
+  --secondary:         #253247;
+  --secondary-foreground:#f0f4f8;
+  --muted:             #1f2f42;
+  --muted-foreground:  #8a9ab0;
+  --accent:            #2a1a23;
+  --accent-foreground: #E91E7B;
+  --border:            rgba(255,255,255,0.08);
+  --input:             rgba(255,255,255,0.1);
+  --ring:              #E91E7B;
+  --destructive:       oklch(0.704 0.191 22.216);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-size: 16px;
+    @apply font-sans;
+  }
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    @apply bg-background text-foreground;
+  }
+
+  /* Escala tipográfica mínima — nunca abaixo de 14px */
+  .text-xs  { font-size: 12px !important; }
+  .text-sm  { font-size: 14px !important; }
+  .text-base{ font-size: 16px !important; }
+
+  /* Botões: 16px por padrão */
+  button { font-size: 16px; }
+
+  /* Inputs e selects: nunca abaixo de 16px (evita zoom no iOS) */
+  input, select, textarea { font-size: 16px; }
+}
+
+/* ── Utilitários de marca ──────────────────────────────────────── */
+@layer utilities {
+  .bg-brand-magenta { background-color: #E91E7B; }
+  .bg-brand-gold    { background-color: #F5A623; }
+  .bg-brand-purple  { background-color: #7B2D8E; }
+  .bg-brand-navy    { background-color: #1E2A3A; }
+
+  .text-brand-magenta { color: #E91E7B; }
+  .text-brand-gold    { color: #F5A623; }
+  .text-brand-purple  { color: #7B2D8E; }
+  .text-brand-navy    { color: #1E2A3A; }
+
+  .border-brand-magenta { border-color: #E91E7B; }
+
+  .ring-brand-magenta { --tw-ring-color: #E91E7B; }
+}
