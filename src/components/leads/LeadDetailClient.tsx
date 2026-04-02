@@ -198,17 +198,14 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                   <Tag className="w-3.5 h-3.5" /> Etapa
                 </Label>
                 {editMode ? (
-                  <Select value={form.stage_id} onValueChange={(v) => set('stage_id', v)}>
-                    <SelectTrigger>
-                      <span className="flex flex-1 text-left text-sm truncate">
-                        {stages.find((s) => s.id === form.stage_id)?.name
-                          ?? <span className="text-muted-foreground">Selecione</span>}
-                      </span>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {stages.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
+                  <select
+                    value={form.stage_id}
+                    onChange={(e) => set('stage_id', e.target.value)}
+                    className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
+                  >
+                    <option value="" disabled>Selecione</option>
+                    {stages.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                  </select>
                 ) : (
                   lead.stage ? (
                     <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full"

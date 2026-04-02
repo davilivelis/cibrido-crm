@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { signUpConfirmed } from '@/lib/actions/auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -37,13 +38,24 @@ export default function LoginPage() {
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true); setError(null); setSuccess(null)
-    const { error } = await supabase.auth.signUp({
-      email: regEmail, password: regPass,
-      options: { data: { full_name: regName } },
-    })
-    setLoading(false)
-    if (error) { setError(error.message); return }
-    setSuccess('Conta criada! Verifique seu email para confirmar.')
+    try {
+      // Cria conta via server action com email já confirmado (sem precisar clicar em link)
+      await signUpConfirmed({ email: regEmail, password: regPass, name: regName })
+      // Faz login automaticamente após cadastro
+      const { error: loginErr } = await supabase.auth.signInWithPassword({
+        email: regEmail,
+        password: regPass,
+      })
+      if (loginErr) {
+        setSuccess('Conta criada! Faça login para continuar.')
+        setLoading(false)
+        return
+      }
+      router.push('/onboarding'); router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao criar conta.')
+      setLoading(false)
+    }
   }
 
   return (
@@ -66,13 +78,13 @@ export default function LoginPage() {
           <span className="text-white font-bold text-2xl tracking-tight">CibridoCRM</span>
         </div>
 
-        {/* Headline em 3 linhas */}
+        {/* Headline em 3 linhas separadas */}
         <div className="text-center max-w-sm">
-          <h1 className="font-bold mb-5" style={{ fontSize: '34px', lineHeight: '1.3', color: '#f8fafc' }}>
-            Te entregamos um Sistema de IA<br />
-            que organiza e acompanha<br />
-            <span style={{ color: '#E91E7B' }}>seu futuro e atual paciente.</span>
-          </h1>
+          <div className="mb-5" style={{ fontSize: '34px', fontWeight: 700, lineHeight: '1.3' }}>
+            <div style={{ color: '#f8fafc' }}>Te entregamos um Sistema de IA</div>
+            <div style={{ color: '#f8fafc' }}>que organiza e acompanha</div>
+            <div style={{ color: '#E91E7B' }}>seu futuro e atual paciente</div>
+          </div>
           <p style={{ fontSize: '16px', color: '#94a3b8', lineHeight: '1.6' }}>
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>

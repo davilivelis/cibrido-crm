@@ -13,7 +13,6 @@ import {
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { createClient } from '@/lib/supabase/client'
 import { updateLead, addLeadEvent } from '@/lib/actions/leads'
 import { createAppointment } from '@/lib/actions/appointments'
@@ -318,28 +317,16 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {/* Mover para etapa */}
               <div className="space-y-2">
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Etapa do funil</p>
-                <Select value={stageId} onValueChange={handleStageChange}>
-                  <SelectTrigger className="h-9">
-                    <span className="flex flex-1 items-center gap-2 text-sm truncate">
-                      {(() => {
-                        const s = stages.find((s) => s.id === stageId)
-                        return s
-                          ? <><span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: s.color }} />{s.name}</>
-                          : <span className="text-muted-foreground">Selecione a etapa</span>
-                      })()}
-                    </span>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {stages.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        <span className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: s.color }} />
-                          {s.name}
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <select
+                  value={stageId}
+                  onChange={(e) => handleStageChange(e.target.value)}
+                  className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
+                >
+                  <option value="" disabled>Selecione a etapa</option>
+                  {stages.map((s) => (
+                    <option key={s.id} value={s.id}>{s.name}</option>
+                  ))}
+                </select>
               </div>
 
               {/* Status */}

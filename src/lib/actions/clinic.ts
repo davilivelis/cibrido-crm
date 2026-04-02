@@ -106,25 +106,29 @@ export async function inviteUser(data: {
 
   const admin = createAdminClient()
 
-  // Envia email de convite (magic link) via Supabase Admin
-  const { data: invited, error } = await admin.auth.admin.inviteUserByEmail(
-    data.email.trim(),
-    {
-      data: {
-        full_name: data.name.trim(),
-        name:      data.name.trim(),
-        role:      data.role,
-        clinic_id: clinicId,
-      },
-    }
-  )
+  // Cria usuário com email já confirmado (sem precisar de confirmação por email)
+  const { data: created, error } = await admin.auth.admin.createUser({
+    email:         data.email.trim(),
+    email_confirm: true,
+    user_metadata: {
+      full_name: data.name.trim(),
+      name:      data.name.trim(),
+      role:      data.role,
+      clinic_id: clinicId,
+    },
+  })
 
-  if (error) throw new Error(error.message)
-  if (!invited.user) throw new Error('Erro ao criar convite')
+  if (error) {
+    const msg = error.message
+    if (msg.toLowerCase().includes('already')) throw new Error('Este email já está cadastrado.')
+    throw new Error(msg)
+  }
+
+  if (!created.user) throw new Error('Erro ao criar usuário')
 
   // Cria registro na tabela users vinculando à clínica
   await admin.from('users').upsert({
-    id:        invited.user.id,
+    id:        created.user.id,
     clinic_id: clinicId,
     name:      data.name.trim(),
     email:     data.email.trim(),
