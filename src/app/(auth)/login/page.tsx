@@ -79,9 +79,9 @@ export default function LoginPage() {
           <img
             src="/logo-cibrido.png"
             alt="Cíbrido"
-            className="h-40 w-auto mx-auto"
+            className="h-32 w-auto mx-auto"
           />
-          <span className="text-white font-bold text-[30px] mt-1">CibridoCRM</span>
+          <span className="text-white font-bold text-[30px] mt-0">CibridoCRM</span>
 
           {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
           <div className="mt-5">
