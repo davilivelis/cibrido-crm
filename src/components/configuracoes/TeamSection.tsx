@@ -1,18 +1,12 @@
 'use client'
 
-import { useState, useTransition } from 'react'
-import { Users, Plus, CheckCircle, Shield, UserCheck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { inviteUser } from '@/lib/actions/clinic'
+import { Users, Shield, UserCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const ROLE_CONFIG: Record<string, { label: string; desc: string; icon: React.ElementType; style: string }> = {
-  owner:     { label: 'Proprietário', desc: 'Acesso total + configurações',   icon: Shield,    style: 'bg-indigo-50 text-indigo-700' },
-  gestor:    { label: 'Gestor',       desc: 'Leads, pipeline e tráfego pago', icon: UserCheck, style: 'bg-violet-50 text-violet-700' },
-  atendente: { label: 'Atendente',    desc: 'Leads e pipeline',               icon: Users,     style: 'bg-blue-50 text-blue-700' },
+const ROLE_CONFIG: Record<string, { label: string; icon: React.ElementType; style: string }> = {
+  owner:     { label: 'Proprietário', icon: Shield,    style: 'bg-indigo-50 text-indigo-700' },
+  gestor:    { label: 'Gestor',       icon: UserCheck, style: 'bg-violet-50 text-violet-700' },
+  atendente: { label: 'Atendente',    icon: Users,     style: 'bg-blue-50 text-blue-700' },
 }
 
 interface TeamMember {
@@ -29,109 +23,24 @@ interface TeamSectionProps {
   clinicPlan: string
 }
 
-export default function TeamSection({ team, clinicPlan }: TeamSectionProps) {
-  const [, startTransition] = useTransition()
-  const [showForm, setShowForm] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [saved, setSaved] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const [form, setForm] = useState({ name: '', email: '', role: 'atendente' })
-
-  function set(field: keyof typeof form, value: string) {
-    setForm((p) => ({ ...p, [field]: value }))
-  }
-
-  async function handleInvite(e: React.FormEvent) {
-    e.preventDefault()
-    setSaving(true)
-    setError(null)
-
-    startTransition(async () => {
-      try {
-        const result = await inviteUser(form)
-        if (result?.error) {
-          setError(result.error)
-        } else {
-          setForm({ name: '', email: '', role: 'atendente' })
-          setShowForm(false)
-          setSaved(true)
-          setTimeout(() => setSaved(false), 3000)
-        }
-      } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Erro ao convidar. Tente novamente.'
-        setError(msg)
-      } finally {
-        setSaving(false)
-      }
-    })
-  }
-
+export default function TeamSection({ team }: TeamSectionProps) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 p-6">
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center">
-            <Users className="w-4 h-4 text-violet-600" />
-          </div>
-          <div>
-            <h2 className="text-sm font-semibold text-gray-900">Equipe</h2>
-            <p className="text-xs text-gray-400">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
-          </div>
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center">
+          <Users className="w-4 h-4 text-violet-600" />
         </div>
-        <Button
-          size="sm"
-          variant="outline"
-          className="gap-1.5"
-          onClick={() => setShowForm((v) => !v)}
-        >
-          <Plus className="w-3.5 h-3.5" />
-          Convidar
-        </Button>
+        <div>
+          <h2 className="text-sm font-semibold text-gray-900">Equipe</h2>
+          <p className="text-xs text-gray-400">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
+        </div>
       </div>
 
-      {/* Formulário de convite */}
-      {showForm && (
-        <form onSubmit={handleInvite} className="mb-5 p-4 bg-gray-50 rounded-xl space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Novo membro</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <Label>Nome</Label>
-              <Input value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Nome completo" required />
-            </div>
-            <div className="space-y-1.5">
-              <Label>Email</Label>
-              <Input type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="email@exemplo.com" required />
-            </div>
-          </div>
-          <div className="space-y-1.5">
-            <Label>Função</Label>
-            <Select value={form.role} onValueChange={(v) => set('role', v ?? 'atendente')}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="atendente">Atendente — leads e pipeline</SelectItem>
-                <SelectItem value="gestor">Gestor — + tráfego pago</SelectItem>
-                <SelectItem value="owner">Proprietário — acesso total</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <div className="flex gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={() => setShowForm(false)}>Cancelar</Button>
-            <Button type="submit" size="sm" disabled={saving}>
-              {saving ? 'Convidando...' : 'Enviar convite'}
-            </Button>
-          </div>
-        </form>
-      )}
-
-      {saved && (
-        <p className="flex items-center gap-1.5 text-sm text-green-600 font-medium mb-4">
-          <CheckCircle className="w-4 h-4" /> Usuário criado com sucesso
-        </p>
-      )}
+      {/* Convite de equipe — disponível na V2 */}
+      <div className="mb-5 p-4 bg-gray-50 rounded-xl text-center">
+        <p className="text-gray-500 text-sm font-medium">Gerenciamento de equipe estará disponível em breve.</p>
+        <p className="text-gray-400 text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
+      </div>
 
       {/* Lista de membros */}
       <div className="space-y-2">
@@ -140,7 +49,6 @@ export default function TeamSection({ team, clinicPlan }: TeamSectionProps) {
           const Icon = config.icon
           return (
             <div key={member.id} className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0">
-              {/* Avatar */}
               <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
                 <span className="text-xs font-semibold text-indigo-700">
                   {member.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}

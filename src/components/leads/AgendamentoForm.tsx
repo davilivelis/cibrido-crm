@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { createAppointment } from '@/lib/actions/appointments'
+import { toast } from 'sonner'
 
 interface AgendamentoFormProps {
   leadId: string
@@ -43,19 +44,24 @@ export default function AgendamentoForm({ leadId, clinicId }: AgendamentoFormPro
     setSaving(true)
 
     startTransition(async () => {
-      await createAppointment({
-        leadId,
-        clinicId,
-        title:       form.title,
-        scheduledAt: form.scheduledAt,
-        durationMin: Number(form.durationMin),
-        notes:       form.notes,
-      })
-      setSaving(false)
-      setSuccess(true)
-      setOpen(false)
-      // Reseta após 2 segundos
-      setTimeout(() => setSuccess(false), 2000)
+      try {
+        await createAppointment({
+          leadId,
+          clinicId,
+          title:       form.title,
+          scheduledAt: form.scheduledAt,
+          durationMin: Number(form.durationMin),
+          notes:       form.notes,
+        })
+        toast.success('Consulta agendada!')
+        setSuccess(true)
+        setOpen(false)
+        setTimeout(() => setSuccess(false), 2000)
+      } catch {
+        toast.error('Erro ao agendar. Tente novamente.')
+      } finally {
+        setSaving(false)
+      }
     })
   }
 
@@ -137,7 +143,15 @@ export default function AgendamentoForm({ leadId, clinicId }: AgendamentoFormPro
               Cancelar
             </Button>
             <Button type="submit" className="flex-1" disabled={saving}>
-              {saving ? 'Agendando...' : 'Confirmar'}
+              {saving ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  Agendando...
+                </span>
+              ) : 'Confirmar'}
             </Button>
           </div>
         </form>

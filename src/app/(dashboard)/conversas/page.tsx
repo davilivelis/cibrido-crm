@@ -1,5 +1,8 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { MessageSquare } from 'lucide-react'
+
+export const metadata: Metadata = { title: 'Conversas' }
 
 export default async function ConversasPage() {
   const supabase = await createClient()

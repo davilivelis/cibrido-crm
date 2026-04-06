@@ -1,5 +1,8 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import LeadsClient from '@/components/leads/LeadsClient'
+
+export const metadata: Metadata = { title: 'Leads' }
 
 export default async function LeadsPage() {
   const supabase = await createClient()

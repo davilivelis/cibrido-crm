@@ -1,9 +1,13 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Search, SlidersHorizontal, ChevronUp, ChevronDown } from 'lucide-react'
+import { Search, SlidersHorizontal, ChevronUp, ChevronDown, Trash2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { LeadWithStage, PipelineStage } from '@/types/database'
+import { deleteLead } from '@/lib/actions/leads'
+import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 
 const STATUS_OPTIONS = [
@@ -49,6 +53,8 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
   const [sortField,   setSortField]   = useState<SortField>('created_at')
   const [sortDir,     setSortDir]     = useState<SortDir>('desc')
   const [showFilters, setShowFilters] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState<LeadWithStage | null>(null)
+  const [deleting, setDeleting] = useState(false)
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortDir((d) => d === 'asc' ? 'desc' : 'asc')
@@ -83,8 +89,41 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       : <ChevronDown className="w-3 h-3 inline ml-0.5" />
   }
 
+  async function handleDelete() {
+    if (!deleteTarget) return
+    setDeleting(true)
+    try {
+      const result = await deleteLead(deleteTarget.id)
+      if (result?.error) {
+        toast.error('Erro ao excluir paciente.')
+      } else {
+        toast.success('Paciente excluído')
+      }
+    } catch {
+      toast.error('Erro ao excluir paciente.')
+    } finally {
+      setDeleting(false)
+      setDeleteTarget(null)
+    }
+  }
+
   return (
     <div className="space-y-3">
+      {/* Dialog de confirmação de exclusão */}
+      <Dialog open={!!deleteTarget} onOpenChange={(v) => !v && setDeleteTarget(null)}>
+        <DialogContent>
+          <DialogTitle>Excluir paciente</DialogTitle>
+          <p className="text-gray-600 mt-2">
+            Tem certeza que deseja excluir <strong>{deleteTarget?.name}</strong>? Esta ação não pode ser desfeita.
+          </p>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={deleting}>Cancelar</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={deleting}>
+              {deleting ? 'Excluindo...' : 'Excluir'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Barra de busca + botão filtros */}
       <div className="flex gap-2">
         <div className="relative flex-1">
@@ -232,12 +271,13 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
               >
                 Cadastrado <SortIcon field="created_at" />
               </th>
+              <th className="px-4 py-3 w-10" />
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-12 text-center text-gray-400">
+                <td colSpan={7} className="px-4 py-12 text-center text-gray-400">
                   {search || hasActiveFilters ? 'Nenhum lead corresponde aos filtros.' : 'Nenhum lead cadastrado ainda.'}
                 </td>
               </tr>
@@ -273,6 +313,15 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                   </td>
                   <td className="hidden lg:table-cell px-4 py-3 text-gray-400 text-xs">
                     {new Date(lead.created_at).toLocaleDateString('pt-BR')}
+                  </td>
+                  <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => setDeleteTarget(lead)}
+                      className="text-gray-300 hover:text-red-500 transition-colors"
+                      title="Excluir paciente"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))

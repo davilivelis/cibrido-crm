@@ -70,7 +70,20 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
         </div>
       </div>
 
-      <LeadsTable leads={leads} stages={stages} />
+      {leads.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 text-center bg-white rounded-xl border border-gray-100">
+          <div className="text-5xl mb-4">👥</div>
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">Nenhum paciente cadastrado</h3>
+          <p className="text-gray-500 mb-6 max-w-md">
+            Cadastre seu primeiro paciente para começar a acompanhar a jornada dele até a consulta.
+          </p>
+          <Button onClick={() => setModalOpen(true)} className="bg-[#E91E7B] hover:bg-[#d11a6f]">
+            + Cadastrar primeiro paciente
+          </Button>
+        </div>
+      ) : (
+        <LeadsTable leads={leads} stages={stages} />
+      )}
 
       <ImportCSVModal
         open={importOpen}

@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select'
 import { createLead } from '@/lib/actions/leads'
 import { PipelineStage } from '@/types/database'
+import { toast } from 'sonner'
 
 const ORIGENS = [
   { value: 'instagram',  label: 'Instagram' },
@@ -73,9 +74,12 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
         stage_id: form.stage_id || null,
         notes:    form.notes  || null,
       })
+      toast.success('Paciente cadastrado com sucesso!')
       handleClose()
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erro ao salvar o lead. Tente novamente.')
+      const msg = e instanceof Error ? e.message : 'Erro ao salvar o lead. Tente novamente.'
+      setError(msg)
+      toast.error('Erro ao salvar. Tente novamente.')
     } finally {
       setLoading(false)
     }
@@ -172,7 +176,15 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
               Cancelar
             </Button>
             <Button type="submit" className="flex-1" disabled={loading}>
-              {loading ? 'Salvando...' : 'Salvar Lead'}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  Salvando...
+                </span>
+              ) : 'Salvar Lead'}
             </Button>
           </div>
         </form>

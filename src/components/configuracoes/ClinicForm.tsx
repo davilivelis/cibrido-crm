@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { updateClinic } from '@/lib/actions/clinic'
+import { toast } from 'sonner'
 
 interface ClinicFormProps {
   clinic: {
@@ -50,9 +51,11 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
     startTransition(async () => {
       try {
         await updateClinic(form)
+        toast.success('Configurações salvas!')
         setSaved(true)
         setTimeout(() => setSaved(false), 3000)
       } catch (err) {
+        toast.error('Erro ao salvar. Tente novamente.')
         setError('Erro ao salvar. Tente novamente.')
       } finally {
         setSaving(false)
@@ -127,7 +130,15 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
 
         <div className="flex items-center gap-3 pt-1">
           <Button type="submit" disabled={saving}>
-            {saving ? 'Salvando...' : 'Salvar alterações'}
+            {saving ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+                Salvando...
+              </span>
+            ) : 'Salvar alterações'}
           </Button>
           {saved && (
             <span className="flex items-center gap-1.5 text-sm text-green-600 font-medium">

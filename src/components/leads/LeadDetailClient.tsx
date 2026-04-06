@@ -2,15 +2,18 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Phone, Mail, MapPin, Tag, User, MessageSquare, PhoneCall, CalendarPlus, StickyNote, CheckCircle, XCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { ArrowLeft, Phone, Mail, MapPin, Tag, User, MessageSquare, PhoneCall, CalendarPlus, StickyNote, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { updateLead, addLeadEvent } from '@/lib/actions/leads'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { updateLead, addLeadEvent, deleteLead } from '@/lib/actions/leads'
 import AgendamentoForm from '@/components/leads/AgendamentoForm'
 import { Lead, PipelineStage, LeadEvent } from '@/types/database'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 const EVENT_ICONS: Record<string, React.ElementType> = {
   stage_change: Tag,
@@ -47,12 +50,15 @@ interface LeadDetailClientProps {
 }
 
 export default function LeadDetailClient({ lead, stages, teamMembers, events }: LeadDetailClientProps) {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [editMode, setEditMode] = useState(false)
   const [saving, setSaving] = useState(false)
   const [noteText, setNoteText] = useState('')
   const [noteType, setNoteType] = useState<'note' | 'call' | 'whatsapp'>('note')
   const [addingNote, setAddingNote] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const [form, setForm] = useState({
     name:        lead.name,
@@ -73,19 +79,25 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
   async function handleSave() {
     setSaving(true)
     startTransition(async () => {
-      await updateLead(lead.id, {
-        name:        form.name,
-        phone:       form.phone,
-        email:       form.email || null,
-        source:      form.source || null,
-        stage_id:    form.stage_id || null,
-        status:      form.status,
-        lost_reason: form.lost_reason || null,
-        notes:       form.notes || null,
-        assigned_to: form.assigned_to || null,
-      })
-      setSaving(false)
-      setEditMode(false)
+      try {
+        await updateLead(lead.id, {
+          name:        form.name,
+          phone:       form.phone,
+          email:       form.email || null,
+          source:      form.source || null,
+          stage_id:    form.stage_id || null,
+          status:      form.status,
+          lost_reason: form.lost_reason || null,
+          notes:       form.notes || null,
+          assigned_to: form.assigned_to || null,
+        })
+        toast.success('Dados atualizados!')
+        setEditMode(false)
+      } catch {
+        toast.error('Erro ao salvar. Tente novamente.')
+      } finally {
+        setSaving(false)
+      }
     })
   }
 
@@ -93,16 +105,66 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
     if (!noteText.trim()) return
     setAddingNote(true)
     startTransition(async () => {
-      await addLeadEvent(lead.id, lead.clinic_id, noteType, noteText.trim())
-      setNoteText('')
-      setAddingNote(false)
+      try {
+        await addLeadEvent(lead.id, lead.clinic_id, noteType, noteText.trim())
+        toast.success('Atividade registrada!')
+        setNoteText('')
+      } catch {
+        toast.error('Erro ao registrar atividade.')
+      } finally {
+        setAddingNote(false)
+      }
     })
+  }
+
+  async function handleDelete() {
+    setDeleting(true)
+    try {
+      const result = await deleteLead(lead.id)
+      if (result?.error) {
+        toast.error('Erro ao excluir paciente.')
+      } else {
+        toast.success('Paciente excluído')
+        router.push('/leads')
+      }
+    } catch {
+      toast.error('Erro ao excluir paciente.')
+    } finally {
+      setDeleting(false)
+      setShowDeleteConfirm(false)
+    }
   }
 
   const currentStatus = STATUS_OPTIONS.find((s) => s.value === (editMode ? form.status : lead.status))
 
   return (
     <div className="space-y-5 max-w-5xl">
+      {/* Dialog de confirmação de exclusão */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent>
+          <DialogTitle>Excluir paciente</DialogTitle>
+          <p className="text-gray-600 mt-2">
+            Tem certeza que deseja excluir <strong>{lead.name}</strong>? Esta ação não pode ser desfeita.
+          </p>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
+              Cancelar
+            </Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={deleting}>
+              {deleting ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  Excluindo...
+                </span>
+              ) : 'Excluir'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Breadcrumb */}
       <div className="flex items-center gap-3">
         <Link href="/leads" className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors">
@@ -139,11 +201,28 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={() => setEditMode(false)}>Cancelar</Button>
                   <Button size="sm" onClick={handleSave} disabled={saving || isPending}>
-                    {saving ? 'Salvando...' : 'Salvar'}
+                    {saving ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                        </svg>
+                        Salvando...
+                      </span>
+                    ) : 'Salvar'}
                   </Button>
                 </div>
               ) : (
-                <Button variant="outline" size="sm" onClick={() => setEditMode(true)}>Editar</Button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="text-red-400 hover:text-red-600 text-sm flex items-center gap-1 transition-colors"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Excluir
+                  </button>
+                  <Button variant="outline" size="sm" onClick={() => setEditMode(true)}>Editar</Button>
+                </div>
               )}
             </div>
 

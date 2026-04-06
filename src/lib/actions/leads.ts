@@ -137,6 +137,26 @@ export async function importLeads(rows: {
   return records.length
 }
 
+// Exclui um lead permanentemente (com confirmação obrigatória no cliente)
+export async function deleteLead(leadId: string) {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Não autenticado' }
+
+  const { error } = await supabase
+    .from('leads')
+    .delete()
+    .eq('id', leadId)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/leads')
+  revalidatePath('/pipeline')
+  revalidatePath('/dashboard')
+  return { success: true }
+}
+
 // Adiciona um evento/nota na timeline do lead
 export async function addLeadEvent(
   leadId: string,

@@ -1,6 +1,9 @@
 // Página do Pipeline Kanban — colunas por etapa com cards de leads
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import KanbanBoard from '@/components/pipeline/KanbanBoard'
+
+export const metadata: Metadata = { title: 'Pipeline' }
 
 export default async function PipelinePage() {
   const supabase = await createClient()

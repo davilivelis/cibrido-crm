@@ -1,6 +1,9 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { Users, TrendingUp, CalendarCheck, MessageCircle, Tag, StickyNote, PhoneCall, MessageSquare, CalendarPlus } from 'lucide-react'
 import FunnelChart from '@/components/dashboard/FunnelChart'
+
+export const metadata: Metadata = { title: 'Dashboard' }
 
 const EVENT_ICONS: Record<string, React.ElementType> = {
   stage_change: Tag,
@@ -62,7 +65,7 @@ export default async function DashboardPage() {
       {/* Título da página */}
       <div>
         <h1 className="text-xl lg:text-[28px] font-bold text-gray-900 leading-tight">Dashboard</h1>
-        <p className="text-sm lg:text-base text-gray-500 mt-1">Visão geral da sua clínica</p>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">Acompanhe seus leads e consultas agendadas</p>
       </div>
 
       {/* Cards de métricas — KPI principal */}
@@ -108,7 +111,14 @@ export default async function DashboardPage() {
             <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#374151' }}>Leads por Etapa</h2>
             <span style={{ fontSize: '14px', color: '#9ca3af' }}>{leadsAtivos} ativos</span>
           </div>
-          <FunnelChart data={funnelData} />
+          {totalLeads === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <p className="font-medium">Comece cadastrando seu primeiro paciente</p>
+              <p className="text-sm mt-1">Os dados do seu funil aparecerão aqui automaticamente.</p>
+            </div>
+          ) : (
+            <FunnelChart data={funnelData} />
+          )}
         </div>
 
         {/* Atividade recente */}
