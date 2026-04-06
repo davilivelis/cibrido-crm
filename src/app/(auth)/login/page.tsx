@@ -63,30 +63,28 @@ export default function LoginPage() {
 
       {/* Lado esquerdo — 50% — fundo escuro com tudo centralizado */}
       <div
-        className="hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 p-12"
+        className="hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
-        {/* Logo centralizado — recorta apenas os balões */}
-        <div className="flex flex-col items-center gap-4 mb-12">
-          <div style={{ height: '80px', overflow: 'hidden', borderRadius: 8 }}>
-            <img
-              src="/logo.png"
-              alt="CibridoCRM"
-              style={{ height: '180px', width: 'auto', display: 'block', objectPosition: 'top' }}
-            />
-          </div>
+        {/* Logo limpa — PNG com fundo transparente */}
+        <div className="flex flex-col items-center gap-4 mb-10 text-center">
+          <img
+            src="/logo-cibrido.png"
+            alt="Cíbrido"
+            className="h-20 w-auto"
+          />
           <span className="text-white font-bold text-2xl tracking-tight">CibridoCRM</span>
         </div>
 
         {/* Headline em 3 linhas separadas — whitespace-nowrap garante 1 linha por elemento */}
-        <div className="max-w-[520px]">
-          <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
+        <div className="text-center">
+          <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
             Te entregamos um Sistema de IA
           </p>
-          <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
+          <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
             que organiza e acompanha
           </p>
-          <p className="text-[28px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+          <p className="text-[30px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
             seu futuro e atual paciente
           </p>
           <p className="text-gray-400 text-sm mt-6 leading-relaxed max-w-[400px]">
