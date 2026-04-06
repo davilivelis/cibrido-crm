@@ -61,23 +61,29 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex" style={{ fontSize: '16px' }}>
 
-      {/* Lado esquerdo — 50% — fundo escuro com tudo centralizado */}
+      {/* Lado esquerdo — 50% — fundo escuro, tudo centralizado */}
       <div
-        className="hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12"
+        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
-        {/* Logo limpa — PNG com fundo transparente */}
-        <div className="flex flex-col items-center gap-4 mb-10 text-center">
+        {/* Fundo de rede sutil — textura tecnológica, 8% opacidade */}
+        <img
+          src="/bg-network.png"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.08] pointer-events-none select-none"
+        />
+
+        {/* Conteúdo por cima do fundo */}
+        <div className="relative z-10 flex flex-col items-center text-center">
+          {/* Logo só balões — grande, sem fundo */}
           <img
             src="/logo-cibrido.png"
             alt="Cíbrido"
-            className="h-20 w-auto"
+            className="h-28 w-auto mb-4"
           />
-          <span className="text-white font-bold text-2xl tracking-tight">CibridoCRM</span>
-        </div>
+          <span className="text-white font-bold text-xl tracking-tight mb-10">CibridoCRM</span>
 
-        {/* Headline em 3 linhas separadas — whitespace-nowrap garante 1 linha por elemento */}
-        <div className="text-center">
+          {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
           <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
             Te entregamos um Sistema de IA
           </p>
