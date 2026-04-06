@@ -78,14 +78,18 @@ export default function LoginPage() {
           <span className="text-white font-bold text-2xl tracking-tight">CibridoCRM</span>
         </div>
 
-        {/* Headline em 3 linhas separadas */}
-        <div className="text-center max-w-sm">
-          <div className="mb-5" style={{ fontSize: '34px', fontWeight: 700, lineHeight: '1.3' }}>
-            <div style={{ color: '#f8fafc' }}>Te entregamos um Sistema de IA</div>
-            <div style={{ color: '#f8fafc' }}>que organiza e acompanha</div>
-            <div style={{ color: '#E91E7B' }}>seu futuro e atual paciente</div>
-          </div>
-          <p style={{ fontSize: '16px', color: '#94a3b8', lineHeight: '1.6' }}>
+        {/* Headline em 3 linhas separadas — whitespace-nowrap garante 1 linha por elemento */}
+        <div className="max-w-[520px]">
+          <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
+            Te entregamos um Sistema de IA
+          </p>
+          <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
+            que organiza e acompanha
+          </p>
+          <p className="text-[28px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+            seu futuro e atual paciente
+          </p>
+          <p className="text-gray-400 text-sm mt-6 leading-relaxed max-w-[400px]">
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>

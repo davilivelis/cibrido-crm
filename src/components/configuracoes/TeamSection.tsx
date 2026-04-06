@@ -49,14 +49,18 @@ export default function TeamSection({ team, clinicPlan }: TeamSectionProps) {
 
     startTransition(async () => {
       try {
-        await inviteUser(form)
-        setForm({ name: '', email: '', role: 'atendente' })
-        setShowForm(false)
-        setSaved(true)
-        setTimeout(() => setSaved(false), 3000)
+        const result = await inviteUser(form)
+        if (result?.error) {
+          setError(result.error)
+        } else {
+          setForm({ name: '', email: '', role: 'atendente' })
+          setShowForm(false)
+          setSaved(true)
+          setTimeout(() => setSaved(false), 3000)
+        }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Erro ao convidar.'
-        setError(msg.includes('already registered') ? 'Este email já está cadastrado.' : msg)
+        const msg = err instanceof Error ? err.message : 'Erro ao convidar. Tente novamente.'
+        setError(msg)
       } finally {
         setSaving(false)
       }

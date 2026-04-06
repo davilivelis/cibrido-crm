@@ -96,51 +96,60 @@ export async function inviteUser(data: {
   email: string
   name: string
   role: string
-}) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Não autorizado')
+}): Promise<{ success?: boolean; error?: string }> {
+  try {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return { error: 'Configuração do servidor incompleta. Contate o suporte.' }
+    }
 
-  const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
-  if (!clinicId) throw new Error('Clínica não encontrada')
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Não autorizado' }
 
-  const admin = createAdminClient()
+    const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
+    if (!clinicId) return { error: 'Clínica não encontrada' }
 
-  // Gera senha temporária forte (usuário pode redefinir depois)
-  const tempPassword = crypto.randomUUID().replace(/-/g, '') + 'Aa1!'
+    const { supabaseAdmin } = await import('@/lib/supabase/admin')
 
-  // Cria usuário com senha temporária e email já confirmado
-  const { data: created, error } = await admin.auth.admin.createUser({
-    email:         data.email.trim(),
-    password:      tempPassword,
-    email_confirm: true,
-    user_metadata: {
-      full_name: data.name.trim(),
-      name:      data.name.trim(),
-      role:      data.role,
+    // Gera senha temporária forte (usuário pode redefinir depois)
+    const tempPassword = crypto.randomUUID().replace(/-/g, '') + 'Aa1!'
+
+    const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
+      email:         data.email.trim(),
+      password:      tempPassword,
+      email_confirm: true,
+      user_metadata: {
+        full_name: data.name.trim(),
+        name:      data.name.trim(),
+        role:      data.role,
+        clinic_id: clinicId,
+      },
+    })
+
+    if (error) {
+      const msg = error.message
+      if (msg.toLowerCase().includes('already')) return { error: 'Este email já está cadastrado.' }
+      return { error: msg }
+    }
+
+    if (!created.user) return { error: 'Erro ao criar usuário' }
+
+    // Garante perfil na tabela users (trigger do banco pode ter rodado, upsert é seguro)
+    const { error: upsertError } = await supabaseAdmin.from('users').upsert({
+      id:        created.user.id,
       clinic_id: clinicId,
-    },
-  })
+      name:      data.name.trim(),
+      email:     data.email.trim(),
+      role:      data.role,
+      is_active: true,
+    }, { onConflict: 'id' })
 
-  if (error) {
-    const msg = error.message
-    if (msg.toLowerCase().includes('already')) throw new Error('Este email já está cadastrado.')
-    throw new Error(msg)
+    if (upsertError) return { error: 'Usuário criado mas erro ao salvar perfil: ' + upsertError.message }
+
+    revalidatePath('/configuracoes')
+    return { success: true }
+  } catch (err: unknown) {
+    console.error('[inviteUser]', err)
+    return { error: 'Erro interno ao convidar membro. Tente novamente.' }
   }
-
-  if (!created.user) throw new Error('Erro ao criar usuário')
-
-  // Garante perfil na tabela users (trigger do banco pode ter rodado, upsert é seguro)
-  const { error: upsertError } = await admin.from('users').upsert({
-    id:        created.user.id,
-    clinic_id: clinicId,
-    name:      data.name.trim(),
-    email:     data.email.trim(),
-    role:      data.role,
-    is_active: true,
-  }, { onConflict: 'id' })
-
-  if (upsertError) throw new Error('Usuário criado mas erro ao salvar perfil: ' + upsertError.message)
-
-  revalidatePath('/configuracoes')
 }
