@@ -63,7 +63,7 @@ export default function LoginPage() {
 
       {/* Lado esquerdo — 50% — fundo escuro, tudo centralizado */}
       <div
-        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 overflow-hidden"
+        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 pb-16 overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
         {/* Fundo de rede sutil — textura tecnológica, 8% opacidade */}
@@ -81,7 +81,7 @@ export default function LoginPage() {
             alt="Cíbrido"
             className="h-40 w-auto mx-auto"
           />
-          <span className="text-white font-bold text-[30px] mt-2">CibridoCRM</span>
+          <span className="text-white font-bold text-[30px] mt-1">CibridoCRM</span>
 
           {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
           <div className="mt-5">
