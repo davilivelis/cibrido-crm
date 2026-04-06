@@ -80,6 +80,7 @@ export default function LoginPage() {
             src="/logo-cibrido.png"
             alt="Cíbrido"
             className="h-32 w-auto mx-auto"
+            style={{ marginBottom: '-32px' }}
           />
           <span className="text-white font-bold text-[30px] mt-0">CibridoCRM</span>
 
