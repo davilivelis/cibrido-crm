@@ -63,7 +63,7 @@ export default function LoginPage() {
 
       {/* Lado esquerdo — 50% — fundo escuro, tudo centralizado */}
       <div
-        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 pb-16 overflow-hidden"
+        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 pt-8 overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
         {/* Fundo de rede sutil — textura tecnológica, 8% opacidade */}
