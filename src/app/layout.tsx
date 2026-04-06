@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   description: "Sistema de gestão de leads para clínicas odontológicas",
   icons: {
-    icon: "/logo-cibrido.png",
-    apple: "/logo-cibrido.png",
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
