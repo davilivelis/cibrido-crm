@@ -48,7 +48,7 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
   }
 
   return (
-    <aside className="w-60 flex flex-col" style={{ backgroundColor: '#1E2A3A' }}>
+    <aside className="w-60 hidden lg:flex flex-col" style={{ backgroundColor: '#1E2A3A' }}>
 
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-white/8">
