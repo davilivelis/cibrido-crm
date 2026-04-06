@@ -59,11 +59,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ fontSize: '16px' }}>
+    <div className="min-h-screen flex flex-col lg:flex-row" style={{ fontSize: '16px' }}>
 
-      {/* Lado esquerdo — 50% — fundo escuro, tudo centralizado */}
+      {/* Lado esquerdo — mobile: full width topo | desktop: 50% fixo */}
       <div
-        className="relative hidden lg:flex flex-col items-center justify-center w-1/2 shrink-0 px-12 pt-8 overflow-hidden"
+        className="relative flex flex-col items-center justify-center w-full lg:w-1/2 lg:shrink-0 py-10 px-6 lg:px-12 lg:pt-8 overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #2d1a32 100%)' }}
       >
         {/* Fundo de rede sutil — textura tecnológica, 8% opacidade */}
@@ -75,47 +75,38 @@ export default function LoginPage() {
 
         {/* Conteúdo por cima do fundo */}
         <div className="relative z-10 flex flex-col items-center text-center">
-          {/* Logo só balões — grande, sem fundo */}
+          {/* Logo só balões — responsiva */}
           <img
             src="/logo-cibrido.png"
             alt="Cíbrido"
-            className="h-32 w-auto mx-auto"
-            style={{ marginBottom: '-32px' }}
+            className="h-16 lg:h-32 w-auto mx-auto -mb-4 lg:-mb-8"
           />
-          <span className="text-white font-bold text-[30px] mt-0">CibridoCRM</span>
+          <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CibridoCRM</span>
 
           {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
-          <div className="mt-5">
-            <p className="text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+          <div className="mt-3 lg:mt-5">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white whitespace-nowrap">
               Te entregamos um Sistema de IA
             </p>
-            <p className="text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white whitespace-nowrap">
               que organiza e acompanha
             </p>
-            <p className="text-[38px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
               seu futuro e atual paciente
             </p>
           </div>
-          <p className="text-gray-400 text-xl mt-5 leading-relaxed max-w-[480px] mx-auto">
+          <p className="text-gray-400 text-sm lg:text-xl mt-3 lg:mt-5 leading-relaxed max-w-[480px] mx-auto">
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>
       </div>
 
-      {/* Lado direito — 50% — formulário centralizado */}
+      {/* Lado direito — mobile: full width abaixo | desktop: 50% */}
       <div
         className="flex-1 lg:w-1/2 flex flex-col items-center justify-center p-8"
         style={{ backgroundColor: '#F8F9FB' }}
       >
         <div className="w-full max-w-sm">
-
-          {/* Logo mobile */}
-          <div className="flex items-center gap-2.5 mb-8 lg:hidden">
-            <div style={{ width: 36, height: 36, overflow: 'hidden', borderRadius: 6, flexShrink: 0 }}>
-              <img src="/logo.png" alt="CibridoCRM" style={{ width: '36px', height: 'auto', display: 'block' }} />
-            </div>
-            <span className="font-bold text-gray-900 text-lg">CibridoCRM</span>
-          </div>
 
           {/* Abas */}
           <div className="flex bg-white rounded-xl p-1 mb-8 shadow-sm border border-gray-100">
