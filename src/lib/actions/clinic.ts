@@ -106,9 +106,13 @@ export async function inviteUser(data: {
 
   const admin = createAdminClient()
 
-  // Cria usuário com email já confirmado (sem precisar de confirmação por email)
+  // Gera senha temporária forte (usuário pode redefinir depois)
+  const tempPassword = crypto.randomUUID().replace(/-/g, '') + 'Aa1!'
+
+  // Cria usuário com senha temporária e email já confirmado
   const { data: created, error } = await admin.auth.admin.createUser({
     email:         data.email.trim(),
+    password:      tempPassword,
     email_confirm: true,
     user_metadata: {
       full_name: data.name.trim(),
@@ -126,15 +130,17 @@ export async function inviteUser(data: {
 
   if (!created.user) throw new Error('Erro ao criar usuário')
 
-  // Cria registro na tabela users vinculando à clínica
-  await admin.from('users').upsert({
+  // Garante perfil na tabela users (trigger do banco pode ter rodado, upsert é seguro)
+  const { error: upsertError } = await admin.from('users').upsert({
     id:        created.user.id,
     clinic_id: clinicId,
     name:      data.name.trim(),
     email:     data.email.trim(),
     role:      data.role,
     is_active: true,
-  })
+  }, { onConflict: 'id' })
+
+  if (upsertError) throw new Error('Usuário criado mas erro ao salvar perfil: ' + upsertError.message)
 
   revalidatePath('/configuracoes')
 }
