@@ -79,21 +79,23 @@ export default function LoginPage() {
           <img
             src="/logo-cibrido.png"
             alt="Cíbrido"
-            className="h-28 w-auto mb-4"
+            className="h-32 w-auto mx-auto"
           />
-          <span className="text-white font-bold text-xl tracking-tight mb-10">CibridoCRM</span>
+          <span className="text-white font-bold text-2xl mt-3">CibridoCRM</span>
 
           {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
-          <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
-            Te entregamos um Sistema de IA
-          </p>
-          <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
-            que organiza e acompanha
-          </p>
-          <p className="text-[30px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
-            seu futuro e atual paciente
-          </p>
-          <p className="text-gray-400 text-sm mt-6 leading-relaxed max-w-[400px]">
+          <div className="mt-4">
+            <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
+              Te entregamos um Sistema de IA
+            </p>
+            <p className="text-[30px] font-bold leading-tight text-white whitespace-nowrap">
+              que organiza e acompanha
+            </p>
+            <p className="text-[30px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+              seu futuro e atual paciente
+            </p>
+          </div>
+          <p className="text-gray-400 text-base mt-4 leading-relaxed max-w-[400px] mx-auto">
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>
