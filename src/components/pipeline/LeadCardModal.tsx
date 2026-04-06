@@ -171,7 +171,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
   // ─── UI ────────────────────────────────────────────────────────
   return (
     <Dialog open onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-w-2xl p-0 flex flex-col gap-0 overflow-hidden" style={{ maxHeight: '90vh' }}>
+      <DialogContent className="p-0 flex flex-col gap-0 overflow-hidden max-sm:!inset-0 max-sm:!translate-x-0 max-sm:!translate-y-0 max-sm:!max-w-none max-sm:!w-screen max-sm:!h-[100dvh] max-sm:!rounded-none sm:max-w-2xl sm:max-h-[90vh] sm:rounded-lg">
 
         {/* ── Cabeçalho ── */}
         <div className="flex items-start gap-4 p-5 border-b border-gray-100">

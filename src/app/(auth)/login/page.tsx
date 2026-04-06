@@ -83,15 +83,15 @@ export default function LoginPage() {
           />
           <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CibridoCRM</span>
 
-          {/* Headline em 3 linhas — whitespace-nowrap garante 1 linha por elemento */}
+          {/* Headline em 3 linhas — lg:whitespace-nowrap garante 1 linha por elemento */}
           <div className="mt-3 lg:mt-5">
-            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white lg:whitespace-nowrap">
               Te entregamos um Sistema de IA
             </p>
-            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-white lg:whitespace-nowrap">
               que organiza e acompanha
             </p>
-            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#E91E7B] lg:whitespace-nowrap">
               seu futuro e atual paciente
             </p>
           </div>

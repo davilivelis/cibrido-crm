@@ -38,30 +38,32 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Leads</h1>
-          <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>{leads.length} leads cadastrados</p>
+          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Leads</h1>
+          <p className="text-sm lg:text-base text-gray-500 mt-1">{leads.length} leads cadastrados</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button
             variant="outline"
-            className="gap-2"
+            className="gap-2 flex-1 sm:flex-none"
             onClick={() => setImportOpen(true)}
           >
             <Upload className="w-4 h-4" />
-            Importar CSV
+            <span className="hidden sm:inline">Importar CSV</span>
+            <span className="sm:hidden">Importar</span>
           </Button>
           <Button
             variant="outline"
-            className="gap-2"
+            className="gap-2 flex-1 sm:flex-none"
             onClick={handleExport}
             disabled={downloading}
           >
             <Download className="w-4 h-4" />
-            {downloading ? 'Baixando...' : 'Exportar CSV'}
+            <span className="hidden sm:inline">{downloading ? 'Baixando...' : 'Exportar CSV'}</span>
+            <span className="sm:hidden">{downloading ? '...' : 'Exportar'}</span>
           </Button>
-          <Button className="gap-2" onClick={() => setModalOpen(true)}>
+          <Button className="gap-2 flex-1 sm:flex-none" onClick={() => setModalOpen(true)}>
             <Plus className="w-4 h-4" />
             Novo Lead
           </Button>

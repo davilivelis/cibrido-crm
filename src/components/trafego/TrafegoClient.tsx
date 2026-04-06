@@ -86,12 +86,12 @@ export default function TrafegoClient({ campaigns }: TrafegoClientProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Tráfego Pago</h1>
-          <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>Performance das campanhas</p>
+          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Tráfego Pago</h1>
+          <p className="text-sm lg:text-base text-gray-500 mt-1">Performance das campanhas</p>
         </div>
-        <Button className="gap-2" onClick={() => setModalOpen(true)}>
+        <Button className="gap-2 sm:self-auto self-start" onClick={() => setModalOpen(true)}>
           <Plus className="w-4 h-4" />
           Nova Campanha
         </Button>

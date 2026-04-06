@@ -219,7 +219,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
               </th>
               <th className="text-left px-4 py-3 font-medium text-gray-500">Contato</th>
               <th className="text-left px-4 py-3 font-medium text-gray-500">Etapa</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-500">Origem</th>
+              <th className="hidden lg:table-cell text-left px-4 py-3 font-medium text-gray-500">Origem</th>
               <th
                 className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
                 onClick={() => toggleSort('status')}
@@ -227,7 +227,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                 Status <SortIcon field="status" />
               </th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
+                className="hidden lg:table-cell text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
                 onClick={() => toggleSort('created_at')}
               >
                 Cadastrado <SortIcon field="created_at" />
@@ -265,13 +265,13 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                       </span>
                     ) : <span className="text-gray-300 text-xs">—</span>}
                   </td>
-                  <td className="px-4 py-3 text-gray-500 capitalize text-sm">{lead.source ?? '—'}</td>
+                  <td className="hidden lg:table-cell px-4 py-3 text-gray-500 capitalize text-sm">{lead.source ?? '—'}</td>
                   <td className="px-4 py-3">
                     <span className={cn('text-xs font-medium px-2 py-1 rounded-full', STATUS_STYLE[lead.status])}>
                       {STATUS_LABEL[lead.status]}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-400 text-xs">
+                  <td className="hidden lg:table-cell px-4 py-3 text-gray-400 text-xs">
                     {new Date(lead.created_at).toLocaleDateString('pt-BR')}
                   </td>
                 </tr>

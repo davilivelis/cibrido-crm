@@ -84,7 +84,7 @@ function KanbanColumn({
   const { setNodeRef, isOver } = useDroppable({ id: stage.id, data: { type: 'column', stageId: stage.id } })
 
   return (
-    <div className="flex-shrink-0 w-64">
+    <div className="flex-shrink-0 min-w-[280px] snap-start">
       {/* Header da coluna — estilo Trello */}
       <div
         className="flex items-center gap-2 px-3 py-2.5 rounded-t-xl mb-0"
@@ -208,7 +208,7 @@ export default function KanbanBoard({ stages, leads: initialLeads }: KanbanBoard
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-3 overflow-x-auto pb-4">
+        <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory">
           {stages.map((stage) => (
             <KanbanColumn
               key={stage.id}

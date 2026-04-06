@@ -13,12 +13,12 @@ export default async function ConversasPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Conversas</h1>
-        <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>Histórico de mensagens WhatsApp</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Conversas</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">Histórico de mensagens WhatsApp</p>
       </div>
 
       {!conversations || conversations.length === 0 ? (
-        <div className="bg-white rounded-xl border border-gray-100 p-16 flex flex-col items-center gap-3 text-center">
+        <div className="bg-white rounded-xl border border-gray-100 p-8 lg:p-16 flex flex-col items-center gap-3 text-center">
           <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
             <MessageSquare className="w-5 h-5 text-blue-500" />
           </div>

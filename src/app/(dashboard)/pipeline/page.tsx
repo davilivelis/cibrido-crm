@@ -22,8 +22,8 @@ export default async function PipelinePage() {
   return (
     <div className="space-y-5 h-full">
       <div>
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Pipeline</h1>
-        <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Pipeline</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">
           {leadsResult.data?.length ?? 0} leads ativos no funil
         </p>
       </div>

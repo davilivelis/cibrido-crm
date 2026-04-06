@@ -74,8 +74,8 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
   return (
     <div className="space-y-5">
       <div>
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Agenda</h1>
-        <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>{total} consulta{total !== 1 ? 's' : ''} nos próximos dias</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Agenda</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">{total} consulta{total !== 1 ? 's' : ''} nos próximos dias</p>
       </div>
 
       {byDay.length === 0 ? (
@@ -105,7 +105,7 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                   return (
                     <div
                       key={appt.id}
-                      className="bg-white rounded-xl border border-gray-100 p-4 flex items-center gap-4 hover:shadow-sm transition-shadow"
+                      className="bg-white rounded-xl border border-gray-100 p-3 lg:p-4 flex items-center gap-3 hover:shadow-sm transition-shadow"
                     >
                       {/* Horário */}
                       <div className="shrink-0 text-center w-14">

@@ -22,8 +22,8 @@ export default async function PerfilPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Meu Perfil</h1>
-        <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>Gerencie seus dados e senha de acesso</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Meu Perfil</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">Gerencie seus dados e senha de acesso</p>
       </div>
       <PerfilClient user={profile} />
     </div>

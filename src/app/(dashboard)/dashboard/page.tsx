@@ -61,8 +61,8 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       {/* Título da página */}
       <div>
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: '1.2' }}>Dashboard</h1>
-        <p style={{ fontSize: '16px', color: '#6b7280', marginTop: '4px' }}>Visão geral da sua clínica</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900 leading-tight">Dashboard</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">Visão geral da sua clínica</p>
       </div>
 
       {/* Cards de métricas — KPI principal */}

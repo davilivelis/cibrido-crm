@@ -6,7 +6,7 @@
 
 ## CONTEXTO
 
-O CibridoCRM V1 está online em https://cibrido-crm.vercel.app com 16 funcionalidades operacionais. Restam EXATAMENTE 2 correções para fechar o V1. Essas correções já foram tentadas DUAS VEZES antes e NÃO foram aplicadas corretamente. Este PRD documenta com precisão cirúrgica o que precisa ser feito.
+O CibridoCRM V1 está online em https://cibrido-crm.vercel.app com 16 funcionalidades operacionais. Resta EXATAMENTE 1 correção visual para fechar o V1. O convite de equipe foi movido pra V2.
 
 **Pasta do projeto:** C:\Users\Davi Jr\Downloads\PROJETOCLAUDECOUDE\cibrido-crm
 **Stack:** Next.js 14 (App Router) + Supabase + TailwindCSS + shadcn/ui
@@ -15,251 +15,292 @@ O CibridoCRM V1 está online em https://cibrido-crm.vercel.app com 16 funcionali
 
 ---
 
-## CORREÇÃO 1: COPY DA TELA DE LOGIN
+## CORREÇÃO ÚNICA: TELA DE LOGIN — LOGO + CENTRALIZAR + FONTE
 
-### Problema atual
-A headline do lado esquerdo da tela de login (split-screen, fundo navy #1E2A3A) está quebrando em **5 linhas** porque a fonte (34px) é grande demais pro container estreito. O text-wrap automático gera:
+### Estado atual (verificado em 06/04/2026)
+A tela de login tem layout split-screen (lado esquerdo navy #1E2A3A, lado direito branco com formulário). O lado esquerdo hoje tem:
+- Logo com fundo PRETO aparecendo (a imagem é JPEG sem transparência — quadrado preto feio)
+- Efeito de rede/nodes atrás da logo — REAPROVEITAR como background sutil do lado esquerdo inteiro
+- Texto "CibridoCRM" abaixo da logo
+- Headline em 3 linhas (a copy JÁ ESTÁ nas 3 linhas corretas — NÃO ALTERAR O TEXTO)
+- Subtexto cinza abaixo
+- TUDO alinhado à ESQUERDA — precisa CENTRALIZAR
+
+---
+
+### AJUSTE 1: LOGO + FUNDO DE REDE SUTIL
+
+A imagem `logo_sem_fundo.png` na raiz do projeto contém DUAS coisas:
+1. Os **balões entrelaçados** coloridos (centro da imagem) — isso é a LOGO
+2. Os **ícones de rede** ao redor (gráficos, envelopes, nodes, linhas) — isso é DECORAÇÃO
+
+Vamos usar as duas coisas de forma inteligente:
+- **LOGO (só os balões):** recortar o centro da imagem, remover fundo preto → usar como logo principal, grande e vibrante
+- **FUNDO DE REDE (imagem inteira):** remover fundo preto → usar como background do lado esquerdo inteiro, com opacidade BAIXA (10-15%) pra criar uma textura sutil e tecnológica
+
+#### Arquivo de origem
+`logo_sem_fundo.png` na raiz do projeto. É JPEG com fundo PRETO sólido (512x512px).
+
+#### O que fazer
+1. Instalar Sharp (se não estiver instalado): `npm install sharp`
+2. Criar um script que gera DOIS arquivos:
+   - `/public/logo-cibrido.png` → só os balões, fundo transparente (crop do centro)
+   - `/public/bg-network.png` → imagem inteira, fundo transparente (pra usar como background sutil)
+3. Deletar o script temporário depois
+
+#### Script de conversão:
+```js
+// remove-bg.js (temporário — deletar depois)
+const sharp = require('sharp');
+
+async function processImages() {
+  // === IMAGEM 1: Fundo de rede inteiro (sem fundo preto) ===
+  const fullImg = sharp('logo_sem_fundo.png');
+  const { data: fullData, info: fullInfo } = await fullImg
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  for (let i = 0; i < fullData.length; i += 4) {
+    const r = fullData[i], g = fullData[i+1], b = fullData[i+2];
+    if (r < 30 && g < 30 && b < 30) {
+      fullData[i+3] = 0;
+    }
+  }
+
+  await sharp(fullData, {
+    raw: { width: fullInfo.width, height: fullInfo.height, channels: 4 }
+  })
+    .png()
+    .toFile('public/bg-network.png');
+
+  console.log('Fundo de rede salvo em public/bg-network.png');
+
+  // === IMAGEM 2: Só os balões (crop do centro + sem fundo preto) ===
+  const cropSize = Math.floor(fullInfo.width * 0.55); // ~55% do centro
+  const offset = Math.floor((fullInfo.width - cropSize) / 2);
+
+  const croppedImg = sharp('logo_sem_fundo.png');
+  const { data: cropData, info: cropInfo } = await croppedImg
+    .extract({ left: offset, top: Math.floor(fullInfo.height * 0.15), width: cropSize, height: Math.floor(fullInfo.height * 0.7) })
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  for (let i = 0; i < cropData.length; i += 4) {
+    const r = cropData[i], g = cropData[i+1], b = cropData[i+2];
+    if (r < 30 && g < 30 && b < 30) {
+      cropData[i+3] = 0;
+    }
+  }
+
+  await sharp(cropData, {
+    raw: { width: cropInfo.width, height: cropInfo.height, channels: 4 }
+  })
+    .png()
+    .toFile('public/logo-cibrido.png');
+
+  console.log('Logo (só balões) salva em public/logo-cibrido.png');
+}
+
+processImages();
 ```
-Te entregamos um
-Sistema de IA
-que organiza e
-acompanha
-seu futuro e atual paciente
-```
-Isso é feio e amador. Precisa ser corrigido.
 
-### Resultado esperado — EXATAMENTE 3 LINHAS (não negociável)
-```
-Linha 1 (branco, bold):   "Te entregamos um Sistema de IA"
-Linha 2 (branco, bold):   "que organiza e acompanha"
-Linha 3 (magenta #E91E7B, bold):  "seu futuro e atual paciente"
-```
-Subtexto abaixo (cinza claro, fonte menor):
-"Desde o primeiro contato até o agendamento, para aumentar o seu faturamento."
+Rodar: `node remove-bg.js`
+Depois: deletar o script (`del remove-bg.js` no Windows)
 
-### Lógica da solução (PENSE antes de codar)
-O problema é que 34px não cabe em 3 linhas no container atual. Existem 2 caminhos:
-- **Caminho A:** Reduzir a fonte pra um tamanho que caiba (ex: 26-28px)
-- **Caminho B:** Aumentar o container (dar mais largura pro lado esquerdo)
-- **Caminho ideal:** Combinar os dois — ajustar a fonte E o container pra ficar proporcional
-
-Na versão Lovable (que funcionava bem visualmente), a proporção era equilibrada: a fonte era menor, o container do lado esquerdo tinha espaço suficiente, e o resultado era limpo e profissional. USE ESSA LÓGICA.
-
-### Implementação técnica — 3 ELEMENTOS BLOCK FORÇADOS
-Cada linha DEVE ser um elemento HTML separado (`<p>` ou `<div>`). O texto NÃO pode depender de text-wrap automático pra quebrar — se o browser quiser quebrar em 4 ou 5, ele vai. Por isso cada linha é um elemento separado com `display: block`.
-
-**Arquivo:** `src/app/(auth)/login/page.tsx` (ou onde estiver o componente de login)
-
-**Código exato:**
+#### No componente de login — LOGO
+Substituir a tag de imagem da logo atual por:
 ```tsx
-<div className="max-w-[520px]">
-  <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
-    Te entregamos um Sistema de IA
-  </p>
-  <p className="text-[28px] font-bold leading-tight text-white whitespace-nowrap">
-    que organiza e acompanha
-  </p>
-  <p className="text-[28px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
-    seu futuro e atual paciente
-  </p>
-  <p className="text-gray-400 text-sm mt-6 leading-relaxed max-w-[400px]">
-    Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
-  </p>
+<img 
+  src="/logo-cibrido.png" 
+  alt="Cíbrido" 
+  className="h-40 w-auto relative z-10"
+/>
+```
+
+**TAMANHO DA LOGO:** `h-40` (160px). O Davi quer a logo GRANDE e próxima do nome "CibridoCRM".
+
+**A logo atual no `/public/Logo.png` tem o nome "Cíbrido" escrito dentro. NÃO USAR.** Usar SOMENTE `/public/logo-cibrido.png` (só os balões, sem texto).
+
+#### No componente de login — FUNDO DE REDE SUTIL
+Adicionar a imagem `bg-network.png` como background do container do lado esquerdo inteiro:
+```tsx
+{/* Container do lado esquerdo */}
+<div className="relative w-1/2 bg-[#1E2A3A] flex flex-col items-center justify-center h-full text-center px-8 overflow-hidden">
+  
+  {/* Fundo de rede sutil — cobre a tela inteira com opacidade baixa */}
+  <img
+    src="/bg-network.png"
+    alt=""
+    className="absolute inset-0 w-full h-full object-cover opacity-[0.08] pointer-events-none"
+  />
+  
+  {/* Conteúdo por cima do fundo */}
+  <div className="relative z-10">
+    <img src="/logo-cibrido.png" alt="Cíbrido" className="h-40 w-auto mx-auto" />
+    <p className="text-white font-bold text-[30px] mt-2">CibridoCRM</p>
+    {/* ... headline e subtexto ... */}
+  </div>
 </div>
 ```
 
-**Por que `whitespace-nowrap`:** impede que QUALQUER linha quebre internamente. Cada `<p>` é uma linha, ponto. Sem surpresas.
+**Opacidade `0.08` (8%)** — sutil, quase uma textura. Dá profundidade e contexto tecnológico sem competir com a logo e o texto. Se ficar invisível demais, subir pra `0.12`. Se ficar poluído, descer pra `0.05`. O ponto certo é: o cliente sente que tem algo ali mas não distrai da leitura.
 
-**Por que `text-[28px]` e não `text-[34px]`:** 34px é grande demais. 28px mantém impacto visual mas cabe no container sem forçar. Teste: se 28px ficar pequeno, suba pra 30px. Se 28px ainda quebrar alguma linha, desça pra 26px. O importante: 3 LINHAS VISÍVEIS.
+### IMPORTANTE — TAMANHOS E ESPAÇAMENTO
 
-### Por que falhou 3 vezes antes
-1. **1ª vez:** Claude Code disse que aplicou mas não editou o arquivo
-2. **2ª vez:** Usou 3 elementos mas manteve 34px sem `whitespace-nowrap`, então o browser ainda quebrava
-3. **3ª vez:** Nada mudou — confirmado visualmente em 06/04/2026
+**CONTEXTO:** O Davi testou a versão atual com zoom de 125% e gostou do resultado. Isso significa que todos os tamanhos atuais estão ~25% MENORES do que o ideal. Todos os tamanhos abaixo já estão corrigidos pra ficarem bons no zoom 100% (tamanho normal da tela).
 
-### Procedimento obrigatório DESTA VEZ
-1. Rodar `grep -rn "Te entregamos" src/` pra achar o arquivo exato
-2. Abrir o arquivo e ME MOSTRAR o código atual da headline
-3. Substituir pelo código acima (3 `<p>` com `whitespace-nowrap`)
-4. Rodar `npm run dev` e abrir no browser local
-5. Confirmar visualmente que são 3 linhas
-6. SE alguma linha estiver quebrando: ajustar o font-size até caber
-7. ME MOSTRAR screenshot ou confirmação visual antes de commitar
-
-### Critério de aceite
-- 3 linhas de headline, sem exceção
-- Linhas 1 e 2 em branco, linha 3 em magenta #E91E7B
-- Proporcional, limpo, profissional
-- Subtexto cinza abaixo com espaço respirável
-- Funciona em tela 1920px e em tela 1366px (notebook comum)
+**ESPAÇAMENTO:** A logo precisa ficar PRÓXIMA ao nome "CibridoCRM" — gap curto (`mt-2`, 8px). O conjunto todo precisa parecer UM BLOCO coeso.
 
 ---
 
-## CORREÇÃO 2: CONVITE DE EQUIPE NAS CONFIGURAÇÕES
+### AJUSTE 2: CENTRALIZAR TUDO NO LADO ESQUERDO
 
-### Problema atual
-Na página de Configurações > aba Equipe, ao clicar no botão de convidar membro, aparece erro genérico de server component:
-> "Ocorreu um erro na renderização dos componentes do servidor. A mensagem específica é omitida nas versões de produção para evitar o vazamento de informações confidenciais."
+O código do Ajuste 1 já inclui a centralização (`items-center justify-center text-center`). Este ajuste é pra garantir que NENHUM elemento filho tenha `text-left` ou alinhamento à esquerda sobrando.
 
-### Diagnóstico provável (baseado no histórico)
-O server action de convite usa um **admin client do Supabase** (com `SUPABASE_SERVICE_ROLE_KEY`) para chamar `supabase.auth.admin.createUser()`. O erro acontece porque:
+Verificar que TODOS os textos estão `text-center`. Se a headline tiver `text-left`, trocar por `text-center`.
 
-1. A variável `SUPABASE_SERVICE_ROLE_KEY` pode não estar configurada na Vercel, OU
-2. O server action está importando o admin client de forma errada, OU  
-3. O server action tenta acessar uma variável de ambiente que não existe em runtime na Vercel e dá erro de "undefined"
-
-### Solução técnica — PASSO A PASSO
-
-**Passo 1 — Verificar variáveis na Vercel:**
-```bash
-vercel env ls
+A estrutura visual final do lado esquerdo, de cima pra baixo, centralizado:
 ```
-Se `SUPABASE_SERVICE_ROLE_KEY` não aparecer, adicionar:
-```bash
-vercel env add SUPABASE_SERVICE_ROLE_KEY
-# Valor: [ver .env.local]
-# Ambiente: Production, Preview, Development
+[logo h-40 (160px) — só os balões, sem texto, sem fundo]
+          ↕ mt-2 (8px) — BEM JUNTO do nome
+CibridoCRM          ← texto branco, bold, text-[30px]
+          ↕ mt-5 (20px)
+Te entregamos um Sistema de IA      ← branco, bold, 38px
+que organiza e acompanha             ← branco, bold, 38px
+seu futuro e atual paciente          ← magenta #E91E7B, bold, 38px
+          ↕ mt-5 (20px)
+Desde o primeiro contato até o       ← cinza claro, text-xl (20px)
+agendamento, para aumentar           ← cinza claro, text-xl (20px)
+o seu faturamento.                   ← cinza claro, text-xl (20px)
 ```
 
-**Passo 2 — Verificar o admin client:**
-O arquivo do admin client (provavelmente `src/lib/supabase/admin.ts` ou similar) DEVE:
-- Usar `createClient` do `@supabase/supabase-js` (NÃO o server client do Next.js)
-- Ler `process.env.SUPABASE_SERVICE_ROLE_KEY` (sem NEXT_PUBLIC_)
-- Ter fallback/validação: se a key não existir, logar erro claro em vez de crashar
+**O texto "CibridoCRM" abaixo da logo:** `text-[30px]`, bold, branco. Espaço CURTO da logo (`mt-2`) — logo e nome praticamente colados.
 
-```ts
-// src/lib/supabase/admin.ts
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-if (!serviceRoleKey) {
-  console.error('SUPABASE_SERVICE_ROLE_KEY não configurada!')
-}
-
-export const supabaseAdmin = createClient(
-  supabaseUrl,
-  serviceRoleKey || '',
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
-)
-```
-
-**Passo 3 — Verificar o server action de convite:**
-O server action (provavelmente em `src/lib/actions/team.ts` ou `src/app/configuracoes/actions.ts`) DEVE:
-- Ser marcado como `'use server'`
-- Importar o `supabaseAdmin` (admin client)
-- Usar `supabaseAdmin.auth.admin.createUser({ email, email_confirm: true })`
-- Após criar o user no Auth, inserir registro na tabela `users` com `clinic_id` e `role`
-- Retornar erro amigável em vez de crashar o server component
-- Usar try/catch com retorno de `{ error: string }` em vez de throw
-
-```ts
-'use server'
-
-import { supabaseAdmin } from '@/lib/supabase/admin'
-import { createClient } from '@/lib/supabase/server'
-
-export async function inviteTeamMember(email: string, role: string = 'dentist') {
-  try {
-    // Verificar se admin client está configurado
-    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return { error: 'Configuração do servidor incompleta. Contate o suporte.' }
-    }
-
-    // Pegar clinic_id do usuário logado
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return { error: 'Não autenticado' }
-
-    const { data: currentUser } = await supabase
-      .from('users')
-      .select('clinic_id')
-      .eq('id', user.id)
-      .single()
-
-    if (!currentUser?.clinic_id) return { error: 'Clínica não encontrada' }
-
-    // Criar usuário via admin
-    const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
-      email,
-      email_confirm: true,
-      user_metadata: { clinic_id: currentUser.clinic_id, role }
-    })
-
-    if (createError) return { error: createError.message }
-
-    // Inserir na tabela users
-    const { error: insertError } = await supabaseAdmin
-      .from('users')
-      .insert({
-        id: newUser.user.id,
-        email,
-        clinic_id: currentUser.clinic_id,
-        role,
-        name: email.split('@')[0]
-      })
-
-    if (insertError) return { error: insertError.message }
-
-    return { success: true, message: `Convite enviado para ${email}` }
-  } catch (err: any) {
-    console.error('Erro ao convidar membro:', err)
-    return { error: 'Erro interno ao convidar membro. Tente novamente.' }
-  }
-}
-```
-
-**Passo 4 — O componente que chama o server action:**
-O componente de equipe NÃO deve ser um server component que crasha. Deve:
-- Chamar o server action via `useTransition` ou formulário
-- Exibir o resultado (sucesso/erro) em toast ou mensagem inline
-- NUNCA deixar o server action crashar o render
-
-### Critério de aceite
-- Acessar Configurações > Equipe
-- Digitar email de teste (ex: teste@cibrido.com.br)
-- Clicar em convidar
-- Ver mensagem de sucesso OU mensagem de erro amigável (NUNCA crash da página)
+**O subtexto "Desde o primeiro contato...":** `text-xl` (20px), `text-gray-400`, `leading-relaxed`. `max-w-[480px]` pra quebrar em 2 linhas. Centralizado.
 
 ---
 
-## DEPLOY
+### AJUSTE 3: AUMENTAR LEVEMENTE A FONTE DA HEADLINE
 
-Após as 2 correções:
+A copy das 3 linhas está correta e NÃO DEVE SER ALTERADA:
+- Linha 1 (branco, bold): "Te entregamos um Sistema de IA"
+- Linha 2 (branco, bold): "que organiza e acompanha"
+- Linha 3 (magenta #E91E7B, bold): "seu futuro e atual paciente"
+
+Aumentar a fonte pra **38px**. O Davi testou com zoom de 125% e gostou — 38px no zoom 100% equivale ao que ele viu com 30px no 125%.
+
+Font-weight: bold (700)
+Line-height: leading-tight (1.25)
+
+Cada linha DEVE ser um elemento HTML separado (`<p>` ou `<div>`) com `whitespace-nowrap`:
+```tsx
+<div className="mt-5">
+  <p className="text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+    Te entregamos um Sistema de IA
+  </p>
+  <p className="text-[38px] font-bold leading-tight text-white whitespace-nowrap">
+    que organiza e acompanha
+  </p>
+  <p className="text-[38px] font-bold leading-tight text-[#E91E7B] whitespace-nowrap">
+    seu futuro e atual paciente
+  </p>
+</div>
+<p className="text-gray-400 text-xl mt-5 leading-relaxed max-w-[480px] mx-auto">
+  Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
+</p>
+```
+
+**Subtexto:** `text-xl` (20px). `max-w-[480px]` faz quebrar em 2 linhas. Centralizado.
+
+Se 30px fizer alguma linha quebrar, descer pra 28px. As 3 linhas são INEGOCIÁVEIS.
+
+---
+
+## O QUE NÃO MEXER
+
+- Lado direito do login (formulário com abas Entrar/Criar conta) — NÃO TOCAR
+- Copy da headline — JÁ ESTÁ CORRETA, NÃO ALTERAR O TEXTO
+- Funcionalidade do login — NÃO TOCAR em lógica, só visual
+- Nenhuma outra página do CRM — só a tela de login
+
+---
+
+## PROCEDIMENTO OBRIGATÓRIO
+
+1. Rodar `grep -rn "CibridoCRM\|Logo\|entregamos" src/ --include="*.tsx"` pra achar o arquivo exato
+2. ABRIR o arquivo e ME MOSTRAR o código atual do lado esquerdo da tela de login
+3. Rodar o script de conversão (Sharp) e confirmar que DOIS arquivos foram criados:
+   - `/public/logo-cibrido.png` (só os balões, sem fundo)
+   - `/public/bg-network.png` (rede inteira, sem fundo)
+4. Aplicar os 3 ajustes (logo + fundo de rede, centralizar, fonte)
+5. ME MOSTRAR o código DEPOIS das edições
+6. Rodar `npm run dev` e abrir no browser local
+7. CONFIRMAR visualmente: logo só balões, fundo de rede sutil, conteúdo centralizado, 3 linhas
+8. Build, push, deploy + domínio
+
+---
+
+## DEPLOY + DOMÍNIO CUSTOMIZADO
+
+### Deploy
 ```bash
-npm run build          # Verificar se builda sem erro
+npm run build
 git add .
-git commit -m "fix: copy login 3 linhas + convite equipe corrigido - FECHA V1"
+git commit -m "fix: login visual - tamanhos maiores + logo próxima do nome - FECHA V1"
 git push origin main
 vercel --prod
 ```
 
----
+### Configurar domínio crm.cibrido.com.br na Vercel
+Após o deploy, rodar:
+```bash
+vercel domains add crm.cibrido.com.br
+```
+Se pedir pra confirmar projeto, selecionar `cibrido-crm`.
+Depois verificar:
+```bash
+vercel domains inspect crm.cibrido.com.br
+```
 
-## CREDENCIAIS (para referência do Claude Code)
+### DNS no Cloudflare (Davi faz manualmente)
+O domínio `cibrido.com.br` está no Registro.br, mas os nameservers apontam pro **Cloudflare** (emma.ns.cloudflare.com / keenan.ns.cloudflare.com). Então o registro DNS é criado no painel do Cloudflare, NÃO no Registro.br.
 
-- **Supabase URL:** https://cktvqvsxogdzeikvoajz.supabase.co
-- **ANON_KEY:** sb_publishable_GiKnWq5x4o07pIvyRoT4TA_urZ71kF-
-- **SERVICE_ROLE_KEY:** [ver .env.local]
-- **Vercel URL:** https://cibrido-crm.vercel.app
-- **Admin login:** livelisdigital@gmail.com / Cibrido2026!
+Passos pro Davi:
+1. Acessar https://dash.cloudflare.com → login
+2. Selecionar o domínio `cibrido.com.br`
+3. Ir em **DNS** → **Records** → **Add record**
+4. Preencher:
+   - **Type:** CNAME
+   - **Name:** crm
+   - **Target:** cname.vercel-dns.com
+   - **Proxy status:** DNS only (nuvem CINZA, NÃO laranja) — IMPORTANTE: desligar o proxy do Cloudflare senão o SSL da Vercel não funciona
+   - **TTL:** Auto
+5. Salvar
+
+A propagação com Cloudflare é quase instantânea (1-5 minutos). Após propagar, `crm.cibrido.com.br` vai apontar pro CRM.
 
 ---
 
 ## REGRAS
 
-1. Não remende — leia o arquivo atual, entenda a estrutura, faça a correção correta
-2. ME MOSTRA o código ANTES e DEPOIS de cada edição
-3. Testa local com `npm run dev` antes de subir
-4. Se algo der erro no build, conserta antes de fazer push
-5. Deploy final com `vercel --prod`
+1. Leia o código atual ANTES de editar — me mostra antes e depois
+2. Testa local antes de subir
+3. NÃO ALTERAR a copy da headline (já está certa nas 3 linhas)
+4. NÃO MEXER no formulário do lado direito
+5. Se algo quebrar no build, conserta antes de push
 6. Avisa quando estiver live
+
+---
+
+## NOTA: CONVITE DE EQUIPE → V2
+
+O convite de equipe nas Configurações foi movido pra V2. Erro atual: "permission denied for table users". Na V2 resolver junto com:
+- Correção do RLS pra insert na tabela users pelo admin client
+- Listagem de colaboradores cadastrados (pro dono ver quem tá no CRM)
+- Limite de usuários por plano (definir na V2)
+- Campo de visualização dos membros da equipe na tela de Configurações
 
 ---
 

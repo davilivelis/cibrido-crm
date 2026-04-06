@@ -93,9 +93,9 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
     <div className="space-y-5">
 
       {/* Cabeçalho */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827' }}>Recall de Pacientes</h1>
+          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Recall de Pacientes</h1>
           <div className="flex items-center gap-3 mt-1">
             <p className="text-sm text-gray-500">{recalls.length} recalls cadastrados</p>
             {overdueCount > 0 && (
@@ -106,7 +106,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
             )}
           </div>
         </div>
-        <Button className="gap-2" onClick={() => setModalOpen(true)}>
+        <Button className="gap-2 sm:self-auto self-start" onClick={() => setModalOpen(true)}>
           <Plus className="w-4 h-4" />
           Novo Recall
         </Button>
