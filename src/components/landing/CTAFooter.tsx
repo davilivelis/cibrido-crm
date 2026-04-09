@@ -31,7 +31,7 @@ export default function CTAFooter() {
             style={{ backgroundColor: "#25D366" }}
           >
             <IconeWhatsApp />
-            Agende o seu diagnóstico
+            Agende o seu Diagnóstico Gratuito
           </a>
         </div>
       </section>

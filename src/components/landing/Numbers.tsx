@@ -15,7 +15,7 @@ const CHECKS = [
 
 export default function Numbers() {
   return (
-    <section className="py-16" style={{ backgroundColor: "#0F1A28" }}>
+    <section className="py-16" style={{ backgroundColor: "#F5F5F5" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className="rounded-2xl p-8 md:p-14 border"

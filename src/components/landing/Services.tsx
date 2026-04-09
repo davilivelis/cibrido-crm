@@ -92,7 +92,7 @@ export default function Services() {
             <div
               key={servico.titulo}
               className="rounded-2xl p-6 text-center transition-all duration-200 hover:-translate-y-1"
-              style={{ border: "1px solid rgba(30,42,58,0.10)", boxShadow: "0 4px 20px rgba(30,42,58,0.09)" }}
+              style={{ border: "1.5px solid #E91E7B", boxShadow: "0 4px 20px rgba(30,42,58,0.09)" }}
             >
               {/* Ícone */}
               <div
