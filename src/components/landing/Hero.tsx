@@ -11,34 +11,33 @@ function IconeWhatsApp() {
   );
 }
 
-// Seção 3: Hero — imagem de fundo full-width com overlay navy + texto centralizado à esquerda
+// Seção 3: Hero — imagem natural (w-full h-auto) define a altura da seção;
+// overlay + conteúdo ficam absolute por cima.
 export default function Hero() {
   return (
-    <section className="relative min-h-[580px] flex items-center py-24 overflow-hidden">
+    <section className="relative overflow-hidden">
 
-      {/* Imagem de fundo — desktop */}
-      <div className="absolute inset-0 hidden sm:block">
-        <Image
-          src="/images/landing/hero-desktop.jpg"
-          alt=""
-          fill
-          className="object-contain object-center"
-          priority
-          sizes="100vw"
-        />
-      </div>
+      {/* Imagem natural — desktop: ocupa 100% da largura, altura proporcional */}
+      <Image
+        src="/images/landing/hero-desktop.jpg"
+        alt=""
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="hidden sm:block w-full h-auto"
+        priority
+      />
 
-      {/* Imagem de fundo — mobile */}
-      <div className="absolute inset-0 sm:hidden">
-        <Image
-          src="/images/landing/hero-mobile.jpg"
-          alt=""
-          fill
-          className="object-contain object-center"
-          priority
-          sizes="100vw"
-        />
-      </div>
+      {/* Imagem natural — mobile */}
+      <Image
+        src="/images/landing/hero-mobile.jpg"
+        alt=""
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="sm:hidden w-full h-auto"
+        priority
+      />
 
       {/* Overlay navy semi-transparente para legibilidade */}
       <div
@@ -46,34 +45,36 @@ export default function Hero() {
         style={{ backgroundColor: "rgba(21,31,43,0.78)" }}
       />
 
-      {/* Conteúdo */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="max-w-2xl space-y-7">
-          <h1
-            className="text-white font-extrabold leading-tight"
-            style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
-          >
-            Faça sua clínica odontológica faturar mais.
-          </h1>
+      {/* Conteúdo — absolute sobre a imagem, centralizado verticalmente */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-2xl space-y-7">
+            <h1
+              className="text-white font-extrabold leading-tight"
+              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
+            >
+              Faça sua clínica odontológica faturar mais.
+            </h1>
 
-          <p className="text-gray-200 leading-relaxed max-w-xl" style={{ fontSize: "1.2rem" }}>
-            Agentes de IA que atendem, qualificam e agendam pacientes
-            <br />
-            24 horas por dia enquanto você foca no que importa:{" "}
-            <strong className="text-white font-extrabold tracking-wide">
-              ATENDER.
-            </strong>
-          </p>
+            <p className="text-gray-200 leading-relaxed max-w-xl" style={{ fontSize: "1.2rem" }}>
+              Agentes de IA que atendem, qualificam e agendam pacientes
+              <br />
+              24 horas por dia enquanto você foca no que importa:{" "}
+              <strong className="text-white font-extrabold tracking-wide">
+                ATENDER.
+              </strong>
+            </p>
 
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-white font-bold text-lg px-12 py-4 rounded-full shadow-xl transition-all bg-[#25D366] hover:bg-[#1fba58] active:bg-[#1aad50] focus:bg-[#25D366] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 hover:scale-105 active:scale-95"
-          >
-            <IconeWhatsApp />
-            Agende o seu Diagnóstico Gratuito
-          </a>
+            <a
+              href={WA_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 text-white font-bold text-lg px-12 py-4 rounded-full shadow-xl transition-all bg-[#25D366] hover:bg-[#1fba58] active:bg-[#1aad50] focus:bg-[#25D366] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 hover:scale-105 active:scale-95"
+            >
+              <IconeWhatsApp />
+              Agende o seu Diagnóstico Gratuito
+            </a>
+          </div>
         </div>
       </div>
     </section>
