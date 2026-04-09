@@ -2,91 +2,119 @@
 const WA_LINK =
   "https://wa.me/5511960341082?text=Ol%C3%A1!%20Quero%20agendar%20meu%20diagn%C3%B3stico%20gratuito.";
 
-// Ícone de check para listas dos cards
-function Check({ destaque }: { destaque: boolean }) {
-  return (
-    <span className="font-bold" style={{ color: destaque ? "#F5A623" : "#25D366" }}>
-      ✓
-    </span>
-  );
-}
+// Feature pode ser booleano ou texto (ex: "10 dias grátis")
+type ValorFeature = boolean | string;
 
-// Definição dos planos e seus recursos
 type PlanFeatures = {
-  qualificador: boolean;
-  agendador: boolean;
-  crm: boolean;
-  trafego: boolean;
-  relatorios: boolean;
-  suporte: boolean;
-  presencial: boolean;
-  treinamento: boolean;
+  qualificador: ValorFeature;
+  agendador: ValorFeature;
+  confirmacao: ValorFeature;
+  crm: ValorFeature;
+  relatorios: ValorFeature;
+  mensagens: ValorFeature;
+  suporteDedicado: ValorFeature;
 };
 
 const PLANOS: {
   nome: string;
   preco: string;
+  slogan: string;
+  paraQuem: string;
   destaque: boolean;
-  itens: string[]; // lista descritiva nos cards
+  itens: string[];
   features: PlanFeatures;
 }[] = [
   {
     nome: "Cibri-Lite",
     preco: "R$497",
+    slogan: "Nunca mais perca um paciente",
+    paraQuem: "Dentista solo ou clínica odontológica pequena sem secretária",
     destaque: false,
     itens: [
-      "CRM Cíbrido",
-      "Suporte WhatsApp",
+      "Agente faz o primeiro contato com novos pacientes",
+      "WhatsApp sem revelar seu número particular",
+      "Qualificação automática de leads",
+      "Leads organizados no Cíbrido",
     ],
     features: {
-      qualificador: false, agendador: false, crm: true, trafego: false,
-      relatorios: false, suporte: true, presencial: false, treinamento: false,
+      qualificador: true,
+      agendador: false,
+      confirmacao: false,
+      crm: false,
+      relatorios: false,
+      mensagens: false,
+      suporteDedicado: false,
     },
   },
   {
     nome: "Cibri-Standard",
     preco: "R$897",
+    slogan: "Agenda sempre cheia",
+    paraQuem: "Clínica odontológica com secretária que quer escalar",
     destaque: true,
     itens: [
-      "CRM Cíbrido",
-      "Agente Qualificador de Pacientes",
-      "Agente Agendador de Consultas",
-      "Relatórios mensais",
-      "Suporte WhatsApp",
+      "Tudo do Cibri-Lite",
+      "Agente Agendador automático de consultas",
+      "Confirmação + lembrete automático",
+      "Redução de no-shows",
+      "CRM Cíbrido — 10 dias grátis",
     ],
     features: {
-      qualificador: true, agendador: true, crm: true, trafego: false,
-      relatorios: true, suporte: true, presencial: false, treinamento: false,
+      qualificador: true,
+      agendador: true,
+      confirmacao: true,
+      crm: "10 dias grátis",
+      relatorios: false,
+      mensagens: false,
+      suporteDedicado: false,
     },
   },
   {
     nome: "Cibri-Master",
     preco: "R$1.497",
+    slogan: "Gestão completa com IA",
+    paraQuem: "Clínica odontológica estruturada que quer escalar",
     destaque: false,
     itens: [
-      "Tudo do Standard",
-      "Tráfego Pago (Google + Meta)",
-      "Consultoria presencial",
-      "Treinamento da equipe",
+      "Tudo do Cibri-Standard",
+      "CRM completo (pipeline, dashboard, relatórios)",
+      "Visão completa da operação",
+      "Mensagens automatizadas",
+      "Integração com sistemas",
+      "Atendimento dedicado",
     ],
     features: {
-      qualificador: true, agendador: true, crm: true, trafego: true,
-      relatorios: true, suporte: true, presencial: true, treinamento: true,
+      qualificador: true,
+      agendador: true,
+      confirmacao: true,
+      crm: true,
+      relatorios: true,
+      mensagens: true,
+      suporteDedicado: true,
     },
   },
 ];
 
-// Labels para a tabela comparativa — nomes atualizados
 const FEATURE_LABELS: Record<keyof PlanFeatures, string> = {
-  qualificador: "Agente Qualificador de Pacientes",
-  agendador:    "Agente Agendador de Consultas",
-  crm:          "CRM Cíbrido",
-  trafego:      "Tráfego Pago (Google + Meta)",
-  relatorios:   "Relatórios mensais",
-  suporte:      "Suporte WhatsApp",
-  presencial:   "Consultoria presencial",
-  treinamento:  "Treinamento da equipe",
+  qualificador:     "Agente Qualificador de Pacientes",
+  agendador:        "Agente Agendador de Consultas",
+  confirmacao:      "Confirmação + lembrete automático",
+  crm:              "CRM Cíbrido",
+  relatorios:       "Dashboard + relatórios",
+  mensagens:        "Mensagens automatizadas",
+  suporteDedicado:  "Atendimento dedicado",
 };
+
+function CelulaFeature({ valor, destaque }: { valor: ValorFeature; destaque: boolean }) {
+  if (valor === false) return <span className="text-gray-300 text-xl">—</span>;
+  if (valor === true)  return <span className="text-xl" style={{ color: "#25D366" }}>✓</span>;
+  // Texto (ex: "10 dias grátis")
+  return (
+    <span className="text-xs font-semibold" style={{ color: destaque ? "#F5A623" : "#E91E7B" }}>
+      {valor}
+    </span>
+  );
+}
 
 export default function Plans() {
   return (
@@ -107,7 +135,7 @@ export default function Plans() {
           {PLANOS.map((plano) => (
             <div
               key={plano.nome}
-              className="rounded-2xl p-8 flex flex-col gap-5"
+              className="rounded-2xl p-8 flex flex-col gap-4"
               style={
                 plano.destaque
                   ? { backgroundColor: "#1E2A3A", border: "2px solid #F5A623" }
@@ -116,15 +144,12 @@ export default function Plans() {
             >
               {/* Badge destaque */}
               {plano.destaque && (
-                <div
-                  className="text-xs font-bold tracking-widest"
-                  style={{ color: "#F5A623" }}
-                >
+                <div className="text-xs font-bold tracking-widest" style={{ color: "#F5A623" }}>
                   ★ MAIS ESCOLHIDO
                 </div>
               )}
 
-              {/* Nome e preço */}
+              {/* Nome, slogan e preço */}
               <div>
                 <h3
                   className="text-2xl font-bold mb-1"
@@ -132,6 +157,12 @@ export default function Plans() {
                 >
                   {plano.nome}
                 </h3>
+                <p
+                  className="text-sm font-semibold mb-3"
+                  style={{ color: plano.destaque ? "#F5A623" : "#E91E7B" }}
+                >
+                  {plano.slogan}
+                </p>
                 <div className="flex items-baseline gap-1">
                   <span
                     className="text-4xl font-black"
@@ -145,13 +176,31 @@ export default function Plans() {
                 </div>
               </div>
 
-              {/* Lista de recursos do plano */}
+              {/* Para quem é */}
+              <p
+                className="text-xs leading-snug italic border-l-2 pl-3"
+                style={{
+                  color: plano.destaque ? "#9CA3AF" : "#6B7280",
+                  borderColor: plano.destaque ? "#F5A623" : "#E91E7B",
+                }}
+              >
+                Para quem é: {plano.paraQuem}
+              </p>
+
+              {/* Lista de recursos */}
               <ul className="flex flex-col gap-2 flex-1">
                 {plano.itens.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm leading-snug"
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-sm leading-snug"
                     style={{ color: plano.destaque ? "#D1D5DB" : "#374151" }}
                   >
-                    <Check destaque={plano.destaque} />
+                    <span
+                      className="font-bold mt-0.5 shrink-0"
+                      style={{ color: plano.destaque ? "#F5A623" : "#25D366" }}
+                    >
+                      ✓
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -196,29 +245,18 @@ export default function Plans() {
               </tr>
             </thead>
             <tbody>
-              {(Object.keys(FEATURE_LABELS) as (keyof PlanFeatures)[]).map(
-                (key, i) => (
-                  <tr
-                    key={key}
-                    className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                  >
-                    <td className="p-4 text-sm text-gray-700 font-medium">
-                      {FEATURE_LABELS[key]}
+              {(Object.keys(FEATURE_LABELS) as (keyof PlanFeatures)[]).map((key, i) => (
+                <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  <td className="p-4 text-sm text-gray-700 font-medium">
+                    {FEATURE_LABELS[key]}
+                  </td>
+                  {PLANOS.map((plano) => (
+                    <td key={plano.nome} className="p-4 text-center">
+                      <CelulaFeature valor={plano.features[key]} destaque={plano.destaque} />
                     </td>
-                    {PLANOS.map((plano) => (
-                      <td key={plano.nome} className="p-4 text-center">
-                        {plano.features[key] ? (
-                          <span className="text-xl" style={{ color: "#25D366" }}>
-                            ✓
-                          </span>
-                        ) : (
-                          <span className="text-gray-300 text-xl">—</span>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                )
-              )}
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

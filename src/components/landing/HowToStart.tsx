@@ -49,7 +49,7 @@ export default function HowToStart() {
                 {/* Número grande decorativo */}
                 <div
                   className="text-6xl font-black mb-4 leading-none"
-                  style={{ color: "#1E2A3A", opacity: 0.22 }}
+                  style={{ color: "#E91E7B" }}
                 >
                   {passo.numero}
                 </div>

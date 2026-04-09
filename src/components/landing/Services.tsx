@@ -91,7 +91,8 @@ export default function Services() {
           {SERVICOS.map((servico) => (
             <div
               key={servico.titulo}
-              className="rounded-2xl p-6 text-center border border-gray-100 hover:shadow-lg transition-shadow duration-200"
+              className="rounded-2xl p-6 text-center transition-all duration-200 hover:-translate-y-1"
+              style={{ border: "1px solid rgba(30,42,58,0.10)", boxShadow: "0 4px 20px rgba(30,42,58,0.09)" }}
             >
               {/* Ícone */}
               <div
