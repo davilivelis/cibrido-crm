@@ -25,12 +25,12 @@ export default function HowToStart() {
     <section className="py-20" style={{ backgroundColor: "#F5F5F5" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-4"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Como começar
         </h2>
-        <p className="text-gray-500 text-center mb-14">
+        <p className="text-center mb-14 text-lg" style={{ color: "#6B7280" }}>
           Simples. Sem complicação. Sem fidelidade.
         </p>
 
@@ -49,14 +49,14 @@ export default function HowToStart() {
                 {/* Número grande decorativo */}
                 <div
                   className="text-6xl font-black mb-4 leading-none"
-                  style={{ color: "#E91E7B", opacity: 0.12 }}
+                  style={{ color: "#1E2A3A", opacity: 0.22 }}
                 >
                   {passo.numero}
                 </div>
-                <h3 className="font-bold text-xl mb-3" style={{ color: "#1E2A3A" }}>
+                <h3 className="font-bold text-2xl mb-3" style={{ color: "#1E2A3A" }}>
                   {passo.titulo}
                 </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                <p className="text-gray-500 leading-relaxed" style={{ fontSize: "1rem" }}>
                   {passo.descricao}
                 </p>
               </div>

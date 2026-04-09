@@ -31,7 +31,7 @@ export default function Numbers() {
                 >
                   {stat.valor}
                 </div>
-                <div className="text-gray-400 text-sm leading-snug">
+                <div className="text-gray-400 leading-snug" style={{ fontSize: "0.95rem" }}>
                   {stat.descricao}
                 </div>
               </div>
@@ -45,7 +45,7 @@ export default function Numbers() {
                 <span className="font-bold text-xl" style={{ color: "#F5A623" }}>
                   ✓
                 </span>
-                <span className="text-white text-sm font-medium">{check}</span>
+                <span className="text-white font-medium" style={{ fontSize: "1rem" }}>{check}</span>
               </div>
             ))}
           </div>

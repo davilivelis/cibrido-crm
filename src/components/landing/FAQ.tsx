@@ -47,7 +47,7 @@ export default function FAQ() {
     <section id="duvidas" className="py-20" style={{ backgroundColor: "#F5F5F5" }}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-14"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-14"
           style={{ color: "#1E2A3A" }}
         >
           Dúvidas frequentes
@@ -65,7 +65,7 @@ export default function FAQ() {
                 onClick={() => toggle(i)}
                 aria-expanded={aberto === i}
               >
-                <span className="font-medium text-base">{item.pergunta}</span>
+                <span className="font-semibold text-lg">{item.pergunta}</span>
                 {/* Ícone + animado */}
                 <span
                   className="shrink-0 text-2xl font-light transition-transform duration-200"
@@ -80,7 +80,7 @@ export default function FAQ() {
 
               {/* Resposta — só renderiza quando aberto */}
               {aberto === i && (
-                <div className="px-6 pb-6 text-gray-600 text-sm leading-relaxed">
+                <div className="px-6 pb-6 leading-relaxed" style={{ color: "#4B5563", fontSize: "1rem" }}>
                   {item.resposta}
                 </div>
               )}

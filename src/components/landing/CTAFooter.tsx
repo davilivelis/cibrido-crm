@@ -17,10 +17,10 @@ export default function CTAFooter() {
       {/* CTA Final */}
       <section className="py-24" style={{ backgroundColor: "#1E2A3A" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white text-3xl md:text-4xl font-bold mb-6 leading-tight">
+          <h2 className="text-white text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
             Pronto pra fazer sua clínica odontológica faturar mais?
           </h2>
-          <p className="text-gray-400 mb-10 text-lg">
+          <p className="text-gray-400 mb-10 text-xl">
             Teste gratuito de 10 dias. Sem fidelidade. Sem burocracia.
           </p>
           <a

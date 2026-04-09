@@ -25,13 +25,16 @@ export default function Hero() {
           <div className="space-y-7">
             <h1
               className="text-white font-extrabold leading-tight"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)" }}
+              style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
             >
               Faça sua clínica odontológica faturar mais.
             </h1>
-            <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
+            <p className="text-gray-300 leading-relaxed max-w-xl" style={{ fontSize: "1.2rem" }}>
               Agentes de IA que atendem, qualificam e agendam pacientes 24 horas
-              por dia — enquanto você foca no que importa: atender.
+              por dia — enquanto você foca no que importa:{" "}
+              <strong className="text-white font-extrabold tracking-wide">
+                ATENDER.
+              </strong>
             </p>
             <a
               href={WA_LINK}

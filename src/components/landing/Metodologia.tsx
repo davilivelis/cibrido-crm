@@ -45,7 +45,7 @@ export default function Metodologia() {
           >
             E.M.E.P.A.
           </div>
-          <h2 className="text-white text-2xl md:text-3xl font-bold">
+          <h2 className="text-white text-3xl md:text-4xl font-extrabold">
             O método que transforma clínicas odontológicas
           </h2>
         </div>
@@ -61,10 +61,10 @@ export default function Metodologia() {
               >
                 {passo.letra}
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">
+              <h3 className="text-white font-bold text-xl mb-2">
                 {passo.titulo}
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
+              <p className="text-gray-400 leading-relaxed" style={{ fontSize: "0.975rem" }}>
                 {passo.descricao}
               </p>
             </div>

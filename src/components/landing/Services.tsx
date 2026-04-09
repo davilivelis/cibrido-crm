@@ -47,9 +47,9 @@ const SERVICOS: {
   {
     icone: <IconeAgente />,
     titulo: "Agentes de IA",
-    subtitulo: "SDR + Agendadora",
+    subtitulo: "Qualificador + Agendador",
     descricao:
-      "Atendimento automático 24h. Os agentes Juliano (SDR) e Lorena (Agendadora) qualificam leads e marcam consultas no WhatsApp da sua clínica odontológica.",
+      "Atendimento automático 24h. O Agente Qualificador de Pacientes e o Agente Agendador de Consultas trabalham juntos no WhatsApp da sua clínica odontológica.",
   },
   {
     icone: <IconeCRM />,
@@ -78,12 +78,12 @@ export default function Services() {
     <section id="solucoes" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-3xl md:text-4xl font-bold text-center mb-4"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Soluções para sua clínica odontológica
         </h2>
-        <p className="text-gray-500 text-center mb-14 max-w-2xl mx-auto">
+        <p className="text-center mb-14 max-w-2xl mx-auto text-lg" style={{ color: "#6B7280" }}>
           Digital e presencial. Tudo integrado para você atender mais e melhor.
         </p>
 
@@ -101,17 +101,17 @@ export default function Services() {
                 {servico.icone}
               </div>
 
-              <h3 className="font-bold text-lg mb-1" style={{ color: "#1E2A3A" }}>
+              <h3 className="font-bold text-xl mb-1" style={{ color: "#1E2A3A" }}>
                 {servico.titulo}
               </h3>
 
               {servico.subtitulo && (
-                <p className="text-xs font-semibold mb-2" style={{ color: "#E91E7B" }}>
+                <p className="text-sm font-semibold mb-2" style={{ color: "#E91E7B" }}>
                   {servico.subtitulo}
                 </p>
               )}
 
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="leading-relaxed" style={{ color: "#6B7280", fontSize: "0.975rem" }}>
                 {servico.descricao}
               </p>
             </div>
