@@ -22,7 +22,7 @@ export default function Hero() {
           src="/images/landing/hero-desktop.jpg"
           alt=""
           fill
-          className="object-cover object-right"
+          className="object-contain object-center"
           priority
           sizes="100vw"
         />
@@ -34,7 +34,7 @@ export default function Hero() {
           src="/images/landing/hero-mobile.jpg"
           alt=""
           fill
-          className="object-cover object-center"
+          className="object-contain object-center"
           priority
           sizes="100vw"
         />
