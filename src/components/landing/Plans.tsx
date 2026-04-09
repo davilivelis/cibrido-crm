@@ -224,7 +224,7 @@ export default function Plans() {
         </div>
 
         {/* Tabela comparativa */}
-        <div className="overflow-x-auto rounded-2xl border border-gray-100 shadow-sm">
+        <div className="overflow-x-auto rounded-2xl" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
           <table className="w-full border-collapse">
             <thead>
               <tr style={{ backgroundColor: "#1E2A3A" }}>

@@ -22,7 +22,7 @@ export default function Hero() {
           src="/images/landing/hero-desktop.jpg"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover object-right"
           priority
           sizes="100vw"
         />
@@ -69,8 +69,13 @@ export default function Hero() {
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-white font-bold text-lg px-12 py-4 rounded-full shadow-xl transition-transform hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-3 text-white font-bold text-lg px-12 py-4 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ backgroundColor: "#25D366" }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1fba58")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#25D366")}
+            onMouseDown={e => (e.currentTarget.style.backgroundColor = "#1aad50")}
+            onMouseUp={e => (e.currentTarget.style.backgroundColor = "#1fba58")}
+            onFocus={e => (e.currentTarget.style.backgroundColor = "#25D366")}
           >
             <IconeWhatsApp />
             Agende o seu Diagnóstico Gratuito
