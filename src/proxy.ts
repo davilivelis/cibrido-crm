@@ -24,7 +24,12 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   const path = request.nextUrl.pathname
-  const isPublic = path.startsWith('/login') || path.startsWith('/auth')
+  const isPublic =
+    path === '/' ||
+    path.startsWith('/clinica-odontologica') ||
+    path.startsWith('/images/landing') ||
+    path.startsWith('/login') ||
+    path.startsWith('/auth')
 
   // Não autenticado tentando acessar rota protegida → login
   if (!user && !isPublic) {
