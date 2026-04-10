@@ -8,6 +8,7 @@ import Hero          from "@/components/landing/Hero";
 import Numbers       from "@/components/landing/Numbers";
 import Services      from "@/components/landing/Services";
 import Metodologia   from "@/components/landing/Metodologia";
+import Founders      from "@/components/landing/Founders";
 import HowToStart    from "@/components/landing/HowToStart";
 import Plans         from "@/components/landing/Plans";
 import FAQ           from "@/components/landing/FAQ";
@@ -116,6 +117,7 @@ export default function Home() {
         <Numbers />
         <Services />
         <Metodologia />
+        <Founders />
         <HowToStart />
         <Plans />
         <FAQ />
