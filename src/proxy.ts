@@ -24,6 +24,15 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   const path = request.nextUrl.pathname
+  const hostname = request.headers.get('host') || ''
+
+  // Subdomínio crm.cibrido.com.br na raiz → redireciona para /login
+  if (hostname.startsWith('crm.') && path === '/') {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
   const isPublic =
     path === '/' ||
     path.startsWith('/clinica-odontologica') ||
