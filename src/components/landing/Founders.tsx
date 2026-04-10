@@ -118,11 +118,11 @@ import Image from "next/image";
                 width={160}
                 height={160}
                 className="object-contain"
-                style={{ marginBottom: "0px" }}
+                style={{ marginBottom: "-4px" }}
               />
-              <div className="text-white font-bold" style={{ fontSize: "30px", lineHeight: 1.1, marginTop: "0px" }}>Cíbrido</div>
-              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.1, marginTop: "0px", paddingTop: "0px" }}>Sistema IA para</div>
-              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.1, marginTop: "0px", paddingTop: "0px" }}>Clínica Odontológica</div>
+              <div className="text-white font-bold" style={{ fontSize: "32px", lineHeight: 1.1, marginTop: "0px" }}>Cíbrido</div>
+              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.0, marginTop: "0px" }}>Sistema IA para</div>
+              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.0, marginTop: "0px" }}>Clínica Odontológica</div>
             </div>
 
           </div>
