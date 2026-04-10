@@ -4,11 +4,11 @@ import Image from "next/image";
 // Posição: entre Metodologia e HowToStart
 export default function Founders() {
   return (
-    <section className="py-20" style={{ backgroundColor: "#1E2A3A" }}>
+    <section className="py-10" style={{ backgroundColor: "#1E2A3A" }}>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Cabeçalho */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-7">
           <div
             className="uppercase font-bold mb-3"
             style={{ color: "#F5A623", letterSpacing: "3px", fontSize: "18px" }}
@@ -24,7 +24,7 @@ export default function Founders() {
         </div>
 
         {/* Cards dos fundadores */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-14">
+        <div className="flex flex-col sm:flex-row gap-6 mb-7">
 
           {/* Card — Ricardo Souza */}
           <div
@@ -90,16 +90,16 @@ export default function Founders() {
         </div>
 
         {/* Bloco inferior: manifesto + logo */}
-        <div className="flex flex-col sm:flex-row gap-10 items-center">
+        <div className="flex flex-col sm:flex-row gap-5 items-center">
 
           {/* Texto manifesto */}
           <div
-            className="flex-[1.3] italic leading-relaxed text-xl"
+            className="flex-[1.3] italic leading-relaxed text-lg"
             style={{
               color: "#FFFFFF",
               lineHeight: 1.8,
               borderTop: "1px solid rgba(245,166,35,0.2)",
-              paddingTop: "24px",
+              paddingTop: "12px",
             }}
           >
             A Cíbrido nasceu da convicção de que o digital sozinho não basta — e o presencial
@@ -110,14 +110,14 @@ export default function Founders() {
           </div>
 
           {/* Logo */}
-          <div className="flex-[0.5] flex flex-col items-center" style={{ gap: "4px" }}>
+          <div className="flex-[0.5] flex flex-col items-center" style={{ gap: "2px" }}>
             <Image
               src="/images/landing/logo-quem-somos.png"
               alt="Cíbrido"
               width={140}
               height={140}
               className="object-contain"
-              style={{ marginBottom: "4px" }}
+              style={{ marginBottom: "2px" }}
             />
             <div className="text-white font-bold" style={{ fontSize: "24px" }}>Cíbrido</div>
             <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Sistema IA para</div>
