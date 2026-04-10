@@ -24,11 +24,11 @@ export default function Founders() {
         </div>
 
         {/* Cards dos fundadores */}
-        <div className="flex flex-col sm:flex-row gap-6 mb-7">
+        <div className="flex flex-col sm:flex-row gap-6 mb-3 items-stretch">
 
           {/* Card — Ricardo Souza */}
           <div
-            className="flex-1 rounded-xl p-7 flex flex-col gap-4"
+            className="flex-1 rounded-xl p-7 flex flex-col gap-4 h-full"
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               border: "1px solid rgba(245,166,35,0.3)",
@@ -49,7 +49,7 @@ export default function Founders() {
                 </div>
               </div>
             </div>
-            <p className="leading-relaxed text-lg" style={{ color: "#A0AEC0" }}>
+            <p className="leading-relaxed text-xl" style={{ color: "#A0AEC0" }}>
               Estuda o negócio da sua clínica odontológica, planeja ações com estratégia e constrói
               presença onde ela mais importa: na rua, no bairro, na porta do seu consultório.
               Transforma presença física em pacientes reais.
@@ -58,7 +58,7 @@ export default function Founders() {
 
           {/* Card — Davi Junior */}
           <div
-            className="flex-1 rounded-xl p-7 flex flex-col gap-4"
+            className="flex-1 rounded-xl p-7 flex flex-col gap-4 h-full"
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               border: "1px solid rgba(233,30,123,0.3)",
@@ -79,7 +79,7 @@ export default function Founders() {
                 </div>
               </div>
             </div>
-            <p className="leading-relaxed text-lg" style={{ color: "#A0AEC0" }}>
+            <p className="leading-relaxed text-xl" style={{ color: "#A0AEC0" }}>
               Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
               automações e tráfego pago que movimentaram milhares de leads. Enxergou a
               oportunidade de levar inteligência artificial e automação para quem mais precisa:
@@ -90,11 +90,11 @@ export default function Founders() {
         </div>
 
         {/* Bloco inferior: manifesto + logo */}
-        <div className="flex flex-col sm:flex-row gap-5 items-center">
+        <div className="flex flex-col sm:flex-row gap-3 items-center">
 
           {/* Texto manifesto */}
           <div
-            className="flex-[1.3] italic leading-relaxed text-lg"
+            className="flex-[1.3] italic leading-relaxed text-xl"
             style={{
               color: "#FFFFFF",
               lineHeight: 1.8,
@@ -119,7 +119,7 @@ export default function Founders() {
               className="object-contain"
               style={{ marginBottom: "2px" }}
             />
-            <div className="text-white font-bold" style={{ fontSize: "24px" }}>Cíbrido</div>
+            <div className="text-white font-bold" style={{ fontSize: "28px" }}>Cíbrido</div>
             <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Sistema IA para</div>
             <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Clínica Odontológica</div>
           </div>
