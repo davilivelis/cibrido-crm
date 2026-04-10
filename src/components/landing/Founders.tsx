@@ -1,4 +1,3 @@
-import Image from "next/image";
 
   // Seção: Quem Faz Acontecer — fundo navy #1E2A3A
   // Posição: entre Metodologia e HowToStart
@@ -111,18 +110,13 @@ import Image from "next/image";
             </div>
 
             {/* Logo */}
-            <div className="flex-[0.5] flex flex-col items-center" style={{ gap: "0px" }}>
-              <Image
-                src="/images/landing/logo-quem-somos.png"
+            <div className="flex-[0.5] flex flex-col items-center">
+              <img
+                src="/logo-quem-somos.png"
                 alt="Cíbrido"
-                width={160}
-                height={160}
-                className="object-contain"
-                style={{ marginBottom: "-4px" }}
+                width={200}
+                style={{ height: "auto" }}
               />
-              <div className="text-white font-bold" style={{ fontSize: "32px", lineHeight: 1.1, marginTop: "0px" }}>Cíbrido</div>
-              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.0, marginTop: "0px" }}>Sistema IA para</div>
-              <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.0, marginTop: "0px" }}>Clínica Odontológica</div>
             </div>
 
           </div>
