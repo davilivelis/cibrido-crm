@@ -11,14 +11,14 @@ export default function Founders() {
         <div className="text-center mb-14">
           <div
             className="uppercase font-bold mb-3"
-            style={{ color: "#F5A623", letterSpacing: "3px", fontSize: "13px" }}
+            style={{ color: "#F5A623", letterSpacing: "3px", fontSize: "18px" }}
           >
             QUEM FAZ ACONTECER
           </div>
-          <h2 className="text-white text-3xl md:text-4xl font-extrabold mb-3">
+          <h2 className="text-white text-4xl md:text-5xl font-extrabold mb-3">
             Dois especialistas. Uma visão.
           </h2>
-          <p style={{ color: "#A0AEC0", fontSize: "1rem" }}>
+          <p style={{ color: "#A0AEC0", fontSize: "1.35rem" }}>
             Fazer sua clínica odontológica crescer no mundo real e no digital.
           </p>
         </div>
@@ -37,19 +37,19 @@ export default function Founders() {
             {/* Avatar */}
             <div className="flex items-center gap-4">
               <div
-                className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-black shrink-0"
+                className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black shrink-0"
                 style={{ color: "#F5A623", backgroundColor: "rgba(245,166,35,0.15)" }}
               >
                 RS
               </div>
               <div>
-                <div className="text-white font-bold text-lg leading-tight">Ricardo Souza</div>
-                <div className="font-semibold text-sm" style={{ color: "#F5A623" }}>
+                <div className="text-white font-bold text-2xl leading-tight">Ricardo Souza</div>
+                <div className="font-semibold text-lg" style={{ color: "#F5A623" }}>
                   Comercial &amp; Estratégia Offline
                 </div>
               </div>
             </div>
-            <p className="leading-relaxed text-sm" style={{ color: "#A0AEC0" }}>
+            <p className="leading-relaxed text-lg" style={{ color: "#A0AEC0" }}>
               Estuda o negócio da sua clínica odontológica, planeja ações com estratégia e constrói
               presença onde ela mais importa: na rua, no bairro, na porta do seu consultório.
               Transforma presença física em pacientes reais.
@@ -67,19 +67,19 @@ export default function Founders() {
             {/* Avatar */}
             <div className="flex items-center gap-4">
               <div
-                className="w-14 h-14 rounded-full flex items-center justify-center text-xl font-black shrink-0"
+                className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black shrink-0"
                 style={{ color: "#E91E7B", backgroundColor: "rgba(233,30,123,0.15)" }}
               >
                 DJ
               </div>
               <div>
-                <div className="text-white font-bold text-lg leading-tight">Davi Junior</div>
-                <div className="font-semibold text-sm" style={{ color: "#E91E7B" }}>
+                <div className="text-white font-bold text-2xl leading-tight">Davi Junior</div>
+                <div className="font-semibold text-lg" style={{ color: "#E91E7B" }}>
                   Projetos &amp; Estratégia Digital
                 </div>
               </div>
             </div>
-            <p className="leading-relaxed text-sm" style={{ color: "#A0AEC0" }}>
+            <p className="leading-relaxed text-lg" style={{ color: "#A0AEC0" }}>
               Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
               automações e tráfego pago que movimentaram milhares de leads. Enxergou a
               oportunidade de levar inteligência artificial e automação para quem mais precisa:
@@ -94,7 +94,7 @@ export default function Founders() {
 
           {/* Texto manifesto */}
           <div
-            className="flex-[1.3] italic leading-relaxed text-sm"
+            className="flex-[1.3] italic leading-relaxed text-lg"
             style={{
               color: "#FFFFFF",
               lineHeight: 1.8,
@@ -118,9 +118,9 @@ export default function Founders() {
               height={80}
               className="object-contain"
             />
-            <div className="text-white font-bold" style={{ fontSize: "18px" }}>Cíbrido</div>
-            <div style={{ color: "#A0AEC0", fontSize: "13px" }}>Sistema IA para</div>
-            <div style={{ color: "#A0AEC0", fontSize: "13px" }}>Clínica Odontológica</div>
+            <div className="text-white font-bold" style={{ fontSize: "24px" }}>Cíbrido</div>
+            <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Sistema IA para</div>
+            <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Clínica Odontológica</div>
           </div>
         </div>
 
