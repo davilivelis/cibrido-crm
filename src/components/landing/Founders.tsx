@@ -118,7 +118,7 @@ import Image from "next/image";
                 width={160}
                 height={160}
                 className="object-contain"
-                style={{ marginBottom: "6px" }}
+                style={{ marginBottom: "0px" }}
               />
               <div className="text-white font-bold" style={{ fontSize: "30px", lineHeight: 1.2 }}>Cíbrido</div>
               <div style={{ color: "#A0AEC0", fontSize: "18px", lineHeight: 1.3, marginTop: "2px" }}>Sistema IA para</div>
