@@ -94,7 +94,7 @@ export default function Founders() {
 
           {/* Texto manifesto */}
           <div
-            className="flex-[1.3] italic leading-relaxed text-lg"
+            className="flex-[1.3] italic leading-relaxed text-xl"
             style={{
               color: "#FFFFFF",
               lineHeight: 1.8,
@@ -110,13 +110,14 @@ export default function Founders() {
           </div>
 
           {/* Logo */}
-          <div className="flex-[0.5] flex flex-col items-center gap-2">
+          <div className="flex-[0.5] flex flex-col items-center" style={{ gap: "4px" }}>
             <Image
               src="/images/landing/logo-quem-somos.png"
               alt="Cíbrido"
-              width={80}
-              height={80}
+              width={140}
+              height={140}
               className="object-contain"
+              style={{ marginBottom: "4px" }}
             />
             <div className="text-white font-bold" style={{ fontSize: "24px" }}>Cíbrido</div>
             <div style={{ color: "#A0AEC0", fontSize: "18px" }}>Sistema IA para</div>
