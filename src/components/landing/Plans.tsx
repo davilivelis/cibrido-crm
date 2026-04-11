@@ -223,12 +223,16 @@ export default function Plans() {
           ))}
         </div>
 
-        {/* Tabela comparativa */}
-        <div className="overflow-x-auto rounded-2xl" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
-          <table className="w-full border-collapse">
+        {/* Tabela comparativa — overflow-x-auto garante scroll horizontal no mobile */}
+        <div className="overflow-x-auto rounded-2xl -mx-4 sm:mx-0 px-4 sm:px-0" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
+          <table className="w-full border-collapse" style={{ minWidth: "520px" }}>
             <thead>
               <tr style={{ backgroundColor: "#1E2A3A" }}>
-                <th className="text-left text-white p-4 font-semibold text-sm rounded-tl-2xl">
+                {/* Coluna "Recurso" sticky — fica fixada ao scrollar horizontalmente no mobile */}
+                <th
+                  className="text-left text-white p-4 font-semibold text-sm rounded-tl-2xl"
+                  style={{ position: "sticky", left: 0, zIndex: 10, backgroundColor: "#1E2A3A" }}
+                >
                   Recurso
                 </th>
                 {PLANOS.map((plano, i) => (
@@ -247,7 +251,16 @@ export default function Plans() {
             <tbody>
               {(Object.keys(FEATURE_LABELS) as (keyof PlanFeatures)[]).map((key, i) => (
                 <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="p-4 text-sm text-gray-700 font-medium">
+                  {/* Célula sticky acompanha a cor de fundo da linha */}
+                  <td
+                    className="p-4 text-sm text-gray-700 font-medium"
+                    style={{
+                      position: "sticky",
+                      left: 0,
+                      zIndex: 10,
+                      backgroundColor: i % 2 === 0 ? "#FFFFFF" : "#F9FAFB",
+                    }}
+                  >
                     {FEATURE_LABELS[key]}
                   </td>
                   {PLANOS.map((plano) => (

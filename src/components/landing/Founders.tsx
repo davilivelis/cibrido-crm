@@ -14,20 +14,20 @@
             >
               QUEM FAZ ACONTECER
             </div>
-            <h2 className="text-white text-4xl md:text-5xl font-extrabold mb-3">
+            <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3">
               Dois especialistas. Uma visão.
             </h2>
-            <p style={{ color: "#A0AEC0", fontSize: "1.25rem" }}>
+            <p className="text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
               Fazer sua clínica odontológica crescer no mundo real e no digital.
             </p>
           </div>
 
-          {/* Cards dos fundadores */}
+          {/* Cards dos fundadores: empilham vertical no mobile, lado a lado no sm+ */}
           <div className="flex flex-col sm:flex-row gap-6 mb-8 items-stretch">
 
             {/* Card — Ricardo Souza */}
             <div
-              className="flex-1 rounded-xl p-8 flex flex-col gap-4"
+              className="flex-1 rounded-xl p-6 sm:p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(245,166,35,0.3)",
@@ -42,13 +42,13 @@
                   RS
                 </div>
                 <div>
-                  <div className="text-white font-bold text-2xl leading-tight">Ricardo Souza</div>
-                  <div className="font-semibold text-lg" style={{ color: "#F5A623" }}>
+                  <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Ricardo Souza</div>
+                  <div className="font-semibold text-base sm:text-lg" style={{ color: "#F5A623" }}>
                     Comercial &amp; Estratégia Offline
                   </div>
                 </div>
               </div>
-              <p className="leading-relaxed text-xl" style={{ color: "#A0AEC0" }}>
+              <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
                 Estuda o negócio da sua clínica odontológica, planeja ações com estratégia e constrói
                 presença onde ela mais importa: na rua, no bairro, na porta do seu consultório.
                 Transforma presença física em pacientes reais.
@@ -57,7 +57,7 @@
 
             {/* Card — Davi Junior */}
             <div
-              className="flex-1 rounded-xl p-8 flex flex-col gap-4"
+              className="flex-1 rounded-xl p-6 sm:p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(233,30,123,0.3)",
@@ -72,13 +72,13 @@
                   DJ
                 </div>
                 <div>
-                  <div className="text-white font-bold text-2xl leading-tight">Davi Junior</div>
-                  <div className="font-semibold text-lg" style={{ color: "#E91E7B" }}>
+                  <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Davi Junior</div>
+                  <div className="font-semibold text-base sm:text-lg" style={{ color: "#E91E7B" }}>
                     Projetos &amp; Estratégia Digital
                   </div>
                 </div>
               </div>
-              <p className="leading-relaxed text-xl" style={{ color: "#A0AEC0" }}>
+              <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
                 Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
                 automações e tráfego pago que movimentaram milhares de leads. Enxergou a
                 oportunidade de levar inteligência artificial e automação para quem mais precisa:
@@ -89,12 +89,12 @@
 
           </div>
 
-          {/* Bloco inferior: manifesto + logo */}
+          {/* Bloco inferior: manifesto + logo — empilham no mobile, lado a lado no sm+ */}
           <div className="flex flex-col sm:flex-row gap-8 items-center">
 
             {/* Texto manifesto */}
             <div
-              className="flex-[1.3] italic leading-relaxed text-xl"
+              className="flex-[1.3] italic leading-relaxed text-base sm:text-xl"
               style={{
                 color: "#FFFFFF",
                 lineHeight: 1.8,
@@ -109,12 +109,12 @@
               É os dois trabalhando juntos para sua clínica odontológica faturar mais.
             </div>
 
-            {/* Logo */}
+            {/* Logo — max-w para ser responsiva */}
             <div className="flex-[0.5] flex flex-col items-center">
               <img
                 src="/logo-quem-somos.png"
                 alt="Cíbrido"
-                width={200}
+                className="w-full max-w-[200px]"
                 style={{ height: "auto" }}
               />
             </div>

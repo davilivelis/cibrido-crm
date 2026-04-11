@@ -10,25 +10,25 @@ const PASSOS = [
     letra: "M",
     titulo: "Mapeamento",
     descricao:
-      "Identificamos processos, gargalos e oportunidades de automação específicos da sua operação.",
+      "Identificamos o que está travando o crescimento da sua clínica e as oportunidades que você ainda não enxergou para atrair mais pacientes qualificados.",
   },
   {
     letra: "E",
     titulo: "Estruturação",
     descricao:
-      "Implementamos CRM + agentes de IA + automações integradas ao WhatsApp da sua clínica odontológica.",
+      "Organizamos o atendimento, o fluxo de pacientes e a comunicação para que nenhuma oportunidade seja perdida.",
   },
   {
     letra: "P",
     titulo: "Prospecção",
     descricao:
-      "Ativamos tráfego pago e SDR ativo para gerar um fluxo constante de leads qualificados.",
+      "Planejamos ações online e presenciais na região da sua clínica para atrair novos pacientes todos os dias — no digital e na rua.",
   },
   {
     letra: "A",
     titulo: "Automação",
     descricao:
-      "Escala com IA. Os agentes trabalham 24/7 enquanto você foca no atendimento clínico.",
+      "Seu atendimento funciona 24 horas, mesmo quando a clínica está fechada. Você foca nos pacientes, a tecnologia com acompanhamento humano cuida do resto.",
   },
 ];
 
@@ -39,19 +39,23 @@ export default function Metodologia() {
 
         {/* Cabeçalho */}
         <div className="text-center mb-16">
+          {/* E.M.E.P.A.: tracking reduzido em mobile para não transbordar em 320px */}
           <div
-            className="inline-block text-5xl md:text-7xl font-black tracking-[0.3em] mb-6"
+            className="inline-block font-black mb-6 text-3xl sm:text-5xl md:text-7xl tracking-[0.1em] sm:tracking-[0.25em] md:tracking-[0.3em]"
             style={{ color: "#F5A623" }}
           >
             E.M.E.P.A.
           </div>
-          <h2 className="text-white text-3xl md:text-4xl font-extrabold">
+          <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-extrabold">
             O método que transforma clínicas odontológicas
           </h2>
         </div>
 
-        {/* Passos */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-8">
+        {/* Passos:
+            mobile (< 768px): 1 coluna, empilhados
+            tablet (768–1023px): 3 colunas → 2 linhas (3+2)
+            desktop (1024px+): 5 colunas lado a lado */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {PASSOS.map((passo, i) => (
             <div key={i} className="text-center">
               {/* Círculo com a letra */}

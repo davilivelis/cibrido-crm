@@ -15,19 +15,19 @@ export default function CTAFooter() {
   return (
     <>
       {/* CTA Final */}
-      <section className="py-24" style={{ backgroundColor: "#1E2A3A" }}>
+      <section className="py-16 sm:py-24" style={{ backgroundColor: "#1E2A3A" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+          <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
             Pronto pra fazer sua clínica odontológica faturar mais?
           </h2>
-          <p className="text-gray-400 mb-10 text-xl">
+          <p className="text-gray-400 mb-10 text-base sm:text-xl">
             Teste gratuito de 10 dias. Sem fidelidade. Sem burocracia.
           </p>
           <a
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-white font-bold text-lg px-10 py-5 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-5 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95"
             style={{ backgroundColor: "#25D366" }}
           >
             <IconeWhatsApp />
@@ -36,13 +36,15 @@ export default function CTAFooter() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
+          pb-20 no mobile: dá espaço para o WhatsApp float (h-12 + bottom-4 = 64px)
+          não sobrepor o texto "CNPJ: a informar" em telas pequenas */}
       <footer
-        className="py-8 border-t"
+        className="pt-8 pb-20 sm:py-8 border-t"
         style={{ backgroundColor: "#151F2B", borderColor: "rgba(255,255,255,0.07)" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-gray-500 text-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-gray-500 text-sm text-center md:text-left">
             <p>© 2026 Cíbrido Soluções em IA — Diadema, SP</p>
             <p>CNPJ: a informar</p>
           </div>
