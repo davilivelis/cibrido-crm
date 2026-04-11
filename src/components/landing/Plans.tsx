@@ -88,7 +88,7 @@ const PLANOS: {
       qualificador: true,
       agendador: true,
       confirmacao: true,
-      crm: true,
+      crm: "10 dias grátis",
       relatorios: true,
       mensagens: true,
       suporteDedicado: true,
