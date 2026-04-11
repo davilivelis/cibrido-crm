@@ -31,10 +31,10 @@ const PLANOS: {
     paraQuem: "Dentista solo ou clínica odontológica pequena sem secretária",
     destaque: false,
     itens: [
-      "Agente faz o primeiro contato com novos pacientes",
-      "WhatsApp sem revelar seu número particular",
+      "Enquanto você atende, seu robô cuida de quem está chegando — respondendo, qualificando e organizando cada novo contato 24h por dia, sem faltar, sem esquecer",
       "Qualificação automática de leads",
-      "Leads organizados no Cíbrido",
+      "Leads organizados no CRM da Cíbrido",
+      "Prospecção Presencial estratégica + abordagem + encaminhamento para clínica",
     ],
     features: {
       qualificador: true,
@@ -54,9 +54,9 @@ const PLANOS: {
     destaque: true,
     itens: [
       "Tudo do Cibri-Lite",
-      "Agente Agendador automático de consultas",
-      "Confirmação + lembrete automático",
-      "Redução de no-shows",
+      "Robô de Agendamento automático",
+      "Confirmação e lembrete de consulta automático",
+      "Redução de faltas e no-shows",
       "10 dias grátis do CRM incluídos",
     ],
     features: {
@@ -77,12 +77,10 @@ const PLANOS: {
     destaque: false,
     itens: [
       "Tudo do Cibri-Standard",
+      "Visão completa de leads, agendamentos e conversão",
+      "Estratégia de crescimento dedicada",
+      "Atendimento dedicado Cíbrido",
       "10 dias grátis do CRM incluídos",
-      "CRM completo (pipeline, dashboard, relatórios)",
-      "Visão completa da operação",
-      "Mensagens automatizadas",
-      "Integração com sistemas",
-      "Atendimento dedicado",
     ],
     features: {
       qualificador: true,
