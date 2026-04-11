@@ -57,7 +57,7 @@ const PLANOS: {
       "Agente Agendador automático de consultas",
       "Confirmação + lembrete automático",
       "Redução de no-shows",
-      "CRM Cíbrido — 10 dias grátis",
+      "10 dias grátis do CRM incluídos",
     ],
     features: {
       qualificador: true,
@@ -77,6 +77,7 @@ const PLANOS: {
     destaque: false,
     itens: [
       "Tudo do Cibri-Standard",
+      "10 dias grátis do CRM incluídos",
       "CRM completo (pipeline, dashboard, relatórios)",
       "Visão completa da operação",
       "Mensagens automatizadas",
