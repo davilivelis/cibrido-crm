@@ -57,7 +57,7 @@ const PLANOS: {
       "Robô de Agendamento automático",
       "Confirmação e lembrete de consulta automático",
       "Redução de faltas e no-shows",
-      "10 dias grátis do CRM incluídos",
+      "10 dias grátis do CRM.Cíbrido incluídos",
     ],
     features: {
       qualificador: true,
@@ -80,7 +80,7 @@ const PLANOS: {
       "Visão completa de leads, agendamentos e conversão",
       "Estratégia de crescimento dedicada",
       "Atendimento dedicado Cíbrido",
-      "10 dias grátis do CRM incluídos",
+      "10 dias grátis do CRM.Cíbrido incluídos",
     ],
     features: {
       qualificador: true,
