@@ -33,7 +33,7 @@ const PLANOS: {
     itens: [
       "Enquanto você atende, seu robô cuida de quem está chegando — respondendo, qualificando e organizando cada novo contato 24h por dia, sem faltar, sem esquecer",
       "Qualificação automática de leads",
-      "Leads organizados no CRM da Cíbrido",
+      "Leads organizados",
       "Prospecção Presencial estratégica + abordagem + encaminhamento para clínica",
     ],
     features: {
