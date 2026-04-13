@@ -226,12 +226,12 @@ export default function Plans() {
 
         {/* Tabela comparativa — overflow-x-auto garante scroll horizontal no mobile */}
         <div className="overflow-x-auto rounded-2xl -mx-4 sm:mx-0 px-4 sm:px-0" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse table-fixed">
             <thead>
               <tr style={{ backgroundColor: "#1E2A3A" }}>
                 {/* Coluna "Recurso" sticky — fica fixada ao scrollar horizontalmente no mobile */}
                 <th
-                  className="text-left text-white p-2 sm:p-4 font-semibold text-xs sm:text-sm rounded-tl-2xl"
+                  className="text-left text-white p-2 sm:p-4 font-semibold text-xs sm:text-sm rounded-tl-2xl w-2/5"
                   style={{ position: "sticky", left: 0, zIndex: 10, backgroundColor: "#1E2A3A" }}
                 >
                   Recurso
@@ -254,7 +254,7 @@ export default function Plans() {
                 <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                   {/* Célula sticky acompanha a cor de fundo da linha */}
                   <td
-                    className="p-2 sm:p-4 text-xs sm:text-sm text-gray-700 font-medium"
+                    className="p-2 sm:p-4 text-xs sm:text-sm text-gray-700 font-medium break-words"
                     style={{
                       position: "sticky",
                       left: 0,
