@@ -107,10 +107,12 @@ const FEATURE_LABELS: Record<keyof PlanFeatures, string> = {
 function CelulaFeature({ valor, destaque }: { valor: ValorFeature; destaque: boolean }) {
   if (valor === false) return <span className="text-gray-300 text-xl">—</span>;
   if (valor === true)  return <span className="text-xl" style={{ color: "#25D366" }}>✓</span>;
-  // Texto (ex: "10 dias grátis")
+  // Texto (ex: "10 dias grátis") — abreviado em mobile
+  const textoMobile = valor === "10 dias grátis" ? "10d grátis" : valor;
   return (
     <span className="text-xs font-semibold" style={{ color: destaque ? "#F5A623" : "#E91E7B" }}>
-      {valor}
+      <span className="sm:hidden">{textoMobile}</span>
+      <span className="hidden sm:inline">{valor}</span>
     </span>
   );
 }
@@ -224,12 +226,12 @@ export default function Plans() {
 
         {/* Tabela comparativa — overflow-x-auto garante scroll horizontal no mobile */}
         <div className="overflow-x-auto rounded-2xl -mx-4 sm:mx-0 px-4 sm:px-0" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
-          <table className="w-full border-collapse" style={{ minWidth: "520px" }}>
+          <table className="w-full border-collapse">
             <thead>
               <tr style={{ backgroundColor: "#1E2A3A" }}>
                 {/* Coluna "Recurso" sticky — fica fixada ao scrollar horizontalmente no mobile */}
                 <th
-                  className="text-left text-white p-4 font-semibold text-sm rounded-tl-2xl"
+                  className="text-left text-white p-2 sm:p-4 font-semibold text-xs sm:text-sm rounded-tl-2xl"
                   style={{ position: "sticky", left: 0, zIndex: 10, backgroundColor: "#1E2A3A" }}
                 >
                   Recurso
@@ -237,7 +239,7 @@ export default function Plans() {
                 {PLANOS.map((plano, i) => (
                   <th
                     key={plano.nome}
-                    className={`text-center p-4 font-semibold text-sm ${
+                    className={`text-center p-2 sm:p-4 font-semibold text-xs sm:text-sm ${
                       i === PLANOS.length - 1 ? "rounded-tr-2xl" : ""
                     }`}
                     style={{ color: plano.destaque ? "#F5A623" : "#FFFFFF" }}
@@ -252,7 +254,7 @@ export default function Plans() {
                 <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                   {/* Célula sticky acompanha a cor de fundo da linha */}
                   <td
-                    className="p-4 text-sm text-gray-700 font-medium"
+                    className="p-2 sm:p-4 text-xs sm:text-sm text-gray-700 font-medium"
                     style={{
                       position: "sticky",
                       left: 0,
@@ -263,7 +265,7 @@ export default function Plans() {
                     {FEATURE_LABELS[key]}
                   </td>
                   {PLANOS.map((plano) => (
-                    <td key={plano.nome} className="p-4 text-center">
+                    <td key={plano.nome} className="p-2 sm:p-4 text-center">
                       <CelulaFeature valor={plano.features[key]} destaque={plano.destaque} />
                     </td>
                   ))}
