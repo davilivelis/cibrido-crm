@@ -316,7 +316,49 @@ npm run build 2>&1 | tail -5
 
 ---
 
-## 10. ATUALIZAÇÃO PRA V2
+## 10. FASE 1 — PENTE FINO (14/04/2026)
+
+### O que foi executado:
+
+| Item | Status | Detalhe |
+|------|--------|---------|
+| Headers de segurança | ✅ Já existia | CSP, X-Frame-Options, HSTS, Referrer-Policy, Permissions-Policy já configurados no next.config.ts |
+| RLS Audit | ✅ OK (1 pendência) | 9 tabelas com RLS + policies corretas. Migration `005_fix_grants.sql` criada — aplicar no Supabase Dashboard |
+| Atualizar Next.js | ✅ Já era latest | Versão 16.2.3 já era a mais recente |
+| GA4 | ⏳ Aguardando ID | Davi precisa fornecer o ID de medição (formato: G-XXXXXXXXXX) |
+| Meta Pixel | ⏳ Aguardando ID | Davi precisa fornecer o Pixel ID (número de 15-16 dígitos) |
+| SEO | ✅ Feito | `sitemap.ts` e `robots.ts` criados. `metadataBase` adicionado. Landing já tinha OG + schema.org |
+| Git → Vercel automático | ⏳ Pendente manual | Precisa de 2 min no Vercel Dashboard (ver instruções abaixo) |
+| .gitignore | ✅ OK | `docs/`, `.env*`, `.env*.local` já cobertos |
+
+### Pendências manuais (Davi faz):
+
+**1. Migration 005 — Grants do banco (Supabase Dashboard)**
+- Acesse: supabase.com → projeto → SQL Editor
+- Cole e execute o conteúdo de: `supabase/migrations/005_fix_grants.sql`
+
+**2. Deploy automático via GitHub (Vercel Dashboard)**
+- Acesse: vercel.com → cibrido-crm → Settings → Git
+- Conecte o repositório: `davilivelis/cibrido-crm`
+- Branch de produção: `master`
+- (Opcional) Criar branch `staging` para previews
+
+**3. Google Analytics 4**
+- Forneça o ID de medição (G-XXXXXXXXXX)
+- Claude Code instala em seguida
+
+**4. Meta Pixel**
+- Forneça o Pixel ID (número de 15-16 dígitos)
+- Claude Code instala em seguida
+
+### Commits desta fase:
+- `d02114d` — fix: force no-cache na landing page
+- `28fe741` — fix: force table-fixed via inline style na tabela de planos
+- `cabfa4f` — feat: sitemap, robots.txt, metadataBase, migration grants
+
+---
+
+## 11. ATUALIZAÇÃO PRA V2
 
 Quando iniciar a V2, atualizar esta SKILL com:
 - Novas features implementadas
@@ -327,4 +369,5 @@ Quando iniciar a V2, atualizar esta SKILL com:
 ---
 
 *SKILL criada em 07/04/2026 — Cíbrido Soluções em IA*
+*Fase 1 (Pente Fino) executada em 14/04/2026*
 *"Este documento é o cérebro do CibridoCRM. Leia antes de tocar em qualquer código."*
