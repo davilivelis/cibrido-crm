@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cibrido.com.br"),
   title: {
     default: "CibridoCRM",
     template: "%s — CibridoCRM",
