@@ -1,8 +1,25 @@
+"use client";
+
 // Widget flutuante WhatsApp — fixo no canto inferior direito
 // Posição menor em mobile para não sobrepor conteúdo em telas pequenas
-// Server Component (só um link, sem estado)
+// Client Component para disparar eventos de conversão GA4 + Meta Pixel no clique
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const WA_LINK =
   "https://wa.me/5511960341082?text=Ol%C3%A1!%20Quero%20agendar%20meu%20diagn%C3%B3stico%20gratuito.";
+
+function handleConversion() {
+  // Meta Pixel — evento de contato/lead
+  window.fbq?.("track", "Contact");
+  // GA4 — evento de conversão
+  window.gtag?.("event", "whatsapp_click", { event_category: "conversion" });
+}
 
 export default function WhatsAppFloat() {
   return (
@@ -11,6 +28,7 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar pelo WhatsApp"
+      onClick={handleConversion}
       className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95"
       style={{ backgroundColor: "#25D366" }}
     >
