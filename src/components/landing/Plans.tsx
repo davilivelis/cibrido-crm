@@ -226,7 +226,7 @@ export default function Plans() {
 
         {/* Tabela comparativa — overflow-x-auto garante scroll horizontal no mobile */}
         <div className="overflow-x-auto rounded-2xl -mx-4 sm:mx-0 px-4 sm:px-0" style={{ border: "2px solid #E5E7EB", boxShadow: "0 8px 30px rgba(30,42,58,0.15)" }}>
-          <table className="w-full border-collapse table-fixed">
+          <table className="w-full border-collapse table-fixed" style={{ tableLayout: 'fixed', minWidth: 0 }}>
             <thead>
               <tr style={{ backgroundColor: "#1E2A3A" }}>
                 {/* Coluna "Recurso" sticky — fica fixada ao scrollar horizontalmente no mobile */}
