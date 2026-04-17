@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PixelEvents from "@/components/landing/PixelEvents";
 
 export const metadata: Metadata = {
   title: "Clínica Odontológica com Agentes de IA — Sistema Cíbrido",
@@ -99,6 +100,7 @@ export default function ClinicaOdontologicaLayout({
       />
       {/* Smooth scroll para âncoras da nav */}
       <style>{`html { scroll-behavior: smooth; }`}</style>
+      <PixelEvents />
       {children}
     </>
   );

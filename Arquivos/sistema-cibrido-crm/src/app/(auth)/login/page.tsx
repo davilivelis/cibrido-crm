@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-
-declare global { interface Window { fbq?: (...args: unknown[]) => void } }
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { signUpConfirmed } from '@/lib/actions/auth'
@@ -34,7 +32,6 @@ export default function LoginPage() {
     setLoading(true); setError(null)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError('Email ou senha incorretos.'); setLoading(false); return }
-    window.fbq?.('trackCustom', 'CRM_Login')
     router.push('/dashboard'); router.refresh()
   }
 
@@ -54,7 +51,6 @@ export default function LoginPage() {
         setLoading(false)
         return
       }
-      window.fbq?.('track', 'CompleteRegistration')
       router.push('/onboarding'); router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao criar conta.')

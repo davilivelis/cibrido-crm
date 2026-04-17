@@ -1,0 +1,549 @@
+# PRD — CibridoCRM v1.0
+## Produto de Referência: CRM SaaS Multi-Tenant para Clínicas Odontológicas
+### Cíbrido Soluções em IA | Diadema, São Paulo
+
+---
+
+## 1. Visão Geral do Produto
+
+### 1.1 Descrição
+CRM web moderno, multi-tenant, focado exclusivamente em clínicas odontológicas. Duas faces de operação: (1) CRM interno da Cíbrido para gestão comercial e captação de clientes, e (2) CRM SaaS entregue ao dentista como produto, com interface adaptada à linguagem clínica. Centrado em gestão de pacientes, pipeline de atendimento, recall/reativação e agendamento — com design proprietário baseado na identidade visual Cíbrido e tendências UI/UX 2026 (Bento Grid, Calm Design, Progressive Disclosure).
+
+### 1.2 Promessa Central
+**"Lotar a agenda do dentista."** Toda funcionalidade deve servir a esse objetivo. Nada de parte técnica/clínica odontológica.
+
+### 1.3 Público-Alvo
+- **Primário:** Donos de clínicas odontológicas de pequeno e médio porte (1-5 dentistas) que precisam atrair, reter e reativar pacientes.
+- **Secundário:** Recepcionistas e gerentes de clínica que operam o sistema diariamente.
+- **Interno:** Equipe Cíbrido (Davi + Ricardo) para gestão do funil comercial B2B.
+
+### 1.4 Proposta de Valor Única
+O único CRM dental brasileiro que combina gestão de pacientes + agentes de IA nativos (SDR + Agendador) para captação automatizada. Enquanto concorrentes oferecem automação básica de lembretes, a Cíbrido entrega inteligência artificial real na captação e no relacionamento, com interface pensada exclusivamente para o dentista brasileiro.
+
+### 1.5 Duas Faces do Produto
+
+| Aspecto | Face Cíbrido (Interno) | Face Dentista (SaaS) |
+|---------|----------------------|---------------------|
+| Linguagem | Lead, funil, conversão, pipeline, cadência | Paciente, jornada, retorno, agenda, recall |
+| Dashboard | KPIs comerciais, MRR, churn, clínicas ativas | Agenda do dia, pacientes novos, recalls pendentes |
+| Módulos visíveis | Todos + gestão de clínicas/tenants | Conforme plano contratado |
+| Branding | Cíbrido completo | Cíbrido como "powered by" + personalização da clínica |
+
+### 1.6 Glossário de Tradução
+
+| Termo Cíbrido (Interno) | Termo Dentista (SaaS) |
+|--------------------------|----------------------|
+| Lead | Paciente em potencial |
+| Funil / Pipeline | Jornada do paciente |
+| Conversão | Agendamento confirmado |
+| Follow-up | Acompanhamento / Retorno |
+| Cadência | Sequência de contato |
+| Churn | Paciente inativo |
+| MRR | Faturamento mensal |
+| Onboarding | Primeiro atendimento |
+| Upsell | Tratamento adicional |
+| Tag | Categoria / Interesse |
+| Deal value | Valor do tratamento |
+| Won/Lost | Compareceu / Não compareceu |
+
+---
+
+## 2. Arquitetura Técnica
+
+### 2.1 Stack Tecnológico Definido
+
+| Camada | Tecnologia | Justificativa |
+|--------|-----------|---------------|
+| Frontend | React + TypeScript + Next.js | SSR, performance, ecossistema maduro |
+| UI/CSS | TailwindCSS + Radix UI | Componentes acessíveis, design system flexível |
+| Animações | Framer Motion + @dnd-kit | Microinterações fluidas, drag-and-drop acessível |
+| State | TanStack Query (React Query) | Sincronização servidor, cache, optimistic UI |
+| Backend | Next.js API Routes + Supabase | Fullstack simplificado, menos infra |
+| Banco de Dados | Supabase (PostgreSQL) | RLS nativo, Realtime, Auth integrado |
+| Autenticação | Supabase Auth | OAuth, email/senha, sessões seguras |
+| Storage | Supabase Storage | Arquivos, imagens, documentos |
+| Deploy | Vercel | Edge functions, preview deploys, CI/CD integrado |
+| DNS/Segurança | Cloudflare | DDoS, SSL, cache, regras de firewall |
+| Billing | Asaas | Cobrança recorrente B2B brasileira, boleto/PIX/cartão |
+| Repositório | GitHub (davilivelis) | Versionamento, CI/CD com Vercel |
+
+### 2.2 Arquitetura Multi-Tenant
+
+**Modelo:** Single database, Row Level Security (RLS) no Supabase.
+
+- Cada clínica = 1 tenant com `clinic_id` em todas as tabelas
+- RLS garante isolamento total dos dados entre clínicas
+- Cíbrido tem acesso admin cross-tenant para gestão
+- Analogia: Cíbrido é o condomínio, cada clínica é um apartamento com sua decoração
+
+**Fluxo de onboarding de novo cliente:**
+1. Dentista contrata via site/Ricardo → paga via Asaas
+2. Cíbrido cria tenant no Supabase (clinic_id + configurações do plano)
+3. Gera credenciais (login/senha) e envia ao dentista
+4. Dentista acessa o CRM já com a interface adaptada à linguagem dental
+5. Módulos visíveis conforme plano contratado
+
+### 2.3 Modelo de Dados Principal (Simplificado)
+
+```
+clinics (tenant principal)
+├── id, name, cnpj, plan_type, logo_url, created_at, active
+├── clinic_settings (cores, configurações específicas)
+│
+├── users (usuários por clínica)
+│   ├── id, clinic_id, name, email, role (admin/user), avatar
+│
+├── patients (pacientes/leads da clínica)
+│   ├── id, clinic_id, name, email, phone, whatsapp
+│   ├── source (indicação, tráfego, walk-in, agente_sdr)
+│   ├── status (novo, agendado, atendido, recall, inativo)
+│   ├── tags[], interest (clareamento, implante, ortodontia...)
+│   ├── notes, created_at, last_contact_at
+│
+├── appointments (agendamentos)
+│   ├── id, clinic_id, patient_id, user_id (dentista)
+│   ├── datetime, duration, status (agendado, confirmado, no_show, realizado)
+│   ├── treatment_type, notes
+│
+├── pipeline_stages (estágios customizáveis)
+│   ├── id, clinic_id, name, order, color
+│
+├── pipeline_cards (cards no kanban)
+│   ├── id, clinic_id, patient_id, stage_id
+│   ├── value, assigned_to, due_date, notes
+│
+├── activities (histórico de interações)
+│   ├── id, clinic_id, patient_id, type (call, whatsapp, email, note, task)
+│   ├── content, created_by, created_at
+│
+├── recalls (sistema de retorno)
+│   ├── id, clinic_id, patient_id, recall_date, recall_type
+│   ├── status (pendente, contatado, agendado, expirado)
+│   ├── attempts, last_attempt_at, next_attempt_at
+│
+├── tasks (tarefas)
+│   ├── id, clinic_id, assigned_to, patient_id
+│   ├── title, description, due_date, priority, status
+```
+
+---
+
+## 3. Requisitos Funcionais (MoSCoW)
+
+### 3.1 Must Have — MVP (Fase 1)
+
+1. **Autenticação e autorização** — registro por email, login seguro, sessões via Supabase Auth. Multi-tenant com RLS.
+2. **Cadastro de pacientes** — CRUD completo: nome, email, telefone, WhatsApp, fonte de captação, interesse/tratamento, tags, notas.
+3. **Pipeline Kanban** — colunas configuráveis (ex: Novo Contato → Agendado → Atendido → Em Tratamento → Concluído). Drag-and-drop fluido com @dnd-kit + Framer Motion.
+4. **Card do paciente com modal expandido (estilo Trello)** — ao clicar no card no pipeline, abre modal centralizado com ficha completa do paciente: dados, histórico de atividades, notas, tarefas, recall. Fundo escurece (overlay), foco total no paciente. Fecha com X ou clicando fora. Botão opcional "abrir em tela cheia" para página dedicada. Edição inline dentro do modal.
+5. **Agenda/Calendário** — visualização diária/semanal dos agendamentos. Criação rápida de consulta. Status (agendado, confirmado, no-show, realizado).
+6. **Módulo de Recall básico** — lista de pacientes com retorno pendente, status de contato, data do último contato, botão de ação (WhatsApp/ligar). Alertas visuais para recalls vencidos.
+7. **Dashboard com KPIs** — pacientes novos (período), agendamentos do dia/semana, recalls pendentes, taxa de comparecimento, no-shows.
+8. **Busca global e filtros** — por nome, telefone, tag, status, fonte, interesse.
+9. **Histórico de atividades** — registro de ligações, WhatsApp, notas, tarefas vinculadas ao paciente.
+10. **Gestão de usuários e permissões** — admin (dono da clínica) e usuário (recepcionista/dentista).
+11. **Responsividade** — desktop e tablet. Mobile mínimo viável.
+12. **Sistema de planos** — controle de features visíveis por plano (Cibri-Lite / Standard / Master).
+13. **Importação CSV** — para migração de base de pacientes existente.
+14. **Onboarding básico** — tour interativo para novo usuário, empty states com instruções claras.
+
+### 3.2 Should Have — Fase 2
+
+1. **Notificações em tempo real** — via Supabase Realtime para atualizações entre membros da equipe.
+2. **Gestão de no-show com lista de espera** — quando paciente falta, sistema sugere contatar pacientes da lista de espera para preencher o horário.
+3. **Sequências de recall multi-toque** — WhatsApp (dia 1) → SMS (dia 3) → Ligação (dia 7) → Email (dia 14). Configurável por clínica.
+4. **Templates de mensagem** — mensagens pré-prontas para WhatsApp/email de recall, confirmação, boas-vindas.
+5. **Relatórios** — período, fonte de pacientes, taxa de conversão, faturamento estimado, recall compliance. Export CSV/PDF.
+6. **Pipeline múltiplo** — mais de uma jornada por clínica (ex: implantes vs. ortodontia).
+7. **Atalhos de teclado e command palette** — Cmd/Ctrl+K para busca rápida e ações.
+8. **Segmentação de pacientes por interesse** — clareamento, implante, ortodontia, limpeza, etc. para campanhas direcionadas.
+9. **Audit log** — histórico de mudanças e undo rápido para ações críticas.
+10. **Integração Google Calendar** — sincronização bidirecional de agendamentos.
+
+### 3.3 Could Have — Fase 3
+
+1. **Integração com agentes de IA** (SDR + Agendador) — os agentes alimentam o CRM automaticamente com novos pacientes captados.
+2. **Integração com Asaas para billing automatizado** — planos, cobranças, status de pagamento visível no painel admin Cíbrido.
+3. **Automação básica de regras** — "quando paciente não comparece, mover para coluna Recall" automaticamente.
+4. **Dashboard por perfil** — visão diferenciada para dono da clínica (financeiro + crescimento) vs. recepcionista (agenda + tarefas do dia).
+5. **Integração WhatsApp Business API** — envio direto de mensagens pelo CRM.
+6. **Portal do paciente** — link para o paciente confirmar/reagendar consulta.
+7. **Importação de leads via Facebook/Google Ads** — webhooks para capturar leads de campanhas.
+8. **PWA / modo offline** — acesso básico sem internet.
+
+### 3.4 Won't Have (fora do escopo)
+
+1. Prontuário eletrônico / ficha clínica odontológica.
+2. Gestão financeira completa (faturamento, NF, contas a pagar).
+3. Funcionalidades clínicas (odontograma, radiografia, prescrição).
+4. App mobile nativo na primeira entrega.
+5. Integrações com softwares de gestão clínica (Dental Office, etc.) na Fase 1.
+6. ERP, estoque de materiais, gestão de fornecedores.
+
+---
+
+## 4. Histórias de Usuário
+
+### 4.1 MVP (Must Have)
+
+| # | Como... | Eu quero... | Para... |
+|---|---------|-------------|---------|
+| 1 | Recepcionista | cadastrar um novo paciente rapidamente | não perder o contato que ligou/chegou |
+| 2 | Recepcionista | ver a agenda do dia com status de cada consulta | organizar o atendimento |
+| 3 | Dono da clínica | ver o dashboard com KPIs | entender a saúde do negócio |
+| 4 | Recepcionista | arrastar um paciente entre colunas do pipeline | refletir o avanço na jornada |
+| 5 | Recepcionista | abrir um card e ver todo o histórico do paciente | dar um atendimento personalizado |
+| 6 | Dono da clínica | ver a lista de recalls pendentes | saber quem precisa voltar |
+| 7 | Recepcionista | buscar paciente por nome ou telefone | encontrar rapidamente a ficha |
+| 8 | Recepcionista | registrar uma nota ou ligação no perfil do paciente | manter o histórico atualizado |
+| 9 | Dono da clínica | convidar a recepcionista e definir permissões | controlar quem acessa o quê |
+| 10 | Dono da clínica | importar minha base de pacientes de uma planilha | não perder dados ao migrar |
+| 11 | Davi (Cíbrido) | ver todas as clínicas ativas e seus status | gerenciar os clientes B2B |
+| 12 | Ricardo (Cíbrido) | registrar um novo lead (clínica interessada) | acompanhar o funil comercial |
+
+### 4.2 Fase 2 (Should Have)
+
+| # | Como... | Eu quero... | Para... |
+|---|---------|-------------|---------|
+| 13 | Recepcionista | receber alerta quando um colega move um paciente | manter a equipe sincronizada |
+| 14 | Recepcionista | usar templates de mensagem para recall | ser mais rápida no contato |
+| 15 | Dono da clínica | ver relatório de no-shows do mês | identificar padrão e agir |
+| 16 | Dono da clínica | ver de qual fonte vêm mais pacientes | investir melhor em marketing |
+| 17 | Recepcionista | usar atalhos de teclado para navegar | ser mais produtiva |
+| 18 | Dono da clínica | ver pacientes segmentados por interesse | fazer campanhas direcionadas |
+
+### 4.3 Fase 3 (Could Have)
+
+| # | Como... | Eu quero... | Para... |
+|---|---------|-------------|---------|
+| 19 | Paciente em potencial | conversar com o agente no site e ser agendado | ter atendimento imediato 24h |
+| 20 | Dono da clínica | que o agente SDR alimente o CRM automaticamente | não depender de cadastro manual |
+| 21 | Davi (Cíbrido) | ver status de pagamento de cada clínica (via Asaas) | gerenciar inadimplência |
+| 22 | Paciente | confirmar/reagendar minha consulta por um link | ter autonomia sem ligar |
+
+---
+
+## 5. Estrutura de Páginas / Navegação
+
+### 5.1 Shell Global
+- **Sidebar esquerda** — navegação principal (colapsável)
+- **Top bar** — pesquisa global, command palette (Cmd+K), notificações, avatar do usuário
+- **Área principal** — conteúdo dinâmico
+- **Modal expandido (estilo Trello)** — ficha completa do paciente ao clicar no card do pipeline (overlay centralizado, fundo escurecido)
+- **Modal stack** — criação rápida (novo paciente, nova consulta, nova tarefa)
+
+### 5.2 Navegação Principal (Sidebar)
+
+**Face Dentista (SaaS):**
+1. 📊 Dashboard (Painel)
+2. 📅 Agenda
+3. 🔄 Pipeline (Jornada do Paciente)
+4. 👥 Pacientes
+5. 🔔 Recalls (Retornos)
+6. ✅ Tarefas
+7. 📈 Relatórios *(Standard+)*
+8. ⚙️ Configurações
+
+**Face Cíbrido (Interno):**
+1. 📊 Dashboard Comercial
+2. 🏢 Clínicas (gestão de tenants)
+3. 🔄 Pipeline Comercial
+4. 👥 Leads (clínicas prospectadas)
+5. 💰 Billing (integração Asaas)
+6. 📈 Relatórios
+7. ⚙️ Configurações Admin
+
+### 5.3 Wireframes (Descrição Textual)
+
+**Dashboard do Dentista (Bento Grid Layout):**
+```
+┌─────────────────────────┬──────────────┐
+│                         │  Pacientes   │
+│    AGENDA DO DIA        │  Novos (mês) │
+│    (card grande)        │  ┌──┐        │
+│    - Próximo paciente   │  │32│        │
+│    - Horários do dia    │  └──┘        │
+│    - Status visual      ├──────────────┤
+│                         │  Recalls     │
+│                         │  Pendentes   │
+│                         │  ┌──┐        │
+│                         │  │14│ ⚠️     │
+├────────────┬────────────┤  └──┘        │
+│ Taxa de    │ No-shows   ├──────────────┤
+│ Comparec.  │ (semana)   │  Agendamentos│
+│  ┌────┐    │  ┌──┐      │  Semana      │
+│  │87% │    │  │ 3│      │  ┌──┐        │
+│  └────┘    │  └──┘      │  │28│        │
+├────────────┴────────────┤  └──┘        │
+│ ATIVIDADES RECENTES     │              │
+│ - Maria ligou 10:30     │              │
+│ - João agendou 14:00    │              │
+│ - Ana recall pendente   │              │
+└─────────────────────────┴──────────────┘
+```
+
+**Pipeline Kanban (Jornada do Paciente):**
+```
+┌──────────────┬──────────────┬──────────────┬──────────────┬──────────────┐
+│ Novo Contato │  Agendado    │  Atendido    │ Em Tratamento│  Concluído   │
+│ (12) R$8.4k  │ (8) R$5.2k   │ (5) R$3.1k   │ (3) R$4.8k   │ (15) R$12k   │
+├──────────────┼──────────────┼──────────────┼──────────────┼──────────────┤
+│ ┌──────────┐ │ ┌──────────┐ │ ┌──────────┐ │              │              │
+│ │Maria S.  │ │ │João P.   │ │ │Ana C.    │ │              │              │
+│ │Implante  │ │ │Clareament│ │ │Ortodontia│ │              │              │
+│ │WhatsApp  │ │ │14:00 hoje│ │ │⚡ Recall  │ │              │              │
+│ │2 dias    │ │ │Confirmado│ │ │vencido   │ │              │              │
+│ └──────────┘ │ └──────────┘ │ └──────────┘ │              │              │
+│ ┌──────────┐ │              │              │              │              │
+│ │Pedro R.  │ │              │              │              │              │
+│ │Limpeza   │ │              │              │              │              │
+│ │Tráfego   │ │              │              │              │              │
+│ └──────────┘ │              │              │              │              │
+└──────────────┴──────────────┴──────────────┴──────────────┴──────────────┘
+```
+
+---
+
+## 6. Design System — Identidade Cíbrido
+
+### 6.1 Paleta de Cores
+
+| Cor | Hex | Uso |
+|-----|-----|-----|
+| Magenta/Pink | #E91E7B | CTA primário, destaques, links ativos |
+| Amarelo/Dourado | #F5A623 | Alertas, badges, acentos secundários |
+| Roxo (Accent) | #7B2D8E | Gradientes, hovers, elementos premium |
+| Dark Navy (BG) | #1E2A3A | Background principal (modo escuro) |
+| Branco | #FFFFFF | Texto principal (modo escuro), backgrounds (modo claro) |
+| Cinza claro | #F0F2F5 | Background modo claro, cards |
+| Cinza médio | #6B7280 | Texto secundário, placeholders |
+| Success (verde) | #10B981 | Status positivo, confirmações |
+| Warning (amber) | #F59E0B | Recalls pendentes, atenção |
+| Error (vermelho) | #EF4444 | No-shows, erros, alertas críticos |
+
+### 6.2 Gradiente da Marca
+- **Primário:** `linear-gradient(135deg, #E91E7B 0%, #7B2D8E 50%, #F5A623 100%)` — reflete o logo
+- **Uso:** header do sidebar, botão principal de CTA, loading states
+
+### 6.3 Tipografia
+- **Typeface:** Inter (Google Fonts) — legível, moderna, multilíngue
+- **Body:** 14-16px, weight 400
+- **Headings:** 18-32px, weight 600-700
+- **Labels/Small:** 12px, weight 500
+- **Monospace (dados):** JetBrains Mono — KPIs, valores
+
+### 6.4 Componentes Visuais
+- **Cards:** border-radius 12px, shadow sutil, hover com elevação
+- **Botões:** border-radius 8px, gradiente Cíbrido no primário, outline no secundário
+- **Sidebar:** fundo Dark Navy #1E2A3A, ícones brancos, item ativo com highlight magenta
+- **Bento Grid:** gaps de 16px, cards com tamanhos variados conforme hierarquia
+- **Modal Trello:** overlay escurecido (rgba(0,0,0,0.6)), card centralizado com max-width 720px, border-radius 16px, transição suave de escala + fade, seções com abas (Dados / Atividades / Tarefas / Recall / Arquivos)
+
+### 6.5 Linguagem Visual Dental
+- Ícones sutis relacionados ao universo dental: dente estilizado (apenas no logo/branding, não na UI), calendário, pessoa, sorriso
+- Tom da interface: profissional mas acolhedor. Sem jargão técnico de TI.
+- Mensagens de status: "Paciente agendou retorno ✓" em vez de "Record updated successfully"
+- Empty states com ilustrações minimalistas e linguagem empática
+
+### 6.6 Modos de Exibição
+- **Modo escuro (padrão):** Background Dark Navy, texto branco, cards com fundo #2A3A4A
+- **Modo claro (opcional):** Background #F0F2F5, texto #1E2A3A, cards brancos com sombra
+
+---
+
+## 7. Sistema de Planos
+
+### 7.1 Matriz de Features por Plano
+
+| Feature | Cibri-Lite | Standard | Master |
+|---------|:----------:|:--------:|:------:|
+| Cadastro de pacientes | ✅ | ✅ | ✅ |
+| Pipeline Kanban | ✅ (1 pipeline) | ✅ (múltiplos) | ✅ (múltiplos) |
+| Agenda/Calendário | ✅ | ✅ | ✅ |
+| Recall básico (lista) | ✅ | ✅ | ✅ |
+| Dashboard KPIs | Básico | Completo | Completo |
+| Busca e filtros | ✅ | ✅ | ✅ |
+| Histórico de atividades | ✅ | ✅ | ✅ |
+| Importação CSV | ✅ | ✅ | ✅ |
+| Usuários por clínica | 2 | 5 | Ilimitado |
+| Recall multi-toque | ❌ | ✅ | ✅ |
+| Templates de mensagem | ❌ | ✅ | ✅ |
+| Relatórios avançados | ❌ | ✅ | ✅ |
+| Segmentação por interesse | ❌ | ✅ | ✅ |
+| Notificações real-time | ❌ | ✅ | ✅ |
+| Gestão de no-show + lista espera | ❌ | ❌ | ✅ |
+| Dashboard por perfil | ❌ | ❌ | ✅ |
+| Agente SDR + Agendador (IA) | ❌ | ❌ | ✅ |
+| Integração WhatsApp API | ❌ | ❌ | ✅ |
+| Portal do paciente | ❌ | ❌ | ✅ |
+| Command palette | ❌ | ✅ | ✅ |
+| Suporte | Email | Email + WhatsApp | Prioritário |
+
+---
+
+## 8. Interações e Animações
+
+### 8.1 Princípios
+- Animações curtas, responsivas, com feedback direto
+- Respeitar `prefers-reduced-motion`
+- Easing padrão: `cubic-bezier(0.2, 0.9, 0.2, 1)`
+- Microinterações: 120-220ms | Overlays: 260-400ms | Transições de layout: 300-600ms
+
+### 8.2 Kanban Drag-and-Drop
+- Biblioteca: @dnd-kit (core + sortable + DragOverlay)
+- Cards com Framer Motion `<motion.div layout layoutId=...>`
+- Ao arrastar: DragOverlay com escala 1.02, shadow accent
+- Drop: spring (stiffness 400, damping 30) com "pop" de confirmação (160ms)
+- Otimizar com `will-change: transform` e `requestAnimationFrame`
+
+### 8.3 Card Expand / Modal Trello
+- Framer Motion `layoutId` para transição compartilhada card → modal centralizado
+- Card no pipeline anima para o centro da tela (scale + translate + fade)
+- Overlay escurece com fade (opacity 0→0.6, duração 260ms)
+- Modal entra com scale (0.95→1) + opacity (0→1), duração 380ms, easing spring
+- Conteúdo interno: staggered children (delay 40-60ms) para abas e seções
+- Fechar: scale (1→0.95) + opacity (1→0) + overlay fade out
+- Botão "abrir em tela cheia" faz transição para página dedicada com layoutId
+
+### 8.4 Hover / Focus
+- Card: elevação 4-8px (translateY), borda com cor accent, duração 140ms
+- Acessibilidade: replicar hover no focus (teclado)
+
+### 8.5 Toasts e Undo
+- Posição bottom-right, entrada slide + fade (240ms)
+- Undo com progress bar animada (linear width shrink)
+- Mensagens na linguagem do dentista: "Paciente movido para Agendados ↩ Desfazer"
+
+### 8.6 Loading
+- Skeleton shimmer com `linear-gradient` animation (1.6s repeating)
+- CSS keyframes com `transform: translateX` para performance
+
+---
+
+## 9. Performance e Segurança
+
+### 9.1 Performance
+- Initial load ≤ 1.5s
+- Time to interactive < 2.5s em conexões médias
+- Virtualização de listas > 200 itens (react-window)
+- Animações exclusivamente via transform/opacity
+- Client-side caching com React Query + stale-while-revalidate
+- Debounce de busca: 300ms
+- Paginação em todos os endpoints
+
+### 9.2 Segurança
+- TLS obrigatório
+- Supabase RLS em todas as tabelas (isolamento multi-tenant)
+- Rate limiting nos endpoints
+- Validação de inputs (frontend + backend)
+- Audit trail para ações críticas
+- Backup automático do banco (Supabase)
+- LGPD compliance: export/delete de dados do paciente
+
+### 9.3 Acessibilidade
+- Navegação completa por teclado
+- ARIA labels em componentes dinâmicos
+- Contraste de cor adequado (WCAG AA mínimo)
+- Respeitar `prefers-reduced-motion`
+
+---
+
+## 10. Integrações
+
+### 10.1 MVP
+- **Supabase Auth** — autenticação e sessões
+- **Asaas** — billing e cobrança (gestão pelo admin Cíbrido)
+
+### 10.2 Fase 2
+- **Google Calendar** — sincronização de agendamentos
+- **Supabase Realtime** — notificações entre equipe
+
+### 10.3 Fase 3
+- **WhatsApp Business API** — envio direto pelo CRM
+- **Facebook/Google Ads** — webhooks para captura de leads
+- **Agentes de IA (GPT Maker → n8n)** — SDR + Agendador alimentando o CRM
+- **Asaas API** — billing automatizado visível no painel admin
+
+---
+
+## 11. Roadmap de Execução
+
+### Fase 1 — MVP (Foco atual)
+**Objetivo:** CRM funcional que o dentista pode usar para gerenciar pacientes e agenda.
+
+- [ ] Setup do projeto (Next.js + Supabase + Vercel + GitHub)
+- [ ] Schema do banco com RLS multi-tenant
+- [ ] Autenticação (email/senha via Supabase Auth)
+- [ ] CRUD de pacientes com campos do glossário dental
+- [ ] Pipeline Kanban com drag-and-drop
+- [ ] Modal Trello de detalhes do paciente (expandir card do pipeline)
+- [ ] Agenda/Calendário com agendamentos
+- [ ] Módulo de Recall básico (lista + status)
+- [ ] Dashboard Bento Grid com KPIs
+- [ ] Busca global e filtros
+- [ ] Histórico de atividades
+- [ ] Sistema de permissões (admin/user)
+- [ ] Importação CSV
+- [ ] Design System Cíbrido implementado
+- [ ] Onboarding tour básico
+- [ ] Controle de features por plano
+- [ ] Responsividade desktop + tablet
+- [ ] Deploy em Vercel + Cloudflare
+
+### Fase 2 — Melhorias
+- [ ] Notificações real-time (Supabase Realtime)
+- [ ] Recall multi-toque com sequências
+- [ ] Gestão de no-show + lista de espera
+- [ ] Templates de mensagem
+- [ ] Relatórios avançados com export
+- [ ] Pipeline múltiplo
+- [ ] Command palette + atalhos
+- [ ] Segmentação por interesse
+- [ ] Audit log + undo
+- [ ] Integração Google Calendar
+
+### Fase 3 — Visão de Longo Prazo
+- [ ] Integração com agentes de IA (SDR + Agendador)
+- [ ] Integração Asaas API (billing no painel)
+- [ ] Automação de regras
+- [ ] Dashboard por perfil de usuário
+- [ ] WhatsApp Business API
+- [ ] Portal do paciente
+- [ ] Importação de leads ads
+- [ ] PWA / modo offline
+
+---
+
+## 12. Métricas de Sucesso
+
+| Métrica | Meta MVP | Meta 6 meses |
+|---------|----------|--------------|
+| Clínicas ativas (SaaS) | 5 | 30 |
+| Uptime | 99.5% | 99.9% |
+| Tempo de carregamento | < 2s | < 1.5s |
+| Taxa de recall compliance (por clínica) | — | > 60% |
+| NPS dos dentistas | — | > 40 |
+| Churn mensal | — | < 10% |
+| MRR | — | R$ 15.000+ |
+
+---
+
+## 13. Referência — O que existe no protótipo Lovable
+
+O CibridoCRM atual em `cibridocrm.lovable.app` tem as seguintes funcionalidades implementadas (usar como referência de fluxo, não como código):
+
+- ✅ Cadastro de pacientes/leads
+- ✅ Pipeline Kanban básico
+- ✅ Dashboard com métricas
+- ✅ Calendário com agendamentos
+- ✅ Gestão de usuários
+- ✅ Conexão com Supabase
+- ⚠️ Bugs conhecidos: locale do calendário, grid alignment, fluxo de reset de senha
+- ❌ Não tem: recall, multi-tenant real, design system Cíbrido, controle de planos
+
+**Decisão:** Desenvolver do zero com stack próprio (Next.js + Supabase). O protótipo Lovable serviu para validação de conceito. O código não será reutilizado, mas os fluxos e aprendizados sim.
+
+---
+
+*Documento gerado em 01/04/2026 — Cíbrido Soluções em IA*
+*Versão: 1.0 | Autor: Livelis (Claude) + Davi Junior*
