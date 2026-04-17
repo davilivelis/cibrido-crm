@@ -29,7 +29,7 @@ export default function AdminSidebar() {
     <aside className="w-60 hidden lg:flex flex-col shrink-0" style={{ backgroundColor: '#1E2A3A' }}>
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-white/[0.08]">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <div style={{ width: 36, height: 36, overflow: 'hidden', flexShrink: 0, borderRadius: 6 }}>
             <img
               src="/logo.png"
@@ -37,9 +37,9 @@ export default function AdminSidebar() {
               style={{ width: '36px', height: 'auto', display: 'block', objectPosition: 'top' }}
             />
           </div>
-          <div>
+          <div className="flex flex-col justify-center">
             <span className="text-white font-bold text-sm leading-none block" translate="no">CibridoCRM</span>
-            <span className="text-[11px] text-slate-500 leading-none mt-0.5 block">Painel Admin</span>
+            <span className="text-[11px] text-slate-500 leading-none mt-[2px] block">Painel Admin</span>
           </div>
         </div>
       </div>
