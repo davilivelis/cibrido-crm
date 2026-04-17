@@ -156,35 +156,31 @@ export default function LoginPage() {
               <Button type="submit" className="w-full h-12 font-semibold" disabled={loading}>
                 {loading ? 'Entrando...' : 'Entrar no CRM'}
               </Button>
+              <div className="text-center">
+                <a href="/esqueceu-senha" className="text-sm text-gray-500 hover:text-gray-700 underline underline-offset-4">
+                  Esqueceu a senha?
+                </a>
+              </div>
             </form>
           )}
 
           {tab === 'cadastrar' && (
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="reg-name">Nome completo</Label>
-                <Input id="reg-name" type="text" placeholder="Seu nome"
-                  value={regName} onChange={(e) => setRegName(e.target.value)}
-                  required className="h-12" />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="reg-email">Email</Label>
-                <Input id="reg-email" type="email" placeholder="voce@clinica.com"
-                  value={regEmail} onChange={(e) => setRegEmail(e.target.value)}
-                  required className="h-12" />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="reg-pass">Senha</Label>
-                <Input id="reg-pass" type="password" placeholder="Mínimo 6 caracteres"
-                  value={regPass} onChange={(e) => setRegPass(e.target.value)}
-                  required minLength={6} className="h-12" />
-              </div>
-              {error   && <p className="text-sm text-red-600 bg-red-50 px-3 py-2.5 rounded-lg border border-red-100">{error}</p>}
-              {success && <p className="text-sm text-green-700 bg-green-50 px-3 py-2.5 rounded-lg border border-green-100">{success}</p>}
-              <Button type="submit" className="w-full h-12 font-semibold" disabled={loading}>
-                {loading ? 'Criando conta...' : 'Criar conta'}
-              </Button>
-            </form>
+            <div className="rounded-xl bg-red-50 border border-red-200 p-5 text-center space-y-3">
+              <div className="text-3xl">🔒</div>
+              <p className="text-sm font-bold text-red-800">Acesso por convite apenas</p>
+              <p className="text-sm text-red-700 leading-relaxed">
+                O CibridoCRM é exclusivo para clientes da Cíbrido.<br />
+                Para obter acesso, fale com nossa equipe:
+              </p>
+              <a
+                href="https://wa.me/5511960341082?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20CibridoCRM."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full py-2.5 rounded-lg bg-[#E91E7B] text-white text-sm font-bold"
+              >
+                Falar com a equipe Cíbrido
+              </a>
+            </div>
           )}
         </div>
 
