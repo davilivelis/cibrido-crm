@@ -2,7 +2,9 @@
 
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { Phone } from 'lucide-react'
 import { updateCibridoLeadStage } from '@/lib/actions/admin'
+import { cn } from '@/lib/utils'
 
 const STAGES = [
   { id: 'lead',             label: 'Lead',             color: '#6366f1' },
@@ -36,42 +38,77 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
   return (
     <div className="p-8">
       <div className="mb-6">
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>Pipeline Comercial</h1>
-        <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Acompanhe o avanço dos leads Cíbrido</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Pipeline Comercial</h1>
+        <p className="text-sm lg:text-base text-gray-500 mt-1">
+          {leads.length} lead{leads.length !== 1 ? 's' : ''} no pipeline
+        </p>
       </div>
 
-      <div className="flex gap-4 overflow-x-auto pb-4">
+      <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory">
         {STAGES.map(stage => {
           const stageLeads = leads.filter(l => l.stage === stage.id)
           return (
-            <div key={stage.id} className="w-52 shrink-0">
-              <div className="flex justify-between items-center px-3 py-2.5 rounded-t-lg"
-                style={{ backgroundColor: `${stage.color}18`, color: stage.color }}>
-                <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{stage.label}</span>
-                <span style={{ fontSize: 13, fontWeight: 700 }}>{stageLeads.length}</span>
+            <div key={stage.id} className="flex-shrink-0 min-w-[280px] snap-start">
+
+              {/* Header — estilo idêntico ao CRM KanbanBoard */}
+              <div
+                className="flex items-center gap-2 px-3 py-2.5 rounded-t-xl"
+                style={{ backgroundColor: `${stage.color}18` }}
+              >
+                <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: stage.color }} />
+                <span className="text-sm font-semibold text-gray-800 truncate flex-1">{stage.label}</span>
+                <span
+                  className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0 text-white"
+                  style={{ backgroundColor: stage.color }}
+                >
+                  {stageLeads.length}
+                </span>
               </div>
-              <div className="rounded-b-lg p-2 min-h-[300px] space-y-2" style={{ background: '#F8F9FB' }}>
-                {stageLeads.length === 0 && (
-                  <p className="text-center pt-8" style={{ fontSize: 13, color: '#d1d5db' }}>Vazio</p>
-                )}
-                {stageLeads.map(lead => (
-                  <div key={lead.id} className="bg-white rounded-lg p-3 border-l-4"
-                    style={{ borderColor: stage.color, boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}>
-                    <p style={{ fontSize: 14, fontWeight: 600, color: '#111827', lineHeight: 1.3 }}>{lead.name}</p>
-                    {lead.clinic_name && <p style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>{lead.clinic_name}</p>}
-                    <div className="flex justify-between items-center mt-2">
-                      <span style={{ fontSize: 12, color: '#9ca3af' }}>{SOURCE_LABELS[lead.source] ?? lead.source ?? '—'}</span>
-                      {stage.id !== 'cliente_ativo' && stage.id !== 'churned' && (
-                        <button onClick={() => handleAdvance(lead.id, lead.stage)} disabled={isPending}
-                          className="bg-slate-100 text-slate-600 hover:bg-slate-200 rounded transition-colors"
-                          style={{ fontSize: 13, fontWeight: 600, padding: '2px 8px' }}>
-                          →
-                        </button>
+
+              {/* Corpo da coluna */}
+              <div className="min-h-[200px] rounded-b-xl p-2.5 bg-[#F1F3F5]">
+                <div className="space-y-2">
+                  {stageLeads.map(lead => (
+                    <div
+                      key={lead.id}
+                      className={cn(
+                        'bg-white rounded-xl border p-4 transition-all duration-150',
+                        'border-[#E2E5EA] shadow-[0_2px_8px_rgba(0,0,0,0.06)]',
+                        'hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:border-[#C5CAD3]'
                       )}
+                    >
+                      <p className="text-sm font-semibold text-gray-900 mb-2">{lead.name}</p>
+                      {lead.phone && (
+                        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                          <Phone className="w-3 h-3" />
+                          {lead.phone}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between mt-2.5">
+                        {lead.source && (
+                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full capitalize">
+                            {SOURCE_LABELS[lead.source] ?? lead.source}
+                          </span>
+                        )}
+                        {stage.id !== 'cliente_ativo' && stage.id !== 'churned' && (
+                          <button
+                            onClick={() => handleAdvance(lead.id, lead.stage)}
+                            disabled={isPending}
+                            className="ml-auto text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition-colors"
+                          >
+                            →
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                {stageLeads.length === 0 && (
+                  <p className="text-xs text-gray-300 text-center pt-6">Vazio</p>
+                )}
               </div>
+
             </div>
           )
         })}
