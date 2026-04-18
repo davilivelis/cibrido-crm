@@ -93,10 +93,72 @@ export async function getInvites() {
   const { data, error } = await admin
     .from('invites')
     .select('*')
+    .is('deleted_at', null)
     .order('created_at', { ascending: false })
 
   if (error) throw new Error(error.message)
   return data ?? []
+}
+
+export async function getAdminClientDetail(clinicId: string) {
+  await assertAdmin()
+  const admin = createAdminClient()
+
+  const [clinicRes, leadsRes, appointmentsRes, notesRes] = await Promise.all([
+    admin
+      .from('clinics')
+      .select(`id, name, phone, email, address, plan, is_active, created_at, users(id, name, email, role), subscriptions(plan, status, trial_ends_at, paid_until)`)
+      .eq('id', clinicId)
+      .single(),
+    admin.from('leads').select('id', { count: 'exact' }).eq('clinic_id', clinicId),
+    admin.from('appointments').select('id', { count: 'exact' }).eq('clinic_id', clinicId),
+    admin.from('admin_notes').select('*').eq('clinic_id', clinicId).order('created_at', { ascending: false }),
+  ])
+
+  if (clinicRes.error) throw new Error(clinicRes.error.message)
+
+  return {
+    clinic:       clinicRes.data,
+    totalLeads:   leadsRes.count ?? 0,
+    totalAppointments: appointmentsRes.count ?? 0,
+    notes:        notesRes.data ?? [],
+  }
+}
+
+export async function createAdminNote(clinicId: string, content: string) {
+  const user = await assertAdmin()
+  const admin = createAdminClient()
+
+  const { error } = await admin
+    .from('admin_notes')
+    .insert({ clinic_id: clinicId, author_email: user.email ?? '', content })
+
+  if (error) throw new Error(error.message)
+}
+
+export async function getAdminNotifications() {
+  await assertAdmin()
+  const admin = createAdminClient()
+
+  const { data, error } = await admin
+    .from('admin_notifications')
+    .select('*')
+    .eq('read', false)
+    .order('created_at', { ascending: false })
+    .limit(20)
+
+  if (error) throw new Error(error.message)
+  return data ?? []
+}
+
+export async function markNotificationsRead() {
+  await assertAdmin()
+  const admin = createAdminClient()
+
+  await admin
+    .from('admin_notifications')
+    .update({ read: true })
+    .eq('read', false)
 }
 
 export async function revokeInvite(id: string) {
@@ -108,6 +170,19 @@ export async function revokeInvite(id: string) {
     .update({ status: 'revoked' })
     .eq('id', id)
     .eq('status', 'pending')
+
+  if (error) throw new Error(error.message)
+}
+
+export async function deleteInvite(id: string) {
+  await assertAdmin()
+  const admin = createAdminClient()
+
+  const { error } = await admin
+    .from('invites')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id)
+    .is('deleted_at', null)
 
   if (error) throw new Error(error.message)
 }

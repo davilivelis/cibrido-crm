@@ -21,11 +21,12 @@ export default function LoginPage() {
   const [error,   setError]   = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
-  const [email,    setEmail]    = useState('')
-  const [password, setPassword] = useState('')
-  const [regName,  setRegName]  = useState('')
-  const [regEmail, setRegEmail] = useState('')
-  const [regPass,  setRegPass]  = useState('')
+  const [email,      setEmail]      = useState('')
+  const [password,   setPassword]   = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
+  const [regName,    setRegName]    = useState('')
+  const [regEmail,   setRegEmail]   = useState('')
+  const [regPass,    setRegPass]    = useState('')
 
   function switchTab(t: Tab) { setTab(t); setError(null); setSuccess(null) }
 
@@ -34,6 +35,7 @@ export default function LoginPage() {
     setLoading(true); setError(null)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError('Email ou senha incorretos.'); setLoading(false); return }
+    if (!rememberMe) sessionStorage.setItem('cibrido_session_only', '1')
     window.fbq?.('trackCustom', 'CRM_Login')
     router.push('/dashboard'); router.refresh()
   }
@@ -153,14 +155,23 @@ export default function LoginPage() {
                   required autoComplete="current-password" className="h-12" />
               </div>
               {error && <p className="text-sm text-red-600 bg-red-50 px-3 py-2.5 rounded-lg border border-red-100">{error}</p>}
-              <Button type="submit" className="w-full h-12 font-semibold" disabled={loading}>
-                {loading ? 'Entrando...' : 'Entrar no CRM'}
-              </Button>
-              <div className="text-center">
-                <a href="/esqueceu-senha" className="text-sm text-gray-500 hover:text-gray-700 underline underline-offset-4">
+              <div className="flex items-center justify-between">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="w-4 h-4 rounded accent-[#E91E7B] cursor-pointer"
+                  />
+                  <span style={{ fontSize: '14px', color: '#6b7280' }}>Lembrar de mim</span>
+                </label>
+                <a href="/esqueceu-senha" style={{ fontSize: '14px', color: '#6b7280' }} className="hover:text-gray-900 underline underline-offset-4">
                   Esqueceu a senha?
                 </a>
               </div>
+              <Button type="submit" className="w-full h-12 font-semibold" disabled={loading}>
+                {loading ? 'Entrando...' : 'Entrar no CRM'}
+              </Button>
             </form>
           )}
 

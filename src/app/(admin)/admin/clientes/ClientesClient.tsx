@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { toggleClientAccess, createInvite } from '@/lib/actions/admin'
 
 const PLAN_LABELS: Record<string, string> = { lite: 'Lite', standard: 'Standard', master: 'Master', trial: 'Trial' }
@@ -92,7 +93,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
         <table className="w-full">
           <thead style={{ background: '#F8F9FB' }}>
             <tr>
-              {['Clínica', 'Responsável', 'Plano', 'Status', 'Desde', 'Acesso'].map(h => (
+              {['Clínica', 'Responsável', 'Plano', 'Status', 'Desde', 'Ações'].map(h => (
                 <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
               ))}
             </tr>
@@ -123,18 +124,27 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                     {new Date(c.created_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-5 py-3.5">
-                    <button
-                      onClick={() => handleToggle(c.id, c.is_active)}
-                      disabled={isPending}
-                      className={`px-3 py-1.5 rounded-lg transition-colors ${
-                        c.is_active
-                          ? 'bg-slate-100 text-slate-600 hover:bg-red-50 hover:text-red-600'
-                          : 'bg-green-50 text-green-700 hover:bg-green-100'
-                      }`}
-                      style={{ fontSize: 13, fontWeight: 600 }}
-                    >
-                      {c.is_active ? 'Bloquear' : 'Liberar'}
-                    </button>
+                    <div className="flex gap-2 items-center">
+                      <Link
+                        href={`/admin/clientes/${c.id}`}
+                        className="px-3 py-1.5 rounded-lg transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        style={{ fontSize: 13, fontWeight: 600 }}
+                      >
+                        Ver detalhes
+                      </Link>
+                      <button
+                        onClick={() => handleToggle(c.id, c.is_active)}
+                        disabled={isPending}
+                        className={`px-3 py-1.5 rounded-lg transition-colors ${
+                          c.is_active
+                            ? 'bg-red-50 text-red-600 hover:bg-red-100'
+                            : 'bg-green-50 text-green-700 hover:bg-green-100'
+                        }`}
+                        style={{ fontSize: 13, fontWeight: 600 }}
+                      >
+                        {c.is_active ? 'Bloquear' : 'Liberar'}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               )

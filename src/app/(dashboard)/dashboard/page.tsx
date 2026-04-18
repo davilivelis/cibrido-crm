@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { Users, TrendingUp, CalendarCheck, MessageCircle, Tag, StickyNote, PhoneCall, MessageSquare, CalendarPlus } from 'lucide-react'
 import FunnelChart from '@/components/dashboard/FunnelChart'
+import OnboardingChecklist from '@/components/dashboard/OnboardingChecklist'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
@@ -24,7 +25,9 @@ const EVENT_LABELS: Record<string, string> = {
 export default async function DashboardPage() {
   const supabase = await createClient()
 
-  const [leadsResult, appointmentsResult, conversationsResult, stagesResult, eventsResult] = await Promise.all([
+  const { data: clinicIdData } = await supabase.rpc('get_user_clinic_id')
+
+  const [leadsResult, appointmentsResult, conversationsResult, stagesResult, eventsResult, clinicResult] = await Promise.all([
     supabase.from('leads').select('id, status, stage_id, created_at'),
     supabase.from('appointments').select('id, status', { count: 'exact' }).eq('status', 'scheduled'),
     supabase.from('conversations').select('id', { count: 'exact' }),
@@ -34,8 +37,12 @@ export default async function DashboardPage() {
       .select('id, type, description, created_at, lead:leads(id, name), user:users(id, name)')
       .order('created_at', { ascending: false })
       .limit(8),
+    clinicIdData
+      ? supabase.from('clinics').select('phone').eq('id', clinicIdData).maybeSingle()
+      : Promise.resolve({ data: null }),
   ])
 
+  const clinic            = clinicResult.data
   const leads             = leadsResult.data ?? []
   const totalLeads        = leads.length
   const leadsAtivos       = leads.filter((l) => l.status === 'active').length
@@ -67,6 +74,13 @@ export default async function DashboardPage() {
         <h1 className="text-xl lg:text-[28px] font-bold text-gray-900 leading-tight">Dashboard</h1>
         <p className="text-sm lg:text-base text-gray-500 mt-1">Acompanhe seus leads e consultas agendadas</p>
       </div>
+
+      {/* Checklist de configuração inicial */}
+      <OnboardingChecklist
+        totalLeads={totalLeads}
+        totalAppointments={consultasMarcadas}
+        clinicPhone={clinic?.phone ?? null}
+      />
 
       {/* Cards de métricas — KPI principal */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -112,9 +126,28 @@ export default async function DashboardPage() {
             <span style={{ fontSize: '14px', color: '#9ca3af' }}>{leadsAtivos} ativos</span>
           </div>
           {totalLeads === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              <p className="font-medium">Comece cadastrando seu primeiro paciente</p>
-              <p className="text-sm mt-1">Os dados do seu funil aparecerão aqui automaticamente.</p>
+            <div className="flex flex-col items-center justify-center py-10 gap-4">
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                style={{ backgroundColor: '#fdf2f8' }}
+              >
+                <Users className="w-7 h-7" style={{ color: '#E91E7B' }} />
+              </div>
+              <div className="text-center">
+                <p style={{ fontSize: '16px', fontWeight: 600, color: '#374151' }}>
+                  Seu funil está esperando
+                </p>
+                <p style={{ fontSize: '14px', color: '#9ca3af', marginTop: '4px' }}>
+                  Cadastre o primeiro paciente para visualizar os dados aqui.
+                </p>
+              </div>
+              <a
+                href="/leads"
+                className="px-5 py-2 rounded-lg font-semibold transition-opacity hover:opacity-90"
+                style={{ backgroundColor: '#E91E7B', color: '#fff', fontSize: '14px' }}
+              >
+                Cadastrar primeiro paciente
+              </a>
             </div>
           ) : (
             <FunnelChart data={funnelData} />
@@ -131,9 +164,13 @@ export default async function DashboardPage() {
           </h2>
 
           {events.length === 0 ? (
-            <p style={{ fontSize: '16px', color: '#9ca3af', textAlign: 'center', paddingTop: '32px' }}>
-              Nenhuma atividade ainda.
-            </p>
+            <div className="flex flex-col items-center justify-center py-8 gap-2">
+              <StickyNote className="w-8 h-8" style={{ color: '#e5e7eb' }} />
+              <p style={{ fontSize: '15px', fontWeight: 500, color: '#9ca3af' }}>Nenhuma atividade ainda</p>
+              <p style={{ fontSize: '13px', color: '#d1d5db', textAlign: 'center' }}>
+                As notas, ligações e agendamentos dos leads aparecerão aqui.
+              </p>
+            </div>
           ) : (
             <ol className="space-y-[16px]">
               {events.map((ev) => {
