@@ -24,11 +24,11 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
   const hostname = request.headers.get('host') || ''
 
-  // crm.cibrido.com.br na raiz → login
+  // crm.cibrido.com.br na raiz → serve /login sem redirect (preserva URL para verificação Meta)
   if (hostname.startsWith('crm.') && path === '/') {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    return NextResponse.redirect(url)
+    return NextResponse.rewrite(url)
   }
 
   // crm.cibrido.com.br tentando acessar landing → bloqueia, manda para login
