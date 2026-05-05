@@ -24,12 +24,7 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
   const hostname = request.headers.get('host') || ''
 
-  // crm.cibrido.com.br na raiz → serve /login sem redirect (preserva URL para verificação Meta)
-  if (hostname.startsWith('crm.') && path === '/') {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.rewrite(url)
-  }
+  // crm.cibrido.com.br na raiz → rewrite para /login feito via next.config.ts rewrites()
 
   // crm.cibrido.com.br tentando acessar landing → bloqueia, manda para login
   if (hostname.startsWith('crm.') && path.startsWith('/clinica-odontologica')) {

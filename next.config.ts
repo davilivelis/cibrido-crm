@@ -60,12 +60,17 @@ const nextConfig: NextConfig = {
         destination: "/clinica-odontologica",
         permanent: true,
       },
-      // crm.cibrido.com.br → CRM login
+    ];
+  },
+
+  async rewrites() {
+    return [
+      // crm.cibrido.com.br raiz → serve /login sem mudar URL
+      // Necessário para verificação de domínio Meta (crawler lê <head> sem seguir redirects)
       {
         source: "/",
         has: [{ type: "host", value: "crm.cibrido.com.br" }],
         destination: "/login",
-        permanent: false,
       },
     ];
   },
