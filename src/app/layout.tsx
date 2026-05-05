@@ -26,7 +26,10 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   other: {
-    "facebook-domain-verification": "b49vgiav9m266uux9k3s8ts04z7u6m",
+    "facebook-domain-verification": [
+      "b49vgiav9m266uux9k3s8ts04z7u6m",   // cibrido.com.br
+      "zii8fltbl5bw63gyd1wy2fa121ppqq",   // crm.cibrido.com.br
+    ],
   },
 };
 
