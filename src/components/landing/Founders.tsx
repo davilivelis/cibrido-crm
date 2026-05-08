@@ -37,7 +37,7 @@
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(245,166,35,0.5)" }}>
                   <img
-                    src="/images/founders/ricardo-face.png"
+                    src="/images/founders/ricardo-face.jpg"
                     alt="Ricardo Souza"
                     className="w-full h-full object-cover"
                     style={{ objectPosition: "center top" }}
@@ -69,7 +69,7 @@
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(233,30,123,0.5)" }}>
                   <img
-                    src="/images/founders/davi-face.png"
+                    src="/images/founders/davi-face.jpg"
                     alt="Davi Junior"
                     className="w-full h-full object-cover"
                     style={{ objectPosition: "center top" }}
