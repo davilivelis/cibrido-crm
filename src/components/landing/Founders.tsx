@@ -39,7 +39,8 @@
                   <img
                     src="/images/founders/ricardo.jpg"
                     alt="Ricardo Souza"
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: "center 33%" }}
                   />
                 </div>
                 <div>
@@ -70,7 +71,8 @@
                   <img
                     src="/images/founders/davi.jpg"
                     alt="Davi Junior"
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: "center 40%" }}
                   />
                 </div>
                 <div>
