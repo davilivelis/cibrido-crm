@@ -33,13 +33,14 @@
                 border: "1px solid rgba(245,166,35,0.3)",
               }}
             >
-              {/* Avatar */}
+              {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black shrink-0"
-                  style={{ color: "#F5A623", backgroundColor: "rgba(245,166,35,0.15)" }}
-                >
-                  RS
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(245,166,35,0.5)" }}>
+                  <img
+                    src="/images/founders/ricardo.jpg"
+                    alt="Ricardo Souza"
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Ricardo Souza</div>
@@ -63,13 +64,14 @@
                 border: "1px solid rgba(233,30,123,0.3)",
               }}
             >
-              {/* Avatar */}
+              {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-black shrink-0"
-                  style={{ color: "#E91E7B", backgroundColor: "rgba(233,30,123,0.15)" }}
-                >
-                  DJ
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(233,30,123,0.5)" }}>
+                  <img
+                    src="/images/founders/davi.jpg"
+                    alt="Davi Junior"
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Davi Junior</div>
