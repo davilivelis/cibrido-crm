@@ -91,10 +91,10 @@ export async function POST(request: Request) {
 
     if (existing) {
       const inviteLink = `${crmUrl}/convite/${existing.token}`
-      // Reenviar WhatsApp se tiver telefone
       if (phone) {
         await sendWhatsApp(phone, buildMessage(name, getPlanLabel(plan), inviteLink))
       }
+      await notifyTeam({ name, email, phone, plan, planLabel: getPlanLabel(plan), inviteLink })
       return NextResponse.json({ ok: true, message: 'Convite ja existe — WhatsApp reenviado', inviteLink })
     }
 
@@ -125,6 +125,9 @@ export async function POST(request: Request) {
       console.warn('[Asaas Webhook] Sem telefone para', email, '— WhatsApp nao enviado')
     }
 
+    // Notifica equipe interna (Davi + Ricardo)
+    await notifyTeam({ name, email, phone, plan, planLabel: getPlanLabel(plan), inviteLink })
+
     console.log(`[Asaas Webhook] Convite criado para ${email} — plano ${plan} — ${inviteLink}`)
 
     return NextResponse.json({ ok: true, plan, inviteLink })
@@ -132,6 +135,42 @@ export async function POST(request: Request) {
     console.error('[Asaas Webhook] Erro:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
+}
+
+async function notifyTeam(params: {
+  name: string
+  email: string
+  phone: string
+  plan: string
+  planLabel: string
+  inviteLink: string
+}): Promise<void> {
+  const { name, email, phone, plan, planLabel, inviteLink } = params
+  const notify = [
+    process.env.NOTIFY_PHONE_DAVI,
+    process.env.NOTIFY_PHONE_RICARDO,
+  ].filter(Boolean) as string[]
+
+  if (notify.length === 0) {
+    console.warn('[Asaas Webhook] Nenhum numero de notificacao interna configurado (NOTIFY_PHONE_DAVI / NOTIFY_PHONE_RICARDO)')
+    return
+  }
+
+  const msg = [
+    `*[NOVO CLIENTE CIBRIDO]* 🎉`,
+    ``,
+    `*Nome:* ${name || '(sem nome)'}`,
+    `*Email:* ${email}`,
+    `*Telefone:* ${phone || '(sem telefone)'}`,
+    `*Plano:* ${planLabel}`,
+    ``,
+    `*Link de acesso enviado ao cliente:*`,
+    inviteLink,
+    ``,
+    `-- Livelis Automacao`,
+  ].join('\n')
+
+  await Promise.all(notify.map((p) => sendWhatsApp(p, msg)))
 }
 
 function buildMessage(name: string, planLabel: string, inviteLink: string): string {
