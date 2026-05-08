@@ -1,6 +1,4 @@
 // Seção 8: Planos + Tabela Comparativa
-const WA_LINK =
-  "https://wa.me/5511960341082?text=Ol%C3%A1!%20Quero%20agendar%20meu%20diagn%C3%B3stico%20gratuito.";
 
 // Feature pode ser booleano ou texto (ex: "10 dias grátis")
 type ValorFeature = boolean | string;
@@ -23,6 +21,7 @@ const PLANOS: {
   destaque: boolean;
   itens: string[];
   features: PlanFeatures;
+  link: string;
 }[] = [
   {
     nome: "Cibri-Lite",
@@ -30,6 +29,7 @@ const PLANOS: {
     slogan: "Nunca mais perca um paciente",
     paraQuem: "Dentista solo ou clínica odontológica pequena sem secretária",
     destaque: false,
+    link: "https://www.asaas.com/c/jz5qhlg0mzux6mzm",
     itens: [
       "Enquanto você atende, seu robô cuida de quem está chegando — respondendo, qualificando e organizando cada novo contato 24h por dia, sem faltar, sem esquecer",
       "Qualificação automática de leads",
@@ -52,6 +52,7 @@ const PLANOS: {
     slogan: "Agenda sempre cheia",
     paraQuem: "Clínica odontológica com secretária que quer escalar",
     destaque: true,
+    link: "https://www.asaas.com/c/i8r1eq79ytajgfqy",
     itens: [
       "Tudo do Cibri-Lite",
       "Robô de Agendamento automático",
@@ -75,6 +76,7 @@ const PLANOS: {
     slogan: "Gestão completa com IA",
     paraQuem: "Clínica odontológica estruturada que quer escalar",
     destaque: false,
+    link: "https://www.asaas.com/c/k1shmq9hbdptvhr7",
     itens: [
       "Tudo do Cibri-Standard",
       "Visão completa de leads, agendamentos e conversão",
@@ -208,7 +210,7 @@ export default function Plans() {
               </ul>
 
               <a
-                href={WA_LINK}
+                href={plano.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center font-bold py-3 rounded-full transition-transform hover:scale-105 active:scale-95"
@@ -218,7 +220,7 @@ export default function Plans() {
                     : { backgroundColor: "#1E2A3A", color: "#FFFFFF" }
                 }
               >
-                Quero esse
+                Contratar agora
               </a>
             </div>
           ))}
