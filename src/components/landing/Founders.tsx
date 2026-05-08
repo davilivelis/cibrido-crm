@@ -35,12 +35,12 @@
             >
               {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(245,166,35,0.5)", backgroundColor: "#2D3E54" }}>
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(245,166,35,0.5)" }}>
                   <img
-                    src="/images/founders/ricardo-nobg.png"
+                    src="/images/founders/ricardo-face.png"
                     alt="Ricardo Souza"
                     className="w-full h-full object-cover"
-                    style={{ objectPosition: "center 20%" }}
+                    style={{ objectPosition: "center top" }}
                   />
                 </div>
                 <div>
@@ -67,12 +67,12 @@
             >
               {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(233,30,123,0.5)", backgroundColor: "#2D3E54" }}>
+                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(233,30,123,0.5)" }}>
                   <img
-                    src="/images/founders/davi-nobg.png"
+                    src="/images/founders/davi-face.png"
                     alt="Davi Junior"
                     className="w-full h-full object-cover"
-                    style={{ objectPosition: "center 25%" }}
+                    style={{ objectPosition: "center top" }}
                   />
                 </div>
                 <div>
