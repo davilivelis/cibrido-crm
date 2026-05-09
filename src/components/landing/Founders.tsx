@@ -35,13 +35,14 @@
             >
               {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(245,166,35,0.5)" }}>
-                  <img
-                    src="/images/founders/ricardo-face.jpg"
-                    alt="Ricardo Souza"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center top" }}
-                  />
+                <div className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center" style={{ border: "2px solid rgba(245,166,35,0.5)", backgroundColor: "rgba(245,166,35,0.12)" }}>
+                  {/* Ícone comercial presencial — substituir por foto quando disponível */}
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Ricardo Souza</div>
@@ -67,13 +68,14 @@
             >
               {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full overflow-hidden shrink-0" style={{ border: "2px solid rgba(233,30,123,0.5)" }}>
-                  <img
-                    src="/images/founders/davi-face.jpg"
-                    alt="Davi Junior"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center top" }}
-                  />
+                <div className="w-16 h-16 rounded-full shrink-0 flex items-center justify-center" style={{ border: "2px solid rgba(233,30,123,0.5)", backgroundColor: "rgba(233,30,123,0.12)" }}>
+                  {/* Ícone projetos e estratégia digital — substituir por foto quando disponível */}
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E91E7B" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                    <polyline points="6,13 10,9 13,12 17,8"/>
+                  </svg>
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Davi Junior</div>
