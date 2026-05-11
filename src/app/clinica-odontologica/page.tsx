@@ -111,9 +111,11 @@ export default function ClinicaOdontologica() {
         <TickerBar />
         <Nav />
         <Hero />
-        <Services />
         <Metodologia />
+        {/* Separador dourado — respiro visual entre dois blocos navy */}
+        <div style={{ height: "2px", background: "linear-gradient(90deg, transparent, #F5A623 30%, #F5A623 70%, transparent)" }} />
         <Founders />
+        <Services />
         <HowToStart />
         <Plans />
         <FAQ />
