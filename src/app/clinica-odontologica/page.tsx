@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import TickerBar     from "@/components/landing/TickerBar";
 import Nav           from "@/components/landing/Nav";
 import Hero          from "@/components/landing/Hero";
-import Numbers       from "@/components/landing/Numbers";
 import Services      from "@/components/landing/Services";
 import Metodologia   from "@/components/landing/Metodologia";
 import Founders      from "@/components/landing/Founders";
@@ -113,7 +112,6 @@ export default function ClinicaOdontologica() {
         <TickerBar />
         <Nav />
         <Hero />
-        <Numbers />
         <Services />
         <Metodologia />
         <Founders />

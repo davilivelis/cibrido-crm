@@ -91,37 +91,6 @@
 
           </div>
 
-          {/* Bloco inferior: manifesto + logo — empilham no mobile, lado a lado no sm+ */}
-          <div className="flex flex-col sm:flex-row gap-8 items-center">
-
-            {/* Texto manifesto */}
-            <div
-              className="flex-[1.3] italic leading-relaxed text-base sm:text-xl"
-              style={{
-                color: "#FFFFFF",
-                lineHeight: 1.8,
-                borderTop: "1px solid rgba(245,166,35,0.2)",
-                paddingTop: "20px",
-              }}
-            >
-              A Cíbrido nasceu da convicção de que o digital sozinho não basta — e o presencial
-              sozinho também não. Quando a prospecção na rua alimenta o sistema digital e os
-              agentes de IA qualificam quem veio do panfleto, do cartão ou da indicação, o
-              resultado é um ciclo que não para. Não é só tecnologia. Não é só presença de rua.
-              É os dois trabalhando juntos para sua clínica odontológica faturar mais.
-            </div>
-
-            {/* Logo — max-w para ser responsiva */}
-            <div className="flex-[0.5] flex flex-col items-center">
-              <img
-                src="/logo-quem-somos.png"
-                alt="Cíbrido"
-                className="w-full max-w-[200px]"
-                style={{ height: "auto" }}
-              />
-            </div>
-
-          </div>
 
         </div>
       </section>
