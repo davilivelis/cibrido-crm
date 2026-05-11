@@ -18,12 +18,11 @@ export default function CTAFooter() {
       <section className="py-16 sm:py-24" style={{ backgroundColor: "#1E2A3A" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-            O agente não é promessa. É ao vivo.
+            Fale com o Juliano agora.
           </h2>
-          <p className="text-gray-400 mb-10 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
-            Clique abaixo e converse agora com o mesmo sistema que vamos ativar na sua clínica.
-            Veja com seus próprios olhos como ele qualifica, responde e agenda — antes de tomar qualquer decisão.{" "}
-            <span className="text-white font-semibold">Diagnóstico gratuito. Sem fidelidade. Sem enrolação.</span>
+          <p className="text-gray-400 mb-10 text-base sm:text-xl max-w-xl mx-auto leading-relaxed">
+            Ele é nosso agente virtual. Entende o momento da sua clínica e agenda seu diagnóstico gratuito com um especialista Cíbrido.{" "}
+            <span className="text-white font-semibold">Simples assim.</span>
           </p>
           <a
             href={WA_LINK}
@@ -33,7 +32,7 @@ export default function CTAFooter() {
             style={{ backgroundColor: "#25D366" }}
           >
             <IconeWhatsApp />
-            Falar com o agente agora
+            Falar com o Juliano
           </a>
         </div>
       </section>

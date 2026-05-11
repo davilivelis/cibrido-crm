@@ -26,9 +26,9 @@ const PASSOS = [
   },
   {
     letra: "A",
-    titulo: "Automação",
+    titulo: "Atendimento Dedicado",
     descricao:
-      "Seu atendimento funciona 24 horas, mesmo quando a clínica está fechada. Você foca nos pacientes, a tecnologia com acompanhamento humano cuida do resto.",
+      "Tratamos sua clínica como se fosse o nosso próprio negócio. Acompanhamento próximo, presença constante e ação imediata — para que cada oportunidade de crescimento seja aproveitada.",
   },
 ];
 
