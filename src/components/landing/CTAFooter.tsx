@@ -18,10 +18,10 @@ export default function CTAFooter() {
       <section className="py-16 sm:py-24" style={{ backgroundColor: "#1E2A3A" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-            Pronto pra fazer sua clínica odontológica faturar mais?
+            Quer ver um agente virtual funcionando?
           </h2>
           <p className="text-gray-400 mb-10 text-base sm:text-xl">
-            Teste gratuito de 10 dias. Sem fidelidade. Sem burocracia.
+            Clique abaixo, fale com nosso agente e veja ele agendando uma visita com um de nossos especialistas. Diagnóstico gratuito — sem compromisso.
           </p>
           <a
             href={WA_LINK}

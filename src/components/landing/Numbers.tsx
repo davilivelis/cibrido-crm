@@ -1,6 +1,5 @@
 // Seção 4: Números + Prova Social — card navy premium, números dourados
 const STATS = [
-  { valor: "93%",  descricao: "Taxa de resposta dos agentes"             },
   { valor: "24/7", descricao: "Atendimento ininterrupto"                 },
   { valor: "3x",   descricao: "Mais agendamentos no primeiro mês"        },
   { valor: "10",   descricao: "Minutos para primeira resposta ao lead"   },
@@ -22,7 +21,7 @@ export default function Numbers() {
           style={{ backgroundColor: "#1E2A3A", borderColor: "rgba(245,166,35,0.25)" }}
         >
           {/* Grid de métricas: 2 colunas no mobile, 4 no desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
             {STATS.map((stat) => (
               <div key={stat.valor} className="text-center">
                 <div

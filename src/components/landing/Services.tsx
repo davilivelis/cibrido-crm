@@ -42,37 +42,29 @@ const SERVICOS: {
   icone: ReactNode;
   titulo: string;
   subtitulo?: string;
-  descricao: string;
 }[] = [
   {
-    icone: <IconeAgente />,
-    titulo: "Agentes de IA",
-    subtitulo: "Qualificador + Agendador",
-    descricao:
-      "Atendimento automático 24h. O Agente Qualificador de Pacientes e o Agente Agendador de Consultas trabalham juntos no WhatsApp da sua clínica odontológica.",
-  },
-  {
     icone: <IconeCRM />,
-    titulo: "CRM Inteligente",
-    descricao:
-      "Gestão completa de leads e pacientes. Acompanhe toda a jornada, do primeiro contato ao agendamento confirmado.",
+    titulo: "Agenda Organizada",
   },
   {
-    icone: <IconeTrafego />,
-    titulo: "Tráfego Pago",
-    subtitulo: "Google Ads + Meta Ads",
-    descricao:
-      "Campanhas especializadas para clínicas odontológicas. Leads qualificados que chegam prontos para agendar.",
+    icone: <IconeAgente />,
+    titulo: "Atendimento Dedicado",
+    subtitulo: "ao Seu Negócio",
   },
   {
     icone: <IconePresencial />,
-    titulo: "Atendimento Presencial",
-    descricao:
-      "Consultoria e suporte presencial em Diadema e região. Nossa equipe vai até a sua clínica odontológica.",
+    titulo: "Presença no Bairro",
+    subtitulo: "Físico + Digital Integrados",
+  },
+  {
+    icone: <IconeTrafego />,
+    titulo: "Engajamento que Impulsiona",
+    subtitulo: "Resultados",
   },
 ];
 
-// Seção 5: Serviços — 4 cards com ícones navy, fundo branco
+// Seção 5: Serviços — 4 cards limpos (só ícone + título) + cardápio completo
 export default function Services() {
   return (
     <section id="solucoes" className="py-20 bg-white">
@@ -84,39 +76,75 @@ export default function Services() {
           Soluções para sua clínica odontológica
         </h2>
         <p className="text-center mb-14 max-w-2xl mx-auto text-lg" style={{ color: "#6B7280" }}>
-          Digital e presencial. Tudo integrado para você atender mais e melhor.
+          Enquanto você cuida dos pacientes, nós cuidamos do crescimento da sua clínica.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4 pilares — cards limpos */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {SERVICOS.map((servico) => (
             <div
               key={servico.titulo}
               className="rounded-2xl p-6 text-center transition-all duration-200 hover:-translate-y-1"
               style={{ border: "1.5px solid #E91E7B", boxShadow: "0 4px 20px rgba(30,42,58,0.09)" }}
             >
-              {/* Ícone */}
               <div
                 className="inline-flex items-center justify-center w-16 h-16 rounded-xl mb-4"
                 style={{ color: "#1E2A3A", backgroundColor: "#F0F2F5" }}
               >
                 {servico.icone}
               </div>
-
-              <h3 className="font-bold text-xl mb-1" style={{ color: "#1E2A3A" }}>
+              <h3 className="font-bold text-lg leading-snug" style={{ color: "#1E2A3A" }}>
                 {servico.titulo}
               </h3>
-
               {servico.subtitulo && (
-                <p className="text-sm font-semibold mb-2" style={{ color: "#E91E7B" }}>
+                <p className="text-sm font-semibold mt-1" style={{ color: "#E91E7B" }}>
                   {servico.subtitulo}
                 </p>
               )}
-
-              <p className="leading-relaxed" style={{ color: "#6B7280", fontSize: "0.975rem" }}>
-                {servico.descricao}
-              </p>
             </div>
           ))}
+        </div>
+
+        {/* Cardápio completo */}
+        <div
+          className="rounded-2xl p-8 sm:p-12"
+          style={{ backgroundColor: "#1E2A3A" }}
+        >
+          <p className="text-center text-lg mb-2 font-semibold" style={{ color: "#F5A623" }}>
+            O QUE A CÍBRIDO TEM A OFERECER
+          </p>
+          <p className="text-center mb-10 max-w-2xl mx-auto" style={{ color: "#A0AEC0" }}>
+            Você pode escolher com a Cíbrido o que mais atende seu negócio.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              "CRM — organizar e cuidar do atendimento",
+              "Agente virtual — primeiro atendimento",
+              "Agente virtual — agendamento",
+              "Site",
+              "Tráfego pago",
+              "Mapeamento da concorrência",
+              "Pesquisa mercadológica",
+              "Coleta de leads",
+              "Prospecção estratégica presencial",
+              "Abordagem e encaminhamento para a clínica",
+              "Fotógrafo profissional",
+              "Impressão gráfica",
+              "Propaganda volante",
+            ].map((item) => (
+              <span
+                key={item}
+                className="px-4 py-2 rounded-full text-sm font-medium"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  color: "#ffffff",
+                  border: "1px solid rgba(245,166,35,0.25)",
+                }}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

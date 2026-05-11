@@ -23,7 +23,7 @@ const PERGUNTAS = [
   {
     pergunta: "O atendimento é realmente presencial em Diadema?",
     resposta:
-      "Sim. A Cíbrido oferece consultoria e suporte presencial para clínicas odontológicas em Diadema e região do Grande ABC.",
+      "Sim. A Cíbrido oferece consultoria e suporte presencial para clínicas odontológicas em Diadema e regiões próximas.",
   },
   {
     pergunta: "Posso cancelar a qualquer momento?",

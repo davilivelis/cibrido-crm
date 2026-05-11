@@ -77,7 +77,7 @@ const faqSchema = {
       name: "O atendimento é realmente presencial em Diadema?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Sim. A Cíbrido oferece consultoria e suporte presencial para clínicas odontológicas em Diadema e região do Grande ABC.",
+        text: "Sim. A Cíbrido oferece consultoria e suporte presencial para clínicas odontológicas em Diadema e regiões próximas.",
       },
     },
     {

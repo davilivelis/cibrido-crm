@@ -2,15 +2,15 @@
 const PASSOS = [
   {
     numero: "01",
-    titulo: "Teste gratuito de 10 dias",
+    titulo: "Visita consultiva presencial",
     descricao:
-      "Ativamos os agentes de IA na sua clínica odontológica sem custo. Você vê funcionando com leads reais antes de pagar qualquer coisa.",
+      "Nossa equipe vai até sua clínica em Diadema e região para entender sua operação, mapear oportunidades e apresentar o que faz sentido para o seu negócio.",
   },
   {
     numero: "02",
-    titulo: "Visita consultiva presencial",
+    titulo: "Teste gratuito de 10 dias",
     descricao:
-      "Nossa equipe vai até sua clínica em Diadema e região para entender sua operação e configurar tudo do jeito certo.",
+      "Ativamos os agentes de IA na sua clínica odontológica sem custo. Você vê funcionando com leads reais antes de pagar qualquer coisa.",
   },
   {
     numero: "03",
