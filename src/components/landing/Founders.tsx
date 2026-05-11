@@ -61,12 +61,12 @@
               className="flex-1 rounded-xl p-6 sm:p-8 flex flex-col gap-4"
               style={{
                 backgroundColor: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(233,30,123,0.3)",
+                border: "1px solid rgba(245,166,35,0.3)",
               }}
             >
               {/* Avatar com foto */}
               <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-full shrink-0 overflow-hidden" style={{ border: "2px solid rgba(233,30,123,0.5)" }}>
+                <div className="w-20 h-20 rounded-full shrink-0 overflow-hidden" style={{ border: "2px solid rgba(245,166,35,0.5)" }}>
                   <img
                     src="/images/landing/davi-junior.jpg"
                     alt="Davi Junior"
@@ -75,7 +75,7 @@
                 </div>
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Davi Junior</div>
-                  <div className="font-semibold text-base sm:text-lg" style={{ color: "#E91E7B" }}>
+                  <div className="font-semibold text-base sm:text-lg" style={{ color: "#F5A623" }}>
                     Projetos &amp; Estratégia Digital
                   </div>
                 </div>
