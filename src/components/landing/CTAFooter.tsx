@@ -18,10 +18,12 @@ export default function CTAFooter() {
       <section className="py-16 sm:py-24" style={{ backgroundColor: "#1E2A3A" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-            Quer ver um agente virtual funcionando?
+            O agente não é promessa. É ao vivo.
           </h2>
-          <p className="text-gray-400 mb-10 text-base sm:text-xl">
-            Clique abaixo, fale com nosso agente e veja ele agendando uma visita com um de nossos especialistas. Diagnóstico gratuito — sem compromisso.
+          <p className="text-gray-400 mb-10 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            Clique abaixo e converse agora com o mesmo sistema que vamos ativar na sua clínica.
+            Veja com seus próprios olhos como ele qualifica, responde e agenda — antes de tomar qualquer decisão.{" "}
+            <span className="text-white font-semibold">Diagnóstico gratuito. Sem fidelidade. Sem enrolação.</span>
           </p>
           <a
             href={WA_LINK}
@@ -31,7 +33,7 @@ export default function CTAFooter() {
             style={{ backgroundColor: "#25D366" }}
           >
             <IconeWhatsApp />
-            Agende o seu Diagnóstico Gratuito
+            Falar com o agente agora
           </a>
         </div>
       </section>
@@ -43,7 +45,7 @@ export default function CTAFooter() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-center md:text-left">
-            <p className="text-gray-500">© 2026 Cíbrido Soluções em IA — Diadema, SP</p>
+            <p className="text-gray-500">© 2026 Sistema Cíbrido — Diadema, SP</p>
             <div className="flex flex-col sm:flex-row items-center gap-3 text-gray-400">
               <a
                 href="https://instagram.com/grupocibrido"

@@ -11,7 +11,6 @@ import HowToStart    from "@/components/landing/HowToStart";
 import Plans         from "@/components/landing/Plans";
 import FAQ           from "@/components/landing/FAQ";
 import CTAFooter     from "@/components/landing/CTAFooter";
-import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 
 export const metadata: Metadata = {
   title: "Clínica Odontológica com Agentes de IA — Sistema Cíbrido",
@@ -119,7 +118,6 @@ export default function ClinicaOdontologica() {
         <Plans />
         <FAQ />
         <CTAFooter />
-        <WhatsAppFloat />
       </main>
     </>
   );

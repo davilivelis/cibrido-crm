@@ -76,7 +76,7 @@ export default function Services() {
           Soluções para sua clínica odontológica
         </h2>
         <p className="text-center mb-14 max-w-2xl mx-auto text-lg" style={{ color: "#6B7280" }}>
-          Enquanto você cuida dos pacientes, nós cuidamos do crescimento da sua clínica.
+          Cada solução foi desenhada para o dentista que está construindo uma clínica de verdade, não só um consultório.
         </p>
 
         {/* 4 pilares — cards limpos */}
@@ -110,11 +110,11 @@ export default function Services() {
           className="rounded-2xl p-8 sm:p-12"
           style={{ backgroundColor: "#1E2A3A" }}
         >
-          <p className="text-center text-lg mb-2 font-semibold" style={{ color: "#F5A623" }}>
-            O QUE A CÍBRIDO TEM A OFERECER
+          <p className="text-center text-lg mb-2 font-semibold tracking-widest uppercase" style={{ color: "#F5A623", letterSpacing: "0.18em" }}>
+            Monte o seu Sistema
           </p>
           <p className="text-center mb-10 max-w-2xl mx-auto" style={{ color: "#A0AEC0" }}>
-            Você pode escolher com a Cíbrido o que mais atende seu negócio.
+            Cada clínica tem um momento diferente. Escolha as peças que fazem sentido agora — e expanda conforme crescer.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {[
