@@ -8,9 +8,18 @@ export default async function CallsPage() {
     pendente:     'bg-yellow-100 text-yellow-700',
     nao_apareceu: 'bg-red-100 text-red-700',
     perdeu:       'bg-gray-100 text-gray-500',
+    agendado:     'bg-blue-100 text-blue-700',
+    em_contato:   'bg-purple-100 text-purple-700',
   }
   const OUTCOME_LABELS: Record<string, string> = {
     fechou: 'Fechou', pendente: 'Pendente', nao_apareceu: 'Não apareceu', perdeu: 'Perdeu',
+    agendado: 'Agendado', em_contato: 'Em contato',
+  }
+
+  function parseContext(ctx: string | null) {
+    if (!ctx) return { name: '—', clinic: '—' }
+    const parts = ctx.split(' - ')
+    return { name: parts[0] ?? '—', clinic: parts[1] ?? '—' }
   }
 
   return (
@@ -35,8 +44,12 @@ export default async function CallsPage() {
             )}
             {calls.map((c: Record<string, unknown>) => (
               <tr key={c.id as string} style={{ borderTop: '1px solid #F3F4F6' }} className="hover:bg-[#FAFAFA] transition-colors">
-                <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 600, color: '#111827' }}>{(c.cibrido_leads as Record<string, string>)?.name ?? '—'}</td>
-                <td className="px-5 py-3.5" style={{ fontSize: 15, color: '#374151' }}>{(c.cibrido_leads as Record<string, string>)?.clinic_name ?? '—'}</td>
+                <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 600, color: '#111827' }}>
+                  {(c.cibrido_leads as Record<string, string>)?.name ?? parseContext(c.lead_context as string).name}
+                </td>
+                <td className="px-5 py-3.5" style={{ fontSize: 15, color: '#374151' }}>
+                  {(c.cibrido_leads as Record<string, string>)?.clinic_name ?? parseContext(c.lead_context as string).clinic}
+                </td>
                 <td className="px-5 py-3.5" style={{ fontSize: 14, color: '#374151' }}>
                   {new Date(c.scheduled_at as string).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}
                 </td>
