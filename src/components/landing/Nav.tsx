@@ -92,6 +92,15 @@ export default function Nav() {
                 {link.label}
               </a>
             ))}
+            <a
+              href={WPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-cta-landing text-white text-sm font-bold px-5 py-3 rounded-lg text-center"
+              onClick={() => setMenuAberto(false)}
+            >
+              Diagnóstico Gratuito
+            </a>
           </div>
         )}
       </div>

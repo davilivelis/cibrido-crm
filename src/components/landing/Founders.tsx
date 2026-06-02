@@ -49,7 +49,7 @@
                   </div>
                 </div>
               </div>
-              <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
+              <p className="leading-relaxed text-sm sm:text-base md:text-lg" style={{ color: "#A0AEC0" }}>
                 Estuda o negócio da sua clínica odontológica, planeja ações com estratégia e constrói
                 presença onde ela mais importa: na rua, no bairro, na porta do seu consultório.
                 Anos de experiência em prospecção presencial e inteligência de mercado.
@@ -80,7 +80,7 @@
                   </div>
                 </div>
               </div>
-              <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
+              <p className="leading-relaxed text-sm sm:text-base md:text-lg" style={{ color: "#A0AEC0" }}>
                 Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
                 automações e tráfego pago que movimentaram milhares de leads. Transforma dados
                 em crescimento previsível para clínicas odontológicas.

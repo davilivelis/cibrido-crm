@@ -15,7 +15,7 @@ function WppIcon() {
 // Seção Hero — foto de fundo com overlay, badge, h1, CTA e nota do Juliano
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden min-h-[520px] sm:min-h-0">
+    <section className="relative overflow-hidden min-h-[680px] sm:min-h-0">
 
       {/* DESKTOP (sm+): imagem landscape natural define a altura da seção */}
       <Image
@@ -44,8 +44,8 @@ export default function Hero() {
 
       {/* Conteúdo sobre a imagem */}
       <div className="absolute inset-0 z-10 flex items-center justify-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 sm:py-0 text-center">
-          <div className="space-y-6 sm:space-y-7">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 sm:py-0 text-center">
+          <div className="space-y-4 sm:space-y-7">
 
             {/* Badge */}
             <div className="flex justify-center">
@@ -95,7 +95,7 @@ export default function Hero() {
                 href={WPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-cta-landing inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-8 py-4 rounded-xl shadow-2xl w-full sm:w-auto whitespace-nowrap"
+                className="btn-cta-landing inline-flex items-center justify-center gap-3 text-white font-bold text-sm sm:text-lg px-5 sm:px-8 py-4 rounded-xl shadow-2xl w-full sm:w-auto"
               >
                 <WppIcon />
                 Solicitar Diagnóstico Gratuito

@@ -69,12 +69,12 @@ export default function Services() {
     <section id="solucoes" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-4"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Soluções para sua clínica odontológica
         </h2>
-        <p className="text-center mb-14 max-w-2xl mx-auto text-lg" style={{ color: "#6B7280" }}>
+        <p className="text-center mb-10 sm:mb-14 max-w-2xl mx-auto text-sm sm:text-base md:text-lg" style={{ color: "#6B7280" }}>
           Cada solução foi desenhada para um dentista que está construindo uma clínica de verdade — não só um consultório.
         </p>
 

@@ -21,12 +21,12 @@ export default function HowToStart() {
     <section id="como-comecar" className="py-20" style={{ backgroundColor: "#F5F5F5" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-4"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Como começar
         </h2>
-        <p className="text-center mb-14 text-lg" style={{ color: "#6B7280" }}>
+        <p className="text-center mb-8 sm:mb-14 text-sm sm:text-base md:text-lg" style={{ color: "#6B7280" }}>
           Simples. Sem complicação. Sem fidelidade.
         </p>
 
@@ -40,14 +40,14 @@ export default function HowToStart() {
                 />
               )}
 
-              <div className="relative z-10 bg-white rounded-2xl p-8 text-center shadow-sm border border-gray-100 h-full flex flex-col">
+              <div className="relative z-10 bg-white rounded-2xl p-5 sm:p-8 text-center shadow-sm border border-gray-100 h-full flex flex-col">
                 <div
-                  className="text-6xl font-black mb-4 leading-none"
+                  className="text-5xl sm:text-6xl font-black mb-4 leading-none"
                   style={{ color: "#E91E7B" }}
                 >
                   {passo.numero}
                 </div>
-                <h3 className="font-bold text-2xl mb-3" style={{ color: "#1E2A3A" }}>
+                <h3 className="font-bold text-xl sm:text-2xl mb-3" style={{ color: "#1E2A3A" }}>
                   {passo.titulo}
                 </h3>
                 <p className="text-gray-500 leading-relaxed flex-1" style={{ fontSize: "1rem" }}>

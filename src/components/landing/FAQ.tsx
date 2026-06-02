@@ -44,7 +44,7 @@ export default function FAQ() {
     <section id="duvidas" className="py-20" style={{ backgroundColor: "#F5F5F5" }}>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-14"
+          className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-center mb-8 sm:mb-14"
           style={{ color: "#1E2A3A" }}
         >
           Dúvidas frequentes
@@ -57,12 +57,12 @@ export default function FAQ() {
               className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm"
             >
               <button
-                className="w-full text-left p-6 flex items-center justify-between gap-4"
+                className="w-full text-left p-4 sm:p-6 flex items-center justify-between gap-4"
                 style={{ color: "#1E2A3A" }}
                 onClick={() => toggle(i)}
                 aria-expanded={aberto === i}
               >
-                <span className="font-semibold text-lg">{item.pergunta}</span>
+                <span className="font-semibold text-base sm:text-lg">{item.pergunta}</span>
                 <span
                   className="shrink-0 text-2xl font-light transition-transform duration-200"
                   style={{
@@ -75,7 +75,7 @@ export default function FAQ() {
               </button>
 
               {aberto === i && (
-                <div className="px-6 pb-6 leading-relaxed" style={{ color: "#4B5563", fontSize: "1rem" }}>
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6 leading-relaxed" style={{ color: "#4B5563", fontSize: "0.9375rem" }}>
                   {item.resposta}
                 </div>
               )}

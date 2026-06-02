@@ -55,7 +55,7 @@ export default function Metodologia() {
             mobile (< 768px): 1 coluna, empilhados
             tablet (768–1023px): 3 colunas → 2 linhas (3+2)
             desktop (1024px+): 5 colunas lado a lado */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 md:gap-5 lg:gap-8">
           {PASSOS.map((passo, i) => (
             <div key={i} className="text-center">
               {/* Círculo com a letra */}
