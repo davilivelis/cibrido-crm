@@ -5,9 +5,9 @@ import Image from "next/image";
 
 // Links de âncora para as seções da landing page
 const NAV_LINKS = [
-  { href: "#solucoes", label: "Soluções" },
-  { href: "#planos",   label: "Planos"   },
-  { href: "#duvidas",  label: "Dúvidas"  },
+  { href: "#solucoes",      label: "Soluções"      },
+  { href: "#como-comecar",  label: "Como Começar"  },
+  { href: "#duvidas",       label: "Dúvidas"       },
 ];
 
 // Seção 2: Nav sticky — fundo navy, logo + links + hamburger mobile

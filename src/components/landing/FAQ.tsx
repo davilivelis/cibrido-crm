@@ -2,45 +2,42 @@
 
 import { useState } from "react";
 
-// Seção 9: FAQ — accordion React, 6 perguntas
-// (Schema JSON-LD está no layout.tsx da rota)
+// Seção: FAQ — accordion React, 6 perguntas (v2)
 const PERGUNTAS = [
   {
     pergunta: "O que é um agente de IA para clínica odontológica?",
     resposta:
-      "É um assistente virtual inteligente que atende seus pacientes pelo WhatsApp 24h por dia, qualifica leads e agenda consultas automaticamente — sem precisar de recepcionista disponível o tempo todo.",
+      "É um assistente virtual que atende seus pacientes pelo WhatsApp 24 horas por dia. Qualifica quem entrou em contato, filtra leads com real interesse e organiza os agendamentos — sem precisar de uma secretária disponível em tempo integral.",
   },
   {
-    pergunta: "Preciso ter conhecimento técnico para usar o Sistema Cíbrido?",
+    pergunta: "Preciso ter conhecimento técnico para usar as soluções da Cíbrido?",
     resposta:
-      "Não. O Sistema Cíbrido é configurado pela nossa equipe e funciona de forma totalmente gerenciada. Você só precisa acompanhar os relatórios e os resultados.",
+      "Não. Nossa equipe cuida de toda a configuração, implantação e acompanhamento. Você foca no que sabe fazer: cuidar dos seus pacientes.",
   },
   {
-    pergunta: "Como funciona o teste gratuito de 10 dias?",
+    pergunta: "Como funciona o Diagnóstico Gratuito?",
     resposta:
-      "Você ativa o sistema sem pagar nada. Durante 10 dias, testamos os agentes na sua clínica odontológica com leads reais. Ao final, você escolhe o plano que faz sentido para o seu volume.",
+      "Nossa equipe vai até sua clínica, entende o momento atual, mapeia o que está travando o crescimento e apresenta o que faz sentido para o seu cenário. Sem custo. Sem compromisso de continuidade.",
   },
   {
-    pergunta: "O atendimento é realmente presencial em Diadema?",
+    pergunta: "O atendimento presencial é só para determinadas regiões?",
     resposta:
-      "Sim. A Cíbrido oferece consultoria e suporte presencial para clínicas odontológicas em Diadema e regiões próximas.",
+      "Atendemos clínicas e consultórios na Grande São Paulo e região. Se você está fora desse perímetro, fale com o Juliano — avaliamos juntos a melhor forma de chegar até você.",
   },
   {
-    pergunta: "Posso cancelar a qualquer momento?",
+    pergunta: "Como funciona o processo depois do Diagnóstico?",
     resposta:
-      "Sim. Não há fidelidade nem multa. Você cancela quando quiser, sem burocracia.",
+      "Após o diagnóstico, apresentamos um plano personalizado com base no que encontramos na sua clínica. A partir daí, você decide o que faz sentido — sem pressão e sem fidelidade forçada.",
   },
   {
     pergunta: "Como os agentes de IA se integram com meu WhatsApp?",
     resposta:
-      "Integramos diretamente com o número de WhatsApp da sua clínica odontológica via API oficial. Os agentes respondem, qualificam e agendam — tudo pelo mesmo número que você já usa.",
+      "Por meio de uma conexão segura ao número da sua clínica. O agente atende como um funcionário seu, com o nome e a personalidade que você definir. Pacientes não percebem a diferença — e quem percebe, aprecia a agilidade.",
   },
 ];
 
 export default function FAQ() {
-  // Índice do item aberto (-1 = nenhum)
   const [aberto, setAberto] = useState<number>(-1);
-
   const toggle = (i: number) => setAberto(aberto === i ? -1 : i);
 
   return (
@@ -66,7 +63,6 @@ export default function FAQ() {
                 aria-expanded={aberto === i}
               >
                 <span className="font-semibold text-lg">{item.pergunta}</span>
-                {/* Ícone + animado */}
                 <span
                   className="shrink-0 text-2xl font-light transition-transform duration-200"
                   style={{
@@ -78,7 +74,6 @@ export default function FAQ() {
                 </span>
               </button>
 
-              {/* Resposta — só renderiza quando aberto */}
               {aberto === i && (
                 <div className="px-6 pb-6 leading-relaxed" style={{ color: "#4B5563", fontSize: "1rem" }}>
                   {item.resposta}
