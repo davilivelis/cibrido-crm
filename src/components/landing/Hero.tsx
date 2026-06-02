@@ -95,15 +95,15 @@ export default function Hero() {
                 href={WPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-8 py-4 rounded-xl shadow-2xl transition-all hover:scale-105 active:scale-95 w-full sm:w-auto whitespace-nowrap"
-                style={{ backgroundColor: "#25D366" }}
+                className="btn-cta-landing inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-8 py-4 rounded-xl shadow-2xl w-full sm:w-auto whitespace-nowrap"
               >
                 <WppIcon />
                 Solicitar Diagnóstico Gratuito
               </a>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-sm mt-2">
                 💬 Você será atendido pelo{" "}
-                <strong className="text-gray-200">Juliano</strong>, nosso agente virtual — rápido, objetivo e sem enrolação.
+                <strong className="text-gray-200">Juliano</strong>
+                , nosso agente virtual — rápido, objetivo e sem enrolação.
               </p>
             </div>
 

@@ -45,7 +45,7 @@
                 <div>
                   <div className="text-white font-bold text-xl sm:text-2xl leading-tight">Ricardo Souza</div>
                   <div className="font-semibold text-base sm:text-lg" style={{ color: "#F5A623" }}>
-                    Comercial &amp; Estratégia Offline
+                    Consultor | Comercial &amp; Estratégia Offline
                   </div>
                 </div>
               </div>

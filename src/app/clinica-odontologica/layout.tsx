@@ -93,6 +93,21 @@ export default function ClinicaOdontologicaLayout({
 }) {
   return (
     <>
+      <style>{`
+        .btn-cta-landing {
+          background-color: #25D366 !important;
+          transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+        }
+        .btn-cta-landing:hover {
+          background-color: #C1272D !important;
+          box-shadow: 0 8px 28px rgba(193,39,45,0.35) !important;
+          transform: translateY(-1px) !important;
+        }
+        .btn-cta-landing:active {
+          background-color: #9e1f24 !important;
+          transform: translateY(0) !important;
+        }
+      `}</style>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

@@ -54,8 +54,7 @@ export default function Nav() {
               href={WPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white text-sm font-bold px-5 py-2 rounded-lg transition-colors"
-              style={{ backgroundColor: "#25D366" }}
+              className="btn-cta-landing text-white text-sm font-bold px-5 py-2 rounded-lg"
             >
               Diagnóstico Gratuito
             </a>

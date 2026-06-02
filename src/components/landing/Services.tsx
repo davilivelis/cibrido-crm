@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 
-// Ícones SVG monocromáticos para cada serviço
 function IconeAgente() {
   return (
     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,33 +37,33 @@ function IconePresencial() {
   );
 }
 
-const SERVICOS: {
-  icone: ReactNode;
-  titulo: string;
-  subtitulo?: string;
-}[] = [
+const SERVICOS: { icone: ReactNode; titulo: string; subtitulo?: string; descricao: string }[] = [
   {
     icone: <IconeCRM />,
     titulo: "Agenda Organizada",
+    descricao: "Pacientes chegando na hora certa, lembretes automáticos e zero buraco na agenda. Sua secretária foca no que importa.",
   },
   {
     icone: <IconeAgente />,
-    titulo: "Atendimento Dedicado",
-    subtitulo: "ao Seu Negócio",
+    titulo: "Engajamento que Impulsiona",
+    subtitulo: "Resultados",
+    descricao: "Lead tratado, oportunidade aproveitada. Nenhum contato cai no esquecimento. Do primeiro interesse até o agendamento — e depois, até a fidelização.",
   },
   {
     icone: <IconePresencial />,
     titulo: "Presença no Bairro",
     subtitulo: "Físico + Digital Integrados",
+    descricao: "Quem está na rua conhece seu nome. Quem está no celular encontra sua clínica. Os dois canais trabalhando juntos, de forma planejada, para que o boca a boca vire sistema.",
   },
   {
     icone: <IconeTrafego />,
-    titulo: "Engajamento que Impulsiona",
-    subtitulo: "Resultados",
+    titulo: "Atendimento Dedicado",
+    subtitulo: "ao Seu Negócio",
+    descricao: "Cuidamos da sua clínica como se fosse a nossa. Presença constante, ajustes rápidos e estratégia em evolução contínua — sem você precisar pedir.",
   },
 ];
 
-// Seção 5: Serviços — 4 cards limpos (só ícone + título) + cardápio completo
+// Seção: Soluções — 4 cards com descrição + Montagem Customizada
 export default function Services() {
   return (
     <section id="solucoes" className="py-20 bg-white">
@@ -76,61 +75,66 @@ export default function Services() {
           Soluções para sua clínica odontológica
         </h2>
         <p className="text-center mb-14 max-w-2xl mx-auto text-lg" style={{ color: "#6B7280" }}>
-          Cada solução foi desenhada para o dentista que está construindo uma clínica de verdade, não só um consultório.
+          Cada solução foi desenhada para um dentista que está construindo uma clínica de verdade — não só um consultório.
         </p>
 
-        {/* 4 pilares — cards limpos */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        {/* 4 pilares — cards com ícone + título + descrição */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {SERVICOS.map((servico) => (
             <div
               key={servico.titulo}
-              className="rounded-2xl p-6 text-center transition-all duration-200 hover:-translate-y-1"
+              className="rounded-2xl p-6 flex flex-col gap-4 transition-all duration-200 hover:-translate-y-1"
               style={{ border: "1.5px solid #E91E7B", boxShadow: "0 4px 20px rgba(30,42,58,0.09)" }}
             >
               <div
-                className="inline-flex items-center justify-center w-16 h-16 rounded-xl mb-4"
+                className="inline-flex items-center justify-center w-14 h-14 rounded-xl"
                 style={{ color: "#1E2A3A", backgroundColor: "#F0F2F5" }}
               >
                 {servico.icone}
               </div>
-              <h3 className="font-bold text-lg leading-snug" style={{ color: "#1E2A3A" }}>
-                {servico.titulo}
-              </h3>
-              {servico.subtitulo && (
-                <p className="text-sm font-semibold mt-1" style={{ color: "#E91E7B" }}>
-                  {servico.subtitulo}
-                </p>
-              )}
+              <div>
+                <h3 className="font-bold text-lg leading-snug" style={{ color: "#1E2A3A" }}>
+                  {servico.titulo}
+                </h3>
+                {servico.subtitulo && (
+                  <p className="text-sm font-semibold mt-0.5" style={{ color: "#E91E7B" }}>
+                    {servico.subtitulo}
+                  </p>
+                )}
+              </div>
+              <p className="text-sm leading-relaxed flex-1" style={{ color: "#6B7280" }}>
+                {servico.descricao}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Cardápio completo */}
+        {/* Montagem Customizada */}
         <div
           className="rounded-2xl p-8 sm:p-12"
           style={{ backgroundColor: "#1E2A3A" }}
         >
           <p className="text-center text-lg mb-2 font-semibold tracking-widest uppercase" style={{ color: "#F5A623", letterSpacing: "0.18em" }}>
-            Monte o seu Sistema
+            Montagem Customizada
           </p>
           <p className="text-center mb-10 max-w-2xl mx-auto" style={{ color: "#A0AEC0" }}>
-            Cada clínica tem um momento diferente. Escolha as peças que fazem sentido agora — e expanda conforme crescer.
+            Cada clínica tem um momento. Escolhemos juntos o que faz sentido para o seu.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              "CRM — organizar e cuidar do atendimento",
-              "Agente virtual — primeiro atendimento",
-              "Agente virtual — agendamento",
+              "CRM",
+              "Agente Virtual Qualificador",
+              "Agente Virtual Agendador",
               "Site",
-              "Tráfego pago",
-              "Mapeamento da concorrência",
-              "Pesquisa mercadológica",
-              "Coleta de leads",
-              "Prospecção estratégica presencial",
-              "Abordagem e encaminhamento para a clínica",
-              "Fotógrafo profissional",
-              "Impressão gráfica",
-              "Propaganda volante",
+              "Tráfego Pago",
+              "Mapeamento da Concorrência",
+              "Pesquisa de Mercado",
+              "Coleta de Leads",
+              "Prospecção Presencial Estratégica",
+              "Abordagem e Encaminhamento",
+              "Fotógrafo Profissional",
+              "Impressão Gráfica",
+              "Propaganda Volante",
             ].map((item) => (
               <span
                 key={item}

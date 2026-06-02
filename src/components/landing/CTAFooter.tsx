@@ -27,8 +27,7 @@ export default function CTAFooter() {
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-5 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95"
-            style={{ backgroundColor: "#25D366" }}
+            className="btn-cta-landing inline-flex items-center gap-3 text-white font-bold text-base sm:text-lg px-6 sm:px-10 py-4 sm:py-5 rounded-full shadow-2xl"
           >
             <IconeWhatsApp />
             Falar com o Juliano — WhatsApp
