@@ -62,7 +62,7 @@ export default function Hero() {
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: "#F5A623", animation: "pulse 2s ease-in-out infinite" }}
                 />
-                Consultoria para Clínicas Odontológicas
+                Consultoria, Inteligência de Mercado e Marketing para Clínicas Odontológicas
               </span>
             </div>
 
