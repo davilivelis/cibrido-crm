@@ -21,8 +21,7 @@ export default function CTAFooter() {
             Fale com o Juliano agora.
           </h2>
           <p className="text-gray-400 mb-10 text-base sm:text-xl max-w-xl mx-auto leading-relaxed">
-            Ele é nosso agente virtual. Entende o momento da sua clínica e agenda seu diagnóstico gratuito com um especialista Cíbrido.{" "}
-            <span className="text-white font-semibold">Simples assim.</span>
+            Ele é nosso agente virtual. Entende o momento da sua clínica e agenda seu diagnóstico gratuito com um especialista Cíbrido.
           </p>
           <a
             href={WA_LINK}
@@ -32,8 +31,11 @@ export default function CTAFooter() {
             style={{ backgroundColor: "#25D366" }}
           >
             <IconeWhatsApp />
-            Falar com o Juliano
+            Falar com o Juliano — WhatsApp
           </a>
+          <p className="mt-5 text-sm" style={{ color: "#6B7280" }}>
+            Atendimento via agente virtual 24h. Sem espera, sem formulário.
+          </p>
         </div>
       </section>
 

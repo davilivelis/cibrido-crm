@@ -52,7 +52,7 @@
               <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
                 Estuda o negócio da sua clínica odontológica, planeja ações com estratégia e constrói
                 presença onde ela mais importa: na rua, no bairro, na porta do seu consultório.
-                Transforma presença física em pacientes reais.
+                Anos de experiência em prospecção presencial e inteligência de mercado.
               </p>
             </div>
 
@@ -82,10 +82,8 @@
               </div>
               <p className="leading-relaxed text-base sm:text-xl" style={{ color: "#A0AEC0" }}>
                 Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
-                automações e tráfego pago que movimentaram milhares de leads. Enxergou a
-                oportunidade de levar inteligência artificial e automação para quem mais precisa:
-                o empresário local. Projeta sistemas que trabalham 24 horas para sua clínica
-                odontológica, transformando tecnologia em agendamentos reais.
+                automações e tráfego pago que movimentaram milhares de leads. Transforma dados
+                em crescimento previsível para clínicas odontológicas.
               </p>
             </div>
 
