@@ -88,18 +88,18 @@ const CARDS: DadosCard[] = [
 // Seção: Soluções — nova dobra Cíbrido Odonto
 export default function Services() {
   return (
-    <section id="solucoes" className="py-20 bg-white">
+    <section id="solucoes" className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Título + subtítulo */}
         <h2
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Cíbrido Odonto: o braço direito do seu consultório
         </h2>
         <p
-          className="text-center mb-14 max-w-2xl mx-auto text-sm sm:text-base md:text-lg"
+          className="text-center mb-12 md:mb-16 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed"
           style={{ color: "#6B7280" }}
         >
           Conectamos tecnologia e estratégia para a sua clínica escalar. Menos tempo no mocho,
@@ -108,13 +108,13 @@ export default function Services() {
 
         {/* Label dourado + parágrafo metodologia */}
         <p
-          className="text-center text-sm font-semibold tracking-widest uppercase mb-3"
+          className="text-center text-base font-semibold tracking-widest uppercase mb-3"
           style={{ color: "#F5A623", letterSpacing: "0.18em" }}
         >
           Por que a Cíbrido Odonto?
         </p>
         <p
-          className="text-center max-w-3xl mx-auto mb-12 text-sm sm:text-base leading-relaxed"
+          className="text-center max-w-3xl mx-auto mb-10 md:mb-12 text-base sm:text-lg leading-relaxed"
           style={{ color: "#1E2A3A" }}
         >
           Esqueça relatórios frios. A Cíbrido Odonto é a consultoria estratégica que assume os
@@ -124,11 +124,11 @@ export default function Services() {
         </p>
 
         {/* Três pílulas */}
-        <div className="flex flex-wrap justify-center gap-3 mb-14">
+        <div className="flex flex-wrap justify-center gap-3 mb-16 md:mb-20">
           {["Lucro", "Tempo", "Escala"].map((pilar) => (
             <span
               key={pilar}
-              className="px-6 py-2 rounded-full text-sm font-semibold"
+              className="px-7 py-3 rounded-full text-base font-semibold"
               style={{ backgroundColor: "#F0F2F5", border: "1.5px solid #E91E7B", color: "#1E2A3A" }}
             >
               {pilar}
@@ -138,18 +138,18 @@ export default function Services() {
 
         {/* Subtítulo de bloco */}
         <h3
-          className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center mb-8"
+          className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-10 md:mb-12"
           style={{ color: "#1E2A3A" }}
         >
           A Perfeita Integração para o seu Negócio
         </h3>
 
         {/* Dois cards Online + Offline */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 md:mb-20">
           {CARDS.map((card) => (
             <div
               key={card.titulo}
-              className="rounded-2xl p-6 flex flex-col gap-4"
+              className="rounded-2xl p-8 flex flex-col gap-4"
               style={CARD_STYLE}
             >
               <div className="flex items-center gap-4">
@@ -160,7 +160,7 @@ export default function Services() {
                   {card.icone}
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg" style={{ color: "#1E2A3A" }}>
+                  <h4 className="font-bold text-xl sm:text-2xl" style={{ color: "#1E2A3A" }}>
                     {card.titulo}
                   </h4>
                   <p className="text-sm font-semibold" style={{ color: "#E91E7B" }}>
@@ -168,12 +168,12 @@ export default function Services() {
                   </p>
                 </div>
               </div>
-              <p className="text-sm" style={{ color: "#6B7280" }}>
+              <p className="text-base leading-relaxed" style={{ color: "#6B7280" }}>
                 {card.intro}
               </p>
               <ul className="flex flex-col gap-3">
                 {card.itens.map((item) => (
-                  <li key={item.nome} className="text-sm leading-relaxed">
+                  <li key={item.nome} className="text-base leading-relaxed">
                     <span className="font-semibold" style={{ color: "#1E2A3A" }}>
                       {item.nome}
                     </span>
@@ -191,10 +191,10 @@ export default function Services() {
           className="rounded-2xl p-8 sm:p-12 text-center"
           style={{ backgroundColor: "#1E2A3A" }}
         >
-          <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-3">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">
             Pronto para construir o futuro sustentável da sua clínica?
           </h3>
-          <p className="mb-8 max-w-2xl mx-auto text-sm sm:text-base" style={{ color: "#A0AEC0" }}>
+          <p className="mb-8 max-w-2xl mx-auto text-base sm:text-lg" style={{ color: "#A0AEC0" }}>
             Garanta a inteligência geográfica e o sistema exclusivo que o seu consultório
             precisa para liderar.
           </p>
@@ -202,7 +202,7 @@ export default function Services() {
             href={WPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-cta-landing inline-block text-white font-bold px-8 py-4 rounded-full text-sm sm:text-base"
+            className="btn-cta-landing inline-block text-white font-bold px-10 py-5 rounded-full text-base sm:text-lg"
           >
             QUERO ESCALAR MEU CONSULTÓRIO
           </a>
