@@ -4,9 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 
 // Links de âncora para as seções da landing page
-const WPP_LINK =
-  "https://wa.me/5511960341082?text=Ol%C3%A1%2C+gostaria+de+solicitar+um+diagn%C3%B3stico+gratuito+para+minha+cl%C3%ADnica.";
-
 const NAV_LINKS = [
   { href: "#solucoes",      label: "Soluções"      },
   { href: "#como-comecar",  label: "Como Começar"  },
@@ -39,7 +36,7 @@ export default function Nav() {
             </span>
           </div>
 
-          {/* Links desktop + CTA */}
+          {/* Links desktop */}
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
@@ -50,14 +47,6 @@ export default function Nav() {
                 {link.label}
               </a>
             ))}
-            <a
-              href={WPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-cta-landing text-white text-sm font-bold px-5 py-2 rounded-lg"
-            >
-              Diagnóstico Gratuito
-            </a>
           </div>
 
           {/* Botão hamburger — mobile */}
@@ -92,15 +81,6 @@ export default function Nav() {
                 {link.label}
               </a>
             ))}
-            <a
-              href={WPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-cta-landing text-white text-sm font-bold px-5 py-3 rounded-lg text-center"
-              onClick={() => setMenuAberto(false)}
-            >
-              Diagnóstico Gratuito
-            </a>
           </div>
         )}
       </div>
