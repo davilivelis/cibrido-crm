@@ -96,10 +96,10 @@ export default function Services() {
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
-          Cíbrido Odonto: o braço direito do seu consultório
+          Cíbrido Odonto:<br className="hidden sm:block" /> o braço direito do seu consultório
         </h2>
         <p
-          className="text-center mb-12 md:mb-16 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed"
+          className="text-center mb-6 md:mb-8 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed"
           style={{ color: "#6B7280" }}
         >
           Conectamos tecnologia e estratégia para a sua clínica escalar. Menos tempo no mocho,
@@ -124,7 +124,7 @@ export default function Services() {
         </p>
 
         {/* Três pílulas */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10 md:mb-16">
+        <div className="flex flex-wrap justify-center gap-3 mb-8 md:mb-10">
           {["Lucro", "Tempo", "Escala"].map((pilar) => (
             <span
               key={pilar}
