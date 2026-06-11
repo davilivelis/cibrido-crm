@@ -88,12 +88,12 @@ const CARDS: DadosCard[] = [
 // Seção: Soluções — nova dobra Cíbrido Odonto
 export default function Services() {
   return (
-    <section id="solucoes" className="py-24 md:py-32 bg-white">
+    <section id="solucoes" className="py-16 sm:py-20 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Título + subtítulo */}
         <h2
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center mb-4"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-center mb-4"
           style={{ color: "#1E2A3A" }}
         >
           Cíbrido Odonto: o braço direito do seu consultório
@@ -124,7 +124,7 @@ export default function Services() {
         </p>
 
         {/* Três pílulas */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16 md:mb-20">
+        <div className="flex flex-wrap justify-center gap-3 mb-10 md:mb-16">
           {["Lucro", "Tempo", "Escala"].map((pilar) => (
             <span
               key={pilar}
@@ -138,18 +138,18 @@ export default function Services() {
 
         {/* Subtítulo de bloco */}
         <h3
-          className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-10 md:mb-12"
+          className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-center mb-10 md:mb-12"
           style={{ color: "#1E2A3A" }}
         >
           A Perfeita Integração para o seu Negócio
         </h3>
 
         {/* Dois cards Online + Offline */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 md:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 md:mb-16">
           {CARDS.map((card) => (
             <div
               key={card.titulo}
-              className="rounded-2xl p-8 flex flex-col gap-4"
+              className="rounded-2xl p-6 sm:p-8 flex flex-col gap-4"
               style={CARD_STYLE}
             >
               <div className="flex items-center gap-4">
@@ -188,10 +188,10 @@ export default function Services() {
 
         {/* Fecho navy */}
         <div
-          className="rounded-2xl p-8 sm:p-12 text-center"
+          className="rounded-2xl p-6 sm:p-8 md:p-12 text-center"
           style={{ backgroundColor: "#1E2A3A" }}
         >
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-white mb-3">
             Pronto para construir o futuro sustentável da sua clínica?
           </h3>
           <p className="mb-8 max-w-2xl mx-auto text-base sm:text-lg" style={{ color: "#A0AEC0" }}>
@@ -202,7 +202,7 @@ export default function Services() {
             href={WPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-cta-landing inline-block text-white font-bold px-10 py-5 rounded-full text-base sm:text-lg"
+            className="btn-cta-landing inline-block text-white font-bold px-6 py-4 sm:px-10 sm:py-5 rounded-full text-base sm:text-lg w-full sm:w-auto"
           >
             QUERO ESCALAR MEU CONSULTÓRIO
           </a>

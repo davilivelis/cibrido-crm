@@ -81,9 +81,7 @@
                 </div>
               </div>
               <p className="leading-relaxed text-sm sm:text-base md:text-lg" style={{ color: "#A0AEC0" }}>
-                Arquiteto de soluções digitais com experiência em bastidores de lançamentos,
-                automações e tráfego pago que movimentaram milhares de leads. Transforma dados
-                em crescimento previsível para clínicas odontológicas.
+                Acompanha de perto o mercado e as tecnologias que estão moldando o digital, com o crescimento absurdo da IA. Está sempre de olho no que pode acelerar o resultado de uma clínica odontológica. Tem experiência nos bastidores de lançamentos, tráfego e prospecção, transformando inteligência de mercado em estratégia previsível através de um método.
               </p>
             </div>
 
