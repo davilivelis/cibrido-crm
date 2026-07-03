@@ -24,6 +24,22 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
   const hostname = request.headers.get('host') || ''
 
+  // ── [03/07/2026] SITE PÚBLICO DESATIVADO ─────────────────────────────────
+  // Cíbrido encerrada em 01/07/2026. A landing sai do ar, mas NADA foi deletado:
+  // o código completo segue em src/components/landing/ e na rota /clinica-odontologica.
+  // O CRM (crm.cibrido.com.br), previews e localhost NÃO são afetados.
+  // PARA RESSUSCITAR O SITE: basta remover este bloco (até a linha do return).
+  const isPublicCibridoSite = hostname === 'cibrido.com.br' || hostname === 'www.cibrido.com.br'
+  if (isPublicCibridoSite && !path.startsWith('/api/webhooks')) {
+    return new NextResponse(
+      '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Site indisponível</title></head>' +
+      '<body style="font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#1E2A3A;color:#fff">' +
+      '<p>Este site está temporariamente desativado.</p></body></html>',
+      { status: 410, headers: { 'content-type': 'text/html; charset=utf-8' } }
+    )
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   // crm.cibrido.com.br na raiz → rewrite para /login feito via next.config.ts rewrites()
 
   // crm.cibrido.com.br tentando acessar landing → bloqueia, manda para login
