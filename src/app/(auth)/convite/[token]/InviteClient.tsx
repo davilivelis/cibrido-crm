@@ -62,14 +62,14 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
       >
         <img src="/bg-network.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.08] pointer-events-none select-none" />
         <div className="relative z-10 flex flex-col items-center text-center">
-          <img src="/logo-cibrido.png" alt="Cíbrido" className="h-16 lg:h-32 w-auto mx-auto -mb-4 lg:-mb-8" />
-          <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CibridoCRM</span>
+          <img src="/logo-livelis.png" alt="Livelis" className="h-16 lg:h-32 w-auto mx-auto -mb-4 lg:-mb-8" />
+          <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CRM Livelis</span>
           <div className="mt-4 inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2">
             <span className="text-yellow-300 text-sm font-bold">✉️ Convite exclusivo</span>
           </div>
           <div className="mt-4">
             <p className="text-xl lg:text-[32px] font-bold leading-tight text-white">Seu acesso foi liberado</p>
-            <p className="text-xl lg:text-[32px] font-bold leading-tight text-[#E91E7B]">pela equipe Cíbrido</p>
+            <p className="text-xl lg:text-[32px] font-bold leading-tight text-[#E91E7B]">pela equipe Livelis</p>
           </div>
           <div className="mt-4 bg-white/5 border border-white/10 rounded-xl px-5 py-3">
             <p className="text-gray-400 text-sm">Plano ativado</p>
@@ -111,7 +111,7 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
             </Button>
           </form>
         </div>
-        <p className="text-xs text-gray-400 mt-8">© 2026 Cíbrido · Todos os direitos reservados</p>
+        <p className="text-xs text-gray-400 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
       </div>
     </div>
   )

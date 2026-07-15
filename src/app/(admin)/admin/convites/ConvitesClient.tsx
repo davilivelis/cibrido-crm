@@ -40,7 +40,7 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
   }
 
   function copyLink(id: string, token: string) {
-    const crmUrl = process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.cibrido.com.br'
+    const crmUrl = process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.livelis.com.br'
     navigator.clipboard.writeText(`${crmUrl}/convite/${token}`)
     setCopiedId(id)
     setTimeout(() => setCopiedId(null), 2000)

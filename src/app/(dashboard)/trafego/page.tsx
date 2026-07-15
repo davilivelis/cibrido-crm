@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import TrafegoClient from '@/components/trafego/TrafegoClient'
 import { Campaign } from '@/types/database'
 
-export const metadata = { title: 'Tráfego Pago — CibridoCRM' }
+export const metadata = { title: 'Tráfego Pago' }
 
 export default async function TrafegoPagoPage() {
   const supabase = await createClient()

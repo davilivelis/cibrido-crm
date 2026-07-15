@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const next = searchParams.get('next') ?? ''
 
   // Usa sempre a URL do site em produção para evitar redirects para URLs antigas
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cibrido-crm.vercel.app'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.livelis.com.br'
 
   if (code) {
     const supabase = await createClient()

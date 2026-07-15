@@ -1,14 +1,8 @@
 import { MetadataRoute } from "next";
 
+// CRM privado — não deve ser indexado por buscadores.
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/clinica-odontologica",
-        disallow: ["/", "/dashboard", "/leads", "/pipeline", "/agenda", "/conversas", "/trafego", "/recalls", "/configuracoes", "/onboarding", "/perfil", "/api/"],
-      },
-    ],
-    sitemap: "https://cibrido.com.br/sitemap.xml",
+    rules: [{ userAgent: "*", disallow: "/" }],
   };
 }

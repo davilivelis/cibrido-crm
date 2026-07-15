@@ -35,7 +35,7 @@ export default function LoginPage() {
     setLoading(true); setError(null)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError('Email ou senha incorretos.'); setLoading(false); return }
-    if (!rememberMe) sessionStorage.setItem('cibrido_session_only', '1')
+    if (!rememberMe) sessionStorage.setItem('crm_session_only', '1')
     window.fbq?.('trackCustom', 'CRM_Login')
     router.push('/dashboard'); router.refresh()
   }
@@ -83,11 +83,11 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col items-center text-center">
           {/* Logo só balões — responsiva */}
           <img
-            src="/logo-cibrido.png"
-            alt="Cíbrido"
+            src="/logo-livelis.png"
+            alt="Livelis"
             className="h-16 lg:h-32 w-auto mx-auto -mb-4 lg:-mb-8"
           />
-          <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CibridoCRM</span>
+          <span className="text-white font-bold text-lg lg:text-[30px] mt-0">CRM Livelis</span>
 
           {/* Headline em 3 linhas — lg:whitespace-nowrap garante 1 linha por elemento */}
           <div className="mt-3 lg:mt-5">
@@ -180,23 +180,23 @@ export default function LoginPage() {
               <div className="text-3xl">🔒</div>
               <p className="text-sm font-bold text-red-800">Acesso por convite apenas</p>
               <p className="text-sm text-red-700 leading-relaxed">
-                O CibridoCRM é exclusivo para clientes da Cíbrido.<br />
+                O CRM Livelis é exclusivo para clientes Livelis.<br />
                 Para obter acesso, fale com nossa equipe:
               </p>
               <a
-                href="https://wa.me/5511960341082?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20CibridoCRM."
+                href="https://wa.me/5511985664908?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20CRM%20Livelis."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block w-full py-2.5 rounded-lg bg-[#E91E7B] text-white text-sm font-bold"
               >
-                Falar com a equipe Cíbrido
+                Falar com Davi Junior
               </a>
             </div>
           )}
         </div>
 
         {/* Rodapé */}
-        <p className="text-xs text-gray-400 mt-8">© 2026 Cíbrido · Todos os direitos reservados</p>
+        <p className="text-xs text-gray-400 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
       </div>
     </div>
   )

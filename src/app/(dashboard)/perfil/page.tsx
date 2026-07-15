@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import PerfilClient from '@/components/perfil/PerfilClient'
 
-export const metadata = { title: 'Meu Perfil — CibridoCRM' }
+export const metadata = { title: 'Meu Perfil' }
 
 export default async function PerfilPage() {
   const supabase = await createClient()

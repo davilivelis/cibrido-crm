@@ -9,9 +9,9 @@ function getPlanFromAsaas(description: string): string {
 }
 
 function getPlanLabel(plan: string): string {
-  if (plan === 'master')   return 'Cibri-Master'
-  if (plan === 'standard') return 'Cibri-Standard'
-  return 'Cibri-Lite'
+  if (plan === 'master')   return 'Plano Master'
+  if (plan === 'standard') return 'Plano Standard'
+  return 'Plano Lite'
 }
 
 function generateToken(length = 32): string {
@@ -29,7 +29,7 @@ function normalizePhone(phone: string): string {
 async function sendWhatsApp(phone: string, message: string): Promise<void> {
   const baseUrl  = process.env.EVOLUTION_API_URL
   const apiKey   = process.env.EVOLUTION_API_KEY
-  const instance = process.env.EVOLUTION_INSTANCE ?? 'Cibrido-Bot'
+  const instance = process.env.EVOLUTION_INSTANCE ?? 'Livelis-Bot'
 
   if (!baseUrl || !apiKey) {
     console.warn('[Asaas Webhook] Evolution API não configurada — WhatsApp não enviado')
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
       .eq('status', 'pending')
       .maybeSingle()
 
-    const crmUrl = process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.cibrido.com.br'
+    const crmUrl = process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.livelis.com.br'
 
     if (existing) {
       const inviteLink = `${crmUrl}/convite/${existing.token}`
@@ -125,7 +125,7 @@ export async function POST(request: Request) {
       console.warn('[Asaas Webhook] Sem telefone para', email, '— WhatsApp nao enviado')
     }
 
-    // Notifica equipe interna (Davi + Ricardo)
+    // Notifica equipe interna
     await notifyTeam({ name, email, phone, plan, planLabel: getPlanLabel(plan), inviteLink })
 
     console.log(`[Asaas Webhook] Convite criado para ${email} — plano ${plan} — ${inviteLink}`)
@@ -148,16 +148,15 @@ async function notifyTeam(params: {
   const { name, email, phone, plan, planLabel, inviteLink } = params
   const notify = [
     process.env.NOTIFY_PHONE_DAVI,
-    process.env.NOTIFY_PHONE_RICARDO,
   ].filter(Boolean) as string[]
 
   if (notify.length === 0) {
-    console.warn('[Asaas Webhook] Nenhum numero de notificacao interna configurado (NOTIFY_PHONE_DAVI / NOTIFY_PHONE_RICARDO)')
+    console.warn('[Asaas Webhook] Nenhum numero de notificacao interna configurado (NOTIFY_PHONE_DAVI)')
     return
   }
 
   const msg = [
-    `*[NOVO CLIENTE CIBRIDO]* 🎉`,
+    `*[NOVO CLIENTE - CRM LIVELIS]* 🎉`,
     ``,
     `*Nome:* ${name || '(sem nome)'}`,
     `*Email:* ${email}`,
@@ -176,7 +175,7 @@ async function notifyTeam(params: {
 function buildMessage(name: string, planLabel: string, inviteLink: string): string {
   const firstName = name.split(' ')[0] || 'Doutor(a)'
   return [
-    `Ola, ${firstName}! Aqui e a equipe Cibrido.`,
+    `Ola, ${firstName}! Aqui e a equipe do CRM Livelis.`,
     ``,
     `Seu pagamento do *${planLabel}* foi confirmado!`,
     ``,
@@ -185,6 +184,6 @@ function buildMessage(name: string, planLabel: string, inviteLink: string): stri
     ``,
     `O link e valido por 7 dias. Qualquer duvida, chama a gente aqui no WhatsApp.`,
     ``,
-    `-- Equipe Cibrido`,
+    `-- Equipe Livelis (Davi Junior)`,
   ].join('\n')
 }

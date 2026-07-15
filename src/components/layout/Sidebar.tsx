@@ -57,11 +57,11 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
           <div style={{ width: 36, height: 36, overflow: 'hidden', flexShrink: 0, borderRadius: 6 }}>
             <img
               src="/logo.png"
-              alt="CibridoCRM"
+              alt="CRM Livelis"
               style={{ width: '36px', height: 'auto', display: 'block', objectPosition: 'top' }}
             />
           </div>
-          <span className="text-white font-bold text-sm leading-none" translate="no">CibridoCRM</span>
+          <span className="text-white font-bold text-sm leading-none" translate="no">CRM Livelis</span>
         </div>
       </div>
 

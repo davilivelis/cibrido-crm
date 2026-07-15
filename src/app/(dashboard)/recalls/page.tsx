@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import RecallsClient from '@/components/recalls/RecallsClient'
 import { RecallWithLead } from '@/types/database'
 
-export const metadata = { title: 'Recall — CibridoCRM' }
+export const metadata = { title: 'Recall' }
 
 export default async function RecallsPage() {
   const supabase = await createClient()

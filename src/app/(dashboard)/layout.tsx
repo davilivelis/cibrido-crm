@@ -26,7 +26,7 @@ export default async function DashboardLayout({
   // Dados do perfil via metadados do auth (sempre acessíveis) + fallbacks
   const meta = user.user_metadata ?? {}
   const profileName = (meta.name || meta.full_name || user.email?.split('@')[0] || 'Usuário') as string
-  const clinicName  = (meta.clinic_name || 'CibridoCRM') as string
+  const clinicName  = (meta.clinic_name || 'CRM Livelis') as string
   const initials    = profileName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()
 
   const profile = {

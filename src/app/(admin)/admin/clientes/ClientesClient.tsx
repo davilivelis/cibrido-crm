@@ -63,7 +63,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>Clientes</h1>
-          <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Clínicas com acesso ao CibridoCRM</p>
+          <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Clínicas com acesso ao CRM Livelis</p>
         </div>
         <button
           onClick={() => setShowModal(true)}

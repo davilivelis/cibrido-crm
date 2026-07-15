@@ -56,13 +56,13 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
             <div className="flex items-center gap-3 mb-10">
               <Image
                 src="/logo.png"
-                alt="CibridoCRM"
+                alt="CRM Livelis"
                 width={120}
                 height={40}
                 style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
                 priority
               />
-              <span className="font-bold text-gray-900 text-lg">CibridoCRM</span>
+              <span className="font-bold text-gray-900 text-lg">CRM Livelis</span>
             </div>
 
             <p className="text-sm font-medium mb-1" style={{ color: '#E91E7B' }}>

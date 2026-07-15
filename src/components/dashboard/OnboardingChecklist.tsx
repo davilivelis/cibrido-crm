@@ -19,7 +19,7 @@ interface Props {
   clinicPhone: string | null
 }
 
-const DISMISS_KEY = 'cibrido_onboarding_dismissed'
+const DISMISS_KEY = 'crm_onboarding_dismissed'
 
 export default function OnboardingChecklist({ totalLeads, totalAppointments, clinicPhone }: Props) {
   const [collapsed, setCollapsed] = useState(false)
@@ -33,7 +33,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
     {
       id: 'account',
       label: 'Conta criada',
-      description: 'Seu acesso ao CibridoCRM está ativo.',
+      description: 'Seu acesso ao CRM Livelis está ativo.',
       done: true,
     },
     {
@@ -94,7 +94,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
           <div className="flex flex-col gap-1 flex-1 min-w-0">
             <div className="flex items-center gap-3">
               <span style={{ fontSize: '15px', fontWeight: 600, color: '#111827' }}>
-                Configure seu CibridoCRM
+                Configure seu CRM Livelis
               </span>
               <span
                 style={{

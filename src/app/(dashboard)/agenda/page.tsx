@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import AgendaClient from '@/components/agenda/AgendaClient'
 import { AppointmentStatus } from '@/types/database'
 
-export const metadata = { title: 'Agenda — CibridoCRM' }
+export const metadata = { title: 'Agenda' }
 
 export default async function AgendaPage() {
   const supabase = await createClient()

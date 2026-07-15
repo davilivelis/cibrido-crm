@@ -18,7 +18,8 @@ export default function EsqueceuSenhaPage() {
     setLoading(true); setError(null)
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://crm.cibrido.com.br/auth/callback?next=/redefinir-senha',
+      // usa o domínio em que o app está rodando — nunca hardcodar (lição da era Cíbrido)
+      redirectTo: `${window.location.origin}/auth/callback?next=/redefinir-senha`,
     })
 
     if (error) {
@@ -36,7 +37,7 @@ export default function EsqueceuSenhaPage() {
       <div className="w-full max-w-sm">
 
         <div className="text-center mb-8">
-          <img src="/logo-cibrido.png" alt="Cíbrido" className="h-12 w-auto mx-auto mb-4" />
+          <img src="/logo-livelis.png" alt="Livelis" className="h-12 w-auto mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900">Recuperar senha</h1>
           <p className="text-sm text-gray-500 mt-1">
             Informe seu email e enviaremos um link para redefinir sua senha.

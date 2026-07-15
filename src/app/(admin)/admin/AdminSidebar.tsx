@@ -33,12 +33,12 @@ export default function AdminSidebar() {
           <div style={{ width: 36, height: 36, overflow: 'hidden', flexShrink: 0, borderRadius: 6 }}>
             <img
               src="/logo.png"
-              alt="Cíbrido"
+              alt="Livelis"
               style={{ width: '36px', height: 'auto', display: 'block', objectPosition: 'top' }}
             />
           </div>
           <div className="flex flex-col justify-center">
-            <span className="text-white font-bold text-sm leading-none block" translate="no">CibridoCRM</span>
+            <span className="text-white font-bold text-sm leading-none block" translate="no">CRM Livelis</span>
             <span className="text-[11px] text-slate-500 leading-none mt-[2px] block">Painel Admin</span>
           </div>
         </div>

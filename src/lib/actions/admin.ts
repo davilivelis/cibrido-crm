@@ -82,7 +82,7 @@ export async function createInvite(data: {
 
   if (error) throw new Error(error.message)
 
-  const link = `${process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.cibrido.com.br'}/convite/${token}`
+  const link = `${process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.livelis.com.br'}/convite/${token}`
   return { invite, link }
 }
 

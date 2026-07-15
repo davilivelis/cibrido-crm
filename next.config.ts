@@ -25,11 +25,11 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net", // unsafe-eval necessário para Next.js em dev
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval necessário para Next.js em dev
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self'",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://region1.google-analytics.com https://www.facebook.com",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
       "frame-ancestors 'none'",
     ].join("; "),
   },
@@ -43,39 +43,7 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
-      {
-        // Força revalidação sem cache na landing page
-        source: "/clinica-odontologica",
-        headers: [{ key: "Cache-Control", value: "no-store, must-revalidate" }],
-      },
     ];
-  },
-
-  async redirects() {
-    return [
-      // cibrido.com.br → landing page (URL definitiva para QR code)
-      {
-        source: "/",
-        has: [{ type: "host", value: "cibrido.com.br" }],
-        destination: "/clinica-odontologica",
-        permanent: true,
-      },
-    ];
-  },
-
-  async rewrites() {
-    return {
-      // beforeFiles intercepta ANTES do page.tsx rodar — necessário porque page.tsx tem redirect()
-      beforeFiles: [
-        {
-          source: "/",
-          has: [{ type: "host", value: "crm.cibrido.com.br" }],
-          destination: "/login",
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
   },
 };
 

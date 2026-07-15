@@ -70,9 +70,9 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div style={{ width: 28, height: 28, overflow: 'hidden', flexShrink: 0, borderRadius: 4 }}>
-            <img src="/logo.png" alt="CibridoCRM" style={{ width: '28px', height: 'auto', display: 'block' }} />
+            <img src="/logo.png" alt="CRM Livelis" style={{ width: '28px', height: 'auto', display: 'block' }} />
           </div>
-          <span className="text-white font-bold text-sm" translate="no">CibridoCRM</span>
+          <span className="text-white font-bold text-sm" translate="no">CRM Livelis</span>
         </div>
 
         {/* Direita: nome clínica + hamburguer */}

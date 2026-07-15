@@ -46,7 +46,7 @@ export default function RedefinirSenhaPage() {
       <div className="w-full max-w-sm">
 
         <div className="text-center mb-8">
-          <img src="/logo-cibrido.png" alt="Cíbrido" className="h-12 w-auto mx-auto mb-4" />
+          <img src="/logo-livelis.png" alt="Livelis" className="h-12 w-auto mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900">Nova senha</h1>
           <p className="text-sm text-gray-500 mt-1">
             Escolha uma nova senha para sua conta.
