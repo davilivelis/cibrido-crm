@@ -44,4 +44,7 @@ next-env.d.ts
 .env*.local
 
 # documentos confidenciais
-docs/
+docs/*
+!docs/legado-cibrido/
+
+!docs/legado-cibrido/
