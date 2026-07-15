@@ -42,7 +42,7 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
       'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150',
       'text-[15px]',
       isActive(href)
-        ? 'bg-[#E91E7B] text-white shadow-sm shadow-[#E91E7B]/30'
+        ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
         : 'text-slate-300 hover:bg-white/8 hover:text-white'
     )
   }

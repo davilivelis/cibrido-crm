@@ -56,7 +56,7 @@ export default function Header({ user }: HeaderProps) {
           {/* Avatar magenta */}
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
-            style={{ background: 'linear-gradient(135deg, #E91E7B, #7B2D8E)' }}
+            style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
           >
             <span className="text-xs font-bold text-white">{initials}</span>
           </div>

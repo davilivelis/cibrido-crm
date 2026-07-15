@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ── Tokens Cíbrido ─────────────────────────────────────────────
-   Magenta  #E91E7B  → primary / CTA / active states
+   Teal     #0D9488  → primary / CTA / active states
    Gold     #F5A623  → destaques / badges de alerta
    Purple   #7B2D8E  → terciário / etapas / ícones
    Navy     #1E2A3A  → sidebar / fundo escuro
@@ -42,7 +42,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* Tokens de marca disponíveis como classes Tailwind */
-  --color-brand-magenta: #E91E7B;
+  --color-brand-magenta: #0D9488;
   --color-brand-gold:    #F5A623;
   --color-brand-purple:  #7B2D8E;
   --color-brand-navy:    #1E2A3A;
@@ -59,8 +59,8 @@
   --popover:           #ffffff;
   --popover-foreground:#0f1923;
 
-  /* Primary → Magenta Cíbrido */
-  --primary:           #E91E7B;
+  /* Primary → Teal Livelis */
+  --primary:           #0D9488;
   --primary-foreground:#ffffff;
 
   /* Secondary → Navy claro */
@@ -71,20 +71,20 @@
   --muted:             #f4f6f9;
   --muted-foreground:  #6b7a8d;
 
-  /* Accent → toque de magenta suave */
+  /* Accent → toque de teal suave */
   --accent:            #fce8f2;
-  --accent-foreground: #E91E7B;
+  --accent-foreground: #0D9488;
 
   /* Bordas e inputs */
   --border:            #e5e9ef;
   --input:             #e5e9ef;
-  --ring:              #E91E7B;
+  --ring:              #0D9488;
 
   /* Destructive */
   --destructive:       oklch(0.577 0.245 27.325);
 
   /* Marca */
-  --brand-magenta: #E91E7B;
+  --brand-magenta: #0D9488;
   --brand-gold:    #F5A623;
   --brand-purple:  #7B2D8E;
   --brand-navy:    #1E2A3A;
@@ -97,17 +97,17 @@
   --card-foreground:   #f0f4f8;
   --popover:           #1a2535;
   --popover-foreground:#f0f4f8;
-  --primary:           #E91E7B;
+  --primary:           #0D9488;
   --primary-foreground:#ffffff;
   --secondary:         #253247;
   --secondary-foreground:#f0f4f8;
   --muted:             #1f2f42;
   --muted-foreground:  #8a9ab0;
   --accent:            #2a1a23;
-  --accent-foreground: #E91E7B;
+  --accent-foreground: #0D9488;
   --border:            rgba(255,255,255,0.08);
   --input:             rgba(255,255,255,0.1);
-  --ring:              #E91E7B;
+  --ring:              #0D9488;
   --destructive:       oklch(0.704 0.191 22.216);
 }
 
@@ -139,17 +139,17 @@
 
 /* ── Utilitários de marca ──────────────────────────────────────── */
 @layer utilities {
-  .bg-brand-magenta { background-color: #E91E7B; }
+  .bg-brand-magenta { background-color: #0D9488; }
   .bg-brand-gold    { background-color: #F5A623; }
   .bg-brand-purple  { background-color: #7B2D8E; }
   .bg-brand-navy    { background-color: #1E2A3A; }
 
-  .text-brand-magenta { color: #E91E7B; }
+  .text-brand-magenta { color: #0D9488; }
   .text-brand-gold    { color: #F5A623; }
   .text-brand-purple  { color: #7B2D8E; }
   .text-brand-navy    { color: #1E2A3A; }
 
-  .border-brand-magenta { border-color: #E91E7B; }
+  .border-brand-magenta { border-color: #0D9488; }
 
-  .ring-brand-magenta { --tw-ring-color: #E91E7B; }
+  .ring-brand-magenta { --tw-ring-color: #0D9488; }
 }

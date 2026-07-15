@@ -131,7 +131,7 @@ export default async function DashboardPage() {
                 className="w-14 h-14 rounded-2xl flex items-center justify-center"
                 style={{ backgroundColor: '#fdf2f8' }}
               >
-                <Users className="w-7 h-7" style={{ color: '#E91E7B' }} />
+                <Users className="w-7 h-7" style={{ color: '#0D9488' }} />
               </div>
               <div className="text-center">
                 <p style={{ fontSize: '16px', fontWeight: 600, color: '#374151' }}>
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
               <a
                 href="/leads"
                 className="px-5 py-2 rounded-lg font-semibold transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#E91E7B', color: '#fff', fontSize: '14px' }}
+                style={{ backgroundColor: '#0D9488', color: '#fff', fontSize: '14px' }}
               >
                 Cadastrar primeiro paciente
               </a>

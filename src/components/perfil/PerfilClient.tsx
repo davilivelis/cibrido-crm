@@ -82,7 +82,7 @@ export default function PerfilClient({ user }: PerfilClientProps) {
         <div className="flex items-center gap-4 mb-6">
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center shadow"
-            style={{ background: 'linear-gradient(135deg, #E91E7B, #7B2D8E)' }}
+            style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
           >
             <span className="text-white font-bold text-lg">
               {user.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}
@@ -93,7 +93,7 @@ export default function PerfilClient({ user }: PerfilClientProps) {
             <p className="text-sm text-gray-400">{user.email}</p>
             <span
               className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white mt-1 inline-block"
-              style={{ backgroundColor: '#E91E7B' }}
+              style={{ backgroundColor: '#0D9488' }}
             >
               {roleLabels[user.role] ?? user.role}
             </span>
@@ -103,7 +103,7 @@ export default function PerfilClient({ user }: PerfilClientProps) {
         {/* Seção: alterar nome */}
         <div className="border-t border-gray-100 pt-5">
           <div className="flex items-center gap-2 mb-4">
-            <User className="w-4 h-4" style={{ color: '#E91E7B' }} />
+            <User className="w-4 h-4" style={{ color: '#0D9488' }} />
             <h2 className="text-sm font-semibold text-gray-800">Alterar nome</h2>
           </div>
 
@@ -143,7 +143,7 @@ export default function PerfilClient({ user }: PerfilClientProps) {
       {/* Seção: trocar senha */}
       <div className="bg-white rounded-xl border border-gray-100 p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Lock className="w-4 h-4" style={{ color: '#E91E7B' }} />
+          <Lock className="w-4 h-4" style={{ color: '#0D9488' }} />
           <h2 className="text-sm font-semibold text-gray-800">Trocar senha</h2>
         </div>
 

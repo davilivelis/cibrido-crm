@@ -109,7 +109,7 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
           <div className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-              style={{ background: 'linear-gradient(135deg, #E91E7B, #7B2D8E)' }}
+              style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
             >
               <span className="text-[11px] font-bold text-white">{userInitials}</span>
             </div>
@@ -141,7 +141,7 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150 text-[15px]',
                     isActive(item.href)
-                      ? 'bg-[#E91E7B] text-white shadow-sm shadow-[#E91E7B]/30'
+                      ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
                       : 'text-slate-300 hover:bg-white/8 hover:text-white'
                   )}
                   translate="no"
@@ -167,7 +167,7 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150 text-[15px]',
                     isActive(item.href)
-                      ? 'bg-[#E91E7B] text-white shadow-sm shadow-[#E91E7B]/30'
+                      ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
                       : 'text-slate-300 hover:bg-white/8 hover:text-white'
                   )}
                   translate="no"

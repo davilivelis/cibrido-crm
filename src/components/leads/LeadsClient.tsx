@@ -77,7 +77,7 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
           <p className="text-gray-500 mb-6 max-w-md">
             Cadastre seu primeiro paciente para começar a acompanhar a jornada dele até a consulta.
           </p>
-          <Button onClick={() => setModalOpen(true)} className="bg-[#E91E7B] hover:bg-[#d11a6f]">
+          <Button onClick={() => setModalOpen(true)} className="bg-[#0D9488] hover:bg-[#d11a6f]">
             + Cadastrar primeiro paciente
           </Button>
         </div>

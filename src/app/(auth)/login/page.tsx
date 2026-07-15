@@ -97,7 +97,7 @@ export default function LoginPage() {
             <p className="text-xl lg:text-[38px] font-bold leading-tight text-white lg:whitespace-nowrap">
               que organiza e acompanha
             </p>
-            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#E91E7B] lg:whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#0D9488] lg:whitespace-nowrap">
               seu futuro e atual paciente
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function LoginPage() {
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'entrar' ? '#E91E7B' : 'transparent',
+                backgroundColor: tab === 'entrar' ? '#0D9488' : 'transparent',
                 color: tab === 'entrar' ? '#fff' : '#6b7280',
               }}
             >
@@ -132,7 +132,7 @@ export default function LoginPage() {
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'cadastrar' ? '#E91E7B' : 'transparent',
+                backgroundColor: tab === 'cadastrar' ? '#0D9488' : 'transparent',
                 color: tab === 'cadastrar' ? '#fff' : '#6b7280',
               }}
             >
@@ -161,7 +161,7 @@ export default function LoginPage() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded accent-[#E91E7B] cursor-pointer"
+                    className="w-4 h-4 rounded accent-[#0D9488] cursor-pointer"
                   />
                   <span style={{ fontSize: '14px', color: '#6b7280' }}>Lembrar de mim</span>
                 </label>
@@ -187,7 +187,7 @@ export default function LoginPage() {
                 href="https://wa.me/5511985664908?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20CRM%20Livelis."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block w-full py-2.5 rounded-lg bg-[#E91E7B] text-white text-sm font-bold"
+                className="inline-block w-full py-2.5 rounded-lg bg-[#0D9488] text-white text-sm font-bold"
               >
                 Falar com Davi Junior
               </a>

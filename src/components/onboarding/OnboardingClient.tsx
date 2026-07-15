@@ -65,7 +65,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
               <span className="font-bold text-gray-900 text-lg">CRM Livelis</span>
             </div>
 
-            <p className="text-sm font-medium mb-1" style={{ color: '#E91E7B' }}>
+            <p className="text-sm font-medium mb-1" style={{ color: '#0D9488' }}>
               Bem-vindo, {firstName}! 👋
             </p>
             <h1 className="text-2xl font-bold text-gray-900 mb-1">Configure sua clínica</h1>
@@ -111,7 +111,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
           <div className="text-center">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
-              style={{ background: 'linear-gradient(135deg, #E91E7B, #7B2D8E)' }}
+              style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
             >
               <CheckCircle className="w-8 h-8 text-white" />
             </div>

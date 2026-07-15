@@ -128,7 +128,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
                   ? 'text-white shadow-sm'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
-              style={statusFilter === opt.value ? { backgroundColor: '#E91E7B' } : {}}
+              style={statusFilter === opt.value ? { backgroundColor: '#0D9488' } : {}}
             >
               {opt.label}
               {count > 0 && (

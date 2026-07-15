@@ -215,7 +215,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               onClick={() => { setShowSchedule((v) => !v); setTab('dados') }}
               className={cn(
                 'w-9 h-9 flex items-center justify-center rounded-lg transition-colors',
-                showSchedule ? 'bg-[#E91E7B] text-white' : 'bg-pink-50 text-[#E91E7B] hover:bg-pink-100'
+                showSchedule ? 'bg-[#0D9488] text-white' : 'bg-pink-50 text-[#0D9488] hover:bg-pink-100'
               )}
             >
               <CalendarPlus className="w-4 h-4" />
@@ -233,7 +233,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
         {/* ── Agenda rápida (aparece ao clicar no botão de calendário) ── */}
         {showSchedule && (
           <div className="px-5 py-3 border-b border-gray-100 bg-pink-50/40 space-y-3">
-            <p className="text-xs font-semibold text-[#E91E7B] uppercase tracking-wide">Agendar consulta rápida</p>
+            <p className="text-xs font-semibold text-[#0D9488] uppercase tracking-wide">Agendar consulta rápida</p>
             <div className="grid grid-cols-2 gap-2">
               <Input
                 placeholder="Título"
@@ -283,7 +283,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               className={cn(
                 'py-3 px-1 mr-5 text-sm font-medium border-b-2 transition-colors capitalize',
                 tab === t
-                  ? 'border-[#E91E7B] text-[#E91E7B]'
+                  ? 'border-[#0D9488] text-[#0D9488]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               )}
             >
@@ -367,7 +367,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                       className={cn(
                         'flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition-colors',
                         noteType === value
-                          ? 'bg-pink-50 border-pink-200 text-[#E91E7B]'
+                          ? 'bg-pink-50 border-pink-200 text-[#0D9488]'
                           : 'border-gray-100 text-gray-500 hover:bg-gray-50'
                       )}
                     >
@@ -456,7 +456,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                   <p className="text-sm text-gray-400">Nenhum recall cadastrado para este paciente</p>
                   <Link
                     href="/recalls"
-                    className="text-xs text-[#E91E7B] hover:underline mt-1 inline-block"
+                    className="text-xs text-[#0D9488] hover:underline mt-1 inline-block"
                     onClick={onClose}
                   >
                     Ir para módulo de Recall →
@@ -490,7 +490,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                   })}
                   <Link
                     href="/recalls"
-                    className="text-xs text-[#E91E7B] hover:underline mt-2 inline-block"
+                    className="text-xs text-[#0D9488] hover:underline mt-2 inline-block"
                     onClick={onClose}
                   >
                     Gerenciar recalls →

@@ -154,7 +154,7 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="w-full border-2 border-dashed border-gray-200 rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#E91E7B]/40 hover:bg-pink-50/30 transition-colors"
+              className="w-full border-2 border-dashed border-gray-200 rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#0D9488]/40 hover:bg-pink-50/30 transition-colors"
             >
               <Upload className="w-8 h-8 text-gray-300" />
               <div className="text-center">
@@ -244,7 +244,7 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
             <div className="flex flex-col items-center gap-3 py-6 text-center">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #E91E7B, #7B2D8E)' }}
+                style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
               >
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>

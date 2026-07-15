@@ -128,7 +128,7 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                           {appt.lead ? (
                             <Link
                               href={`/leads/${appt.lead.id}`}
-                              className="text-sm font-medium text-gray-900 hover:text-[#E91E7B] transition-colors"
+                              className="text-sm font-medium text-gray-900 hover:text-[#0D9488] transition-colors"
                             >
                               {appt.lead.name}
                             </Link>

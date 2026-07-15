@@ -69,7 +69,7 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
           </div>
           <div className="mt-4">
             <p className="text-xl lg:text-[32px] font-bold leading-tight text-white">Seu acesso foi liberado</p>
-            <p className="text-xl lg:text-[32px] font-bold leading-tight text-[#E91E7B]">pela equipe Livelis</p>
+            <p className="text-xl lg:text-[32px] font-bold leading-tight text-[#0D9488]">pela equipe Livelis</p>
           </div>
           <div className="mt-4 bg-white/5 border border-white/10 rounded-xl px-5 py-3">
             <p className="text-gray-400 text-sm">Plano ativado</p>

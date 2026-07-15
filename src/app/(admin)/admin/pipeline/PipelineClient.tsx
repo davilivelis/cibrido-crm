@@ -10,7 +10,7 @@ const STAGES = [
   { id: 'lead',             label: 'Lead',             color: '#6366f1' },
   { id: 'qualificado',      label: 'Qualificado',      color: '#f59e0b' },
   { id: 'call_agendada',    label: 'Call Agendada',    color: '#10b981' },
-  { id: 'proposta_enviada', label: 'Proposta Enviada', color: '#E91E7B' },
+  { id: 'proposta_enviada', label: 'Proposta Enviada', color: '#0D9488' },
   { id: 'cliente_ativo',    label: 'Cliente Ativo',    color: '#22c55e' },
   { id: 'churned',          label: 'Churned',          color: '#ef4444' },
 ]

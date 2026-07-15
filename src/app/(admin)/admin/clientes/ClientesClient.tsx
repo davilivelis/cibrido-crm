@@ -67,7 +67,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-[#E91E7B] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#c91568] transition-colors"
+          className="bg-[#0D9488] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0F766E] transition-colors"
         >
           + Novo Convite
         </button>
@@ -76,7 +76,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Total',      value: stats.total,   color: '#E91E7B' },
+          { label: 'Total',      value: stats.total,   color: '#0D9488' },
           { label: 'Em trial',   value: stats.trial,   color: '#d97706' },
           { label: 'Ativos',     value: stats.active,  color: '#16a34a' },
           { label: 'Bloqueados', value: stats.blocked, color: '#dc2626' },
@@ -166,12 +166,12 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email do dentista</label>
                   <input type="email" placeholder="dr.carlos@clinica.com" value={inviteEmail}
                     onChange={e => setInviteEmail(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#E91E7B]" />
+                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488]" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Plano contratado</label>
                   <select value={invitePlan} onChange={e => setInvitePlan(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#E91E7B] bg-white">
+                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488] bg-white">
                     <option value="lite">Cibri-Lite — R$497/mês</option>
                     <option value="standard">Cibri-Standard — R$897/mês</option>
                     <option value="master">Cibri-Master — R$1.497/mês</option>
@@ -180,7 +180,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-1.5">Validade do convite</label>
                   <select value={inviteDays} onChange={e => setInviteDays(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#E91E7B] bg-white">
+                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488] bg-white">
                     <option value="3">3 dias</option>
                     <option value="7">7 dias</option>
                     <option value="15">15 dias</option>
@@ -189,7 +189,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                 <div className="flex gap-3 mt-2">
                   <button onClick={closeModal} className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-lg text-sm font-bold">Cancelar</button>
                   <button onClick={handleCreateInvite} disabled={creating || !inviteEmail}
-                    className="flex-1 bg-[#E91E7B] text-white py-2.5 rounded-lg text-sm font-bold disabled:opacity-50">
+                    className="flex-1 bg-[#0D9488] text-white py-2.5 rounded-lg text-sm font-bold disabled:opacity-50">
                     {creating ? 'Gerando...' : 'Gerar link'}
                   </button>
                 </div>
@@ -205,7 +205,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                 </div>
                 <div className="flex gap-3">
                   <button onClick={closeModal} className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-lg text-sm font-bold">Fechar</button>
-                  <button onClick={copyLink} className="flex-1 bg-[#E91E7B] text-white py-2.5 rounded-lg text-sm font-bold">
+                  <button onClick={copyLink} className="flex-1 bg-[#0D9488] text-white py-2.5 rounded-lg text-sm font-bold">
                     Copiar link
                   </button>
                 </div>

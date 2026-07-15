@@ -113,7 +113,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
             <div className="w-full max-w-[240px] h-1.5 rounded-full" style={{ backgroundColor: '#F3F4F6' }}>
               <div
                 className="h-1.5 rounded-full transition-all duration-500"
-                style={{ width: `${progressPct}%`, backgroundColor: '#E91E7B' }}
+                style={{ width: `${progressPct}%`, backgroundColor: '#0D9488' }}
               />
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   href={step.href}
                   className="mt-auto inline-block text-center rounded-lg text-sm font-semibold py-1.5 transition-colors"
                   style={{
-                    backgroundColor: '#E91E7B',
+                    backgroundColor: '#0D9488',
                     color: '#fff',
                     fontSize: '13px',
                   }}
