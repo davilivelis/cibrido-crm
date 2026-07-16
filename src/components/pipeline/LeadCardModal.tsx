@@ -223,7 +223,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
             <button
               type="button"
               onClick={onClose}
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-muted-foreground/75 hover:bg-muted transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-muted-foreground hover:bg-muted transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -284,7 +284,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                 'py-3 px-1 mr-5 text-sm font-medium border-b-2 transition-colors capitalize',
                 tab === t
                   ? 'border-primary text-primary-strong'
-                  : 'border-transparent text-muted-foreground hover:text-foreground/85'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
               )}
             >
               {t === 'dados' ? 'Dados' : t === 'historico' ? 'Histórico' : 'Recall'}
@@ -306,17 +306,17 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
 
               {/* Contato */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Contato</p>
-                <div className="text-sm text-foreground/85 font-medium">{lead.phone}</div>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Contato</p>
+                <div className="text-sm text-foreground font-medium">{lead.phone}</div>
                 {lead.email && <div className="text-sm text-muted-foreground">{lead.email}</div>}
                 {lead.source && (
-                  <div className="text-sm text-muted-foreground/75 capitalize">Origem: {lead.source}</div>
+                  <div className="text-sm text-muted-foreground capitalize">Origem: {lead.source}</div>
                 )}
               </div>
 
               {/* Mover para etapa */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Etapa do funil</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Etapa do funil</p>
                 <select
                   value={stageId}
                   onChange={(e) => handleStageChange(e.target.value)}
@@ -331,7 +331,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
 
               {/* Status */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Status</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Status</p>
                 <div className="flex gap-2">
                   {STATUS_OPTIONS.map((s) => (
                     <button
@@ -339,7 +339,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                       onClick={() => handleStatusChange(s.value)}
                       className={cn(
                         'flex-1 text-xs font-medium py-1.5 rounded-lg border transition-all',
-                        status === s.value ? s.cls : 'border-border text-muted-foreground/75 hover:bg-muted/60'
+                        status === s.value ? s.cls : 'border-border text-muted-foreground hover:bg-muted/60'
                       )}
                     >
                       {s.label}
@@ -351,14 +351,14 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {/* Observações */}
               {lead.notes && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Observações</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Observações</p>
                   <p className="text-sm text-muted-foreground bg-muted/60 rounded-lg p-3 whitespace-pre-wrap">{lead.notes}</p>
                 </div>
               )}
 
               {/* Registrar atividade */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Registrar atividade</p>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Registrar atividade</p>
                 <div className="flex gap-1.5">
                   {NOTE_TYPES.map(({ value, label, icon: Icon }) => (
                     <button
@@ -393,7 +393,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {/* UTMs */}
               {(lead.utm_source || lead.utm_campaign) && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Campanha</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Campanha</p>
                   <div className="text-xs text-muted-foreground bg-muted/60 rounded-lg p-3 space-y-1 font-mono">
                     {lead.utm_source   && <p>source: {lead.utm_source}</p>}
                     {lead.utm_medium   && <p>medium: {lead.utm_medium}</p>}
@@ -416,7 +416,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               ) : events.length === 0 ? (
                 <div className="text-center py-10">
                   <Clock className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground/75">Nenhuma atividade registrada</p>
+                  <p className="text-sm text-muted-foreground">Nenhuma atividade registrada</p>
                 </div>
               ) : (
                 <div className="space-y-1">
@@ -428,8 +428,8 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                           <Icon className="w-3.5 h-3.5 text-muted-foreground" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm text-foreground/85">{ev.description ?? '—'}</p>
-                          <p className="text-xs text-muted-foreground/75 mt-0.5">
+                          <p className="text-sm text-foreground">{ev.description ?? '—'}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
                             {new Date(ev.created_at).toLocaleDateString('pt-BR', {
                               day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
                             })}
@@ -453,7 +453,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               ) : recalls.length === 0 ? (
                 <div className="text-center py-10">
                   <RotateCcw className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground/75">Nenhum recall cadastrado para este paciente</p>
+                  <p className="text-sm text-muted-foreground">Nenhum recall cadastrado para este paciente</p>
                   <Link
                     href="/recalls"
                     className="text-xs text-primary-strong hover:underline mt-1 inline-block"
@@ -477,7 +477,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                       >
                         <div className="min-w-0">
                           <p className="text-sm font-medium text-foreground">{r.reason}</p>
-                          <p className="text-xs text-muted-foreground/75 mt-0.5">
+                          <p className="text-xs text-muted-foreground mt-0.5">
                             {new Date(r.recall_date + 'T00:00:00').toLocaleDateString('pt-BR')}
                             {overdue && <span className="ml-2 text-amber-600 font-semibold">• Vencido</span>}
                           </p>

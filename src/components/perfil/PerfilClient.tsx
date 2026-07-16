@@ -90,7 +90,7 @@ export default function PerfilClient({ user }: PerfilClientProps) {
           </div>
           <div>
             <p className="font-semibold text-foreground">{user.name}</p>
-            <p className="text-sm text-muted-foreground/75">{user.email}</p>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
             <span
               className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white mt-1 inline-block"
               style={{ backgroundColor: 'var(--primary)' }}

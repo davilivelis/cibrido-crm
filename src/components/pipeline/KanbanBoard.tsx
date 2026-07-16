@@ -55,7 +55,7 @@ function LeadCard({
       )}
     >
       <p className="text-sm font-semibold text-foreground mb-2">{lead.name}</p>
-      <div className="flex items-center gap-1.5 text-xs text-muted-foreground/75">
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <Phone className="w-3 h-3" />
         {lead.phone}
       </div>
@@ -106,7 +106,7 @@ function KanbanColumn({
           'min-h-[200px] rounded-b-xl p-2.5 transition-colors',
           isOver
             ? 'bg-indigo-50 border-2 border-dashed border-indigo-300'
-            : 'bg-[#F1F3F5]'
+            : 'bg-muted'
         )}
       >
         <SortableContext items={leads.map((l) => l.id)} strategy={verticalListSortingStrategy}>
@@ -224,7 +224,7 @@ export default function KanbanBoard({ stages, leads: initialLeads }: KanbanBoard
           {activeLead ? (
             <div className="bg-card rounded-xl border border-indigo-200 shadow-lg p-3 w-60 rotate-1 cursor-grabbing">
               <p className="text-sm font-medium text-foreground">{activeLead.name}</p>
-              <div className="flex items-center gap-1 text-xs text-muted-foreground/75 mt-1">
+              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                 <Phone className="w-3 h-3" />
                 {activeLead.phone}
               </div>

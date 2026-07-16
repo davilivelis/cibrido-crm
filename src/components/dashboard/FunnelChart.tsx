@@ -21,9 +21,9 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: { valu
   const d = payload[0]!
   return (
     <div className="bg-card border border-border rounded-lg shadow-lg px-3 py-2">
-      <p className="text-xs font-semibold text-foreground/85">{d.payload.name}</p>
+      <p className="text-xs font-semibold text-foreground">{d.payload.name}</p>
       <p className="text-lg font-bold" style={{ color: d.payload.color }}>{d.value}</p>
-      <p className="text-xs text-muted-foreground/75">leads</p>
+      <p className="text-xs text-muted-foreground">leads</p>
     </div>
   )
 }
@@ -69,7 +69,7 @@ export default function FunnelChart({ data }: FunnelChartProps) {
   if (data.every((d) => d.total === 0)) {
     return (
       <div className="h-[300px] flex items-center justify-center">
-        <p className="text-sm text-muted-foreground/75">Nenhum lead no funil ainda.</p>
+        <p className="text-sm text-muted-foreground">Nenhum lead no funil ainda.</p>
       </div>
     )
   }

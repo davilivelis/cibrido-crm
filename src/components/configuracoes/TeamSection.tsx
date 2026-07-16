@@ -32,14 +32,14 @@ export default function TeamSection({ team }: TeamSectionProps) {
         </div>
         <div>
           <h2 className="text-sm font-semibold text-foreground">Equipe</h2>
-          <p className="text-xs text-muted-foreground/75">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
+          <p className="text-xs text-muted-foreground">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
         </div>
       </div>
 
       {/* Convite de equipe — disponível na V2 */}
       <div className="mb-5 p-4 bg-muted/60 rounded-xl text-center">
         <p className="text-muted-foreground text-sm font-medium">Gerenciamento de equipe estará disponível em breve.</p>
-        <p className="text-muted-foreground/75 text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
+        <p className="text-muted-foreground text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
       </div>
 
       {/* Lista de membros */}
@@ -56,7 +56,7 @@ export default function TeamSection({ team }: TeamSectionProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">{member.name}</p>
-                <p className="text-xs text-muted-foreground/75 truncate">{member.email}</p>
+                <p className="text-xs text-muted-foreground truncate">{member.email}</p>
               </div>
               <span className={cn('flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full shrink-0', config.style)}>
                 <Icon className="w-3 h-3" />

@@ -52,7 +52,7 @@ export default function EsqueceuSenhaPage() {
             </p>
             <a
               href="/login"
-              className="inline-block mt-4 text-sm text-muted-foreground hover:text-foreground/85 underline underline-offset-4"
+              className="inline-block mt-4 text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
             >
               Voltar para o login
             </a>
@@ -86,7 +86,7 @@ export default function EsqueceuSenhaPage() {
             <div className="text-center">
               <a
                 href="/login"
-                className="text-sm text-muted-foreground hover:text-foreground/85 underline underline-offset-4"
+                className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4"
               >
                 Voltar para o login
               </a>

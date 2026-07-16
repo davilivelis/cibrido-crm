@@ -66,7 +66,7 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
               </div>
 
               {/* Corpo da coluna */}
-              <div className="min-h-[200px] rounded-b-xl p-2.5 bg-[#F1F3F5]">
+              <div className="min-h-[200px] rounded-b-xl p-2.5 bg-muted">
                 <div className="space-y-2">
                   {stageLeads.map(lead => (
                     <div
@@ -79,7 +79,7 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
                     >
                       <p className="text-sm font-semibold text-foreground mb-2">{lead.name}</p>
                       {lead.phone && (
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/75">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <Phone className="w-3 h-3" />
                           {lead.phone}
                         </div>

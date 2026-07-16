@@ -93,7 +93,7 @@ export default async function DashboardPage() {
               style={{
                 padding: '24px',
                 borderRadius: '12px',
-                border: '1px solid #E2E5EA',
+                border: '1px solid var(--border)',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
               }}
             >
@@ -101,7 +101,7 @@ export default async function DashboardPage() {
                 <Icon className={`w-7 h-7 ${card.color}`} />
               </div>
               <div>
-                <p style={{ fontSize: '32px', fontWeight: 700, color: '#111827', lineHeight: 1 }}>
+                <p style={{ fontSize: '32px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>
                   {card.value}
                 </p>
                 <p style={{ fontSize: '16px', fontWeight: 500, color: '#6b7280', marginTop: '4px' }}>
@@ -119,11 +119,11 @@ export default async function DashboardPage() {
         {/* Gráfico de funil */}
         <div
           className="lg:col-span-3 bg-card"
-          style={{ padding: '24px', borderRadius: '12px', border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+          style={{ padding: '24px', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
         >
           <div className="flex items-center justify-between mb-5">
-            <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#374151' }}>Leads por Etapa</h2>
-            <span style={{ fontSize: '14px', color: '#9ca3af' }}>{leadsAtivos} ativos</span>
+            <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--foreground)' }}>Leads por Etapa</h2>
+            <span style={{ fontSize: '14px', color: 'var(--muted-foreground)' }}>{leadsAtivos} ativos</span>
           </div>
           {totalLeads === 0 ? (
             <div className="flex flex-col items-center justify-center py-10 gap-4">
@@ -134,10 +134,10 @@ export default async function DashboardPage() {
                 <Users className="w-7 h-7" style={{ color: 'var(--primary-strong)' }} />
               </div>
               <div className="text-center">
-                <p style={{ fontSize: '16px', fontWeight: 600, color: '#374151' }}>
+                <p style={{ fontSize: '16px', fontWeight: 600, color: 'var(--foreground)' }}>
                   Seu funil está esperando
                 </p>
-                <p style={{ fontSize: '14px', color: '#9ca3af', marginTop: '4px' }}>
+                <p style={{ fontSize: '14px', color: 'var(--muted-foreground)', marginTop: '4px' }}>
                   Cadastre o primeiro paciente para visualizar os dados aqui.
                 </p>
               </div>
@@ -157,17 +157,17 @@ export default async function DashboardPage() {
         {/* Atividade recente */}
         <div
           className="lg:col-span-2 bg-card"
-          style={{ padding: '24px', borderRadius: '12px', border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+          style={{ padding: '24px', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
         >
-          <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#374151', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--foreground)', marginBottom: '20px' }}>
             Atividade Recente
           </h2>
 
           {events.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 gap-2">
-              <StickyNote className="w-8 h-8" style={{ color: '#e5e7eb' }} />
-              <p style={{ fontSize: '15px', fontWeight: 500, color: '#9ca3af' }}>Nenhuma atividade ainda</p>
-              <p style={{ fontSize: '13px', color: '#d1d5db', textAlign: 'center' }}>
+              <StickyNote className="w-8 h-8" style={{ color: 'var(--muted-foreground)' }} />
+              <p style={{ fontSize: '15px', fontWeight: 500, color: 'var(--muted-foreground)' }}>Nenhuma atividade ainda</p>
+              <p style={{ fontSize: '13px', color: 'var(--muted-foreground)', textAlign: 'center' }}>
                 As notas, ligações e agendamentos dos leads aparecerão aqui.
               </p>
             </div>
@@ -180,19 +180,19 @@ export default async function DashboardPage() {
                 return (
                   <li key={ev.id} className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-full bg-muted/60 border border-border flex items-center justify-center shrink-0 mt-0.5">
-                      <Icon className="w-4 h-4 text-muted-foreground/75" />
+                      <Icon className="w-4 h-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p style={{ fontSize: '15px', color: '#374151', lineHeight: '1.4' }}>
+                      <p style={{ fontSize: '15px', color: 'var(--foreground)', lineHeight: '1.4' }}>
                         <span style={{ fontWeight: 600 }}>{EVENT_LABELS[ev.type] ?? ev.type}</span>
                         {lead && <> · <span style={{ color: '#6366f1' }}>{lead.name}</span></>}
                       </p>
                       {ev.description && (
-                        <p className="truncate" style={{ fontSize: '14px', color: '#9ca3af', marginTop: '2px' }}>
+                        <p className="truncate" style={{ fontSize: '14px', color: 'var(--muted-foreground)', marginTop: '2px' }}>
                           {ev.description}
                         </p>
                       )}
-                      <p style={{ fontSize: '14px', color: '#d1d5db', marginTop: '2px' }}>
+                      <p style={{ fontSize: '14px', color: 'var(--muted-foreground)', marginTop: '2px' }}>
                         {user?.name && <>{user.name} · </>}
                         {new Date(ev.created_at).toLocaleDateString('pt-BR', {
                           day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'

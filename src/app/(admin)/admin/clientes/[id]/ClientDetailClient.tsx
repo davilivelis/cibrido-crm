@@ -61,7 +61,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>
             {clinic.name}
           </h1>
           <div className="flex items-center gap-3 mt-2">
@@ -76,7 +76,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
             <span style={{ fontSize: 13, fontWeight: 600, background: '#f3e8ff', color: '#7e22ce', padding: '3px 10px', borderRadius: 20 }}>
               {PLAN_LABELS[sub?.plan ?? 'trial']}
             </span>
-            <span style={{ fontSize: 13, color: '#9ca3af' }}>
+            <span style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>
               Cliente desde {new Date(clinic.created_at).toLocaleDateString('pt-BR')}
             </span>
           </div>
@@ -100,52 +100,52 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
         <div className="lg:col-span-2 space-y-6">
 
           {/* Dados cadastrais */}
-          <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#374151', marginBottom: 16 }}>Dados cadastrais</h2>
+          <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 16 }}>Dados cadastrais</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {owner && (
                 <div className="flex items-start gap-3">
-                  <Users className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#9ca3af' }} />
+                  <Users className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--muted-foreground)' }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Responsável</p>
-                    <p style={{ fontSize: 15, color: '#111827', fontWeight: 500 }}>{owner.name}</p>
+                    <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Responsável</p>
+                    <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>{owner.name}</p>
                     <p style={{ fontSize: 13, color: '#6b7280' }}>{owner.email}</p>
                   </div>
                 </div>
               )}
               {clinic.phone && (
                 <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#9ca3af' }} />
+                  <Phone className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--muted-foreground)' }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Telefone</p>
-                    <p style={{ fontSize: 15, color: '#111827', fontWeight: 500 }}>{clinic.phone}</p>
+                    <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Telefone</p>
+                    <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>{clinic.phone}</p>
                   </div>
                 </div>
               )}
               {clinic.email && (
                 <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#9ca3af' }} />
+                  <Mail className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--muted-foreground)' }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Email</p>
-                    <p style={{ fontSize: 15, color: '#111827', fontWeight: 500 }}>{clinic.email}</p>
+                    <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Email</p>
+                    <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>{clinic.email}</p>
                   </div>
                 </div>
               )}
               {clinic.address && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#9ca3af' }} />
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--muted-foreground)' }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Endereço</p>
-                    <p style={{ fontSize: 15, color: '#111827', fontWeight: 500 }}>{clinic.address}</p>
+                    <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Endereço</p>
+                    <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>{clinic.address}</p>
                   </div>
                 </div>
               )}
               {sub?.trial_ends_at && (
                 <div className="flex items-start gap-3">
-                  <Clock className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#9ca3af' }} />
+                  <Clock className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--muted-foreground)' }} />
                   <div>
-                    <p style={{ fontSize: 12, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Trial até</p>
-                    <p style={{ fontSize: 15, color: '#111827', fontWeight: 500 }}>
+                    <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Trial até</p>
+                    <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>
                       {new Date(sub.trial_ends_at).toLocaleDateString('pt-BR')}
                     </p>
                   </div>
@@ -155,8 +155,8 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
           </div>
 
           {/* Anotações internas */}
-          <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#374151', marginBottom: 16 }}>Anotações internas</h2>
+          <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 16 }}>Anotações internas</h2>
 
             <div className="flex gap-2 mb-4">
               <textarea
@@ -165,7 +165,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 placeholder="Ex: Ricardo ligou em 20/04, cliente interessado em upgrade..."
                 rows={2}
                 className="flex-1 border border-border rounded-lg px-3 py-2 text-sm outline-none focus:border-primary resize-none"
-                style={{ fontSize: 14, color: '#374151' }}
+                style={{ fontSize: 14, color: 'var(--foreground)' }}
               />
               <button
                 onClick={handleAddNote}
@@ -177,7 +177,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
             </div>
 
             {notes.length === 0 ? (
-              <p style={{ fontSize: 14, color: '#9ca3af' }}>Nenhuma anotação ainda.</p>
+              <p style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>Nenhuma anotação ainda.</p>
             ) : (
               <ol className="space-y-3">
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -185,8 +185,8 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                   <li key={note.id} className="flex gap-3">
                     <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: 'var(--primary)' }} />
                     <div>
-                      <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.5 }}>{note.content}</p>
-                      <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>
+                      <p style={{ fontSize: 14, color: 'var(--foreground)', lineHeight: 1.5 }}>{note.content}</p>
+                      <p style={{ fontSize: 12, color: 'var(--muted-foreground)', marginTop: 2 }}>
                         {note.author_email} · {new Date(note.created_at).toLocaleDateString('pt-BR', {
                           day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
                         })}
@@ -201,15 +201,15 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
 
         {/* Coluna lateral — métricas */}
         <div className="space-y-4">
-          <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#374151', marginBottom: 16 }}>Uso do CRM</h2>
+          <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 16 }}>Uso do CRM</h2>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#fdf2f8' }}>
                   <Users className="w-5 h-5" style={{ color: 'var(--primary-strong)' }} />
                 </div>
                 <div>
-                  <p style={{ fontSize: 22, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{totalLeads}</p>
+                  <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{totalLeads}</p>
                   <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Leads cadastrados</p>
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                   <CalendarCheck className="w-5 h-5" style={{ color: '#16a34a' }} />
                 </div>
                 <div>
-                  <p style={{ fontSize: 22, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{totalAppointments}</p>
+                  <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{totalAppointments}</p>
                   <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Consultas agendadas</p>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                   <Users className="w-5 h-5" style={{ color: '#2563eb' }} />
                 </div>
                 <div>
-                  <p style={{ fontSize: 22, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{clinic.users?.length ?? 0}</p>
+                  <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{clinic.users?.length ?? 0}</p>
                   <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Usuários na conta</p>
                 </div>
               </div>
@@ -235,12 +235,12 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
           </div>
 
           {/* Plano */}
-          <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#374151', marginBottom: 12 }}>Assinatura</h2>
+          <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 12 }}>Assinatura</h2>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span style={{ fontSize: 13, color: '#6b7280' }}>Plano</span>
-                <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>{PLAN_LABELS[sub?.plan ?? 'trial']}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>{PLAN_LABELS[sub?.plan ?? 'trial']}</span>
               </div>
               <div className="flex justify-between">
                 <span style={{ fontSize: 13, color: '#6b7280' }}>Status</span>
@@ -249,7 +249,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
               {sub?.paid_until && (
                 <div className="flex justify-between">
                   <span style={{ fontSize: 13, color: '#6b7280' }}>Pago até</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: '#111827' }}>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>
                     {new Date(sub.paid_until).toLocaleDateString('pt-BR')}
                   </span>
                 </div>

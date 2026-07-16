@@ -73,7 +73,7 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
       {leads.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center bg-card rounded-xl border border-border">
           <div className="text-5xl mb-4">👥</div>
-          <h3 className="text-lg font-semibold text-foreground/85 mb-2">Nenhum paciente cadastrado</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-2">Nenhum paciente cadastrado</h3>
           <p className="text-muted-foreground mb-6 max-w-md">
             Cadastre seu primeiro paciente para começar a acompanhar a jornada dele até a consulta.
           </p>

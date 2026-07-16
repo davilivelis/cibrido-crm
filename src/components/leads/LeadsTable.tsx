@@ -127,7 +127,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       {/* Barra de busca + botão filtros */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/75" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Buscar por nome, telefone ou email..."
             value={search}
@@ -240,7 +240,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       )}
 
       {/* Contador */}
-      <p className="text-xs text-muted-foreground/75">
+      <p className="text-xs text-muted-foreground">
         {filtered.length} lead{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
         {hasActiveFilters && <span className="text-indigo-500"> (filtrado)</span>}
       </p>
@@ -277,7 +277,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground/75">
+                <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">
                   {search || hasActiveFilters ? 'Nenhum lead corresponde aos filtros.' : 'Nenhum lead cadastrado ainda.'}
                 </td>
               </tr>
@@ -292,7 +292,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                   <td className="px-4 py-3">
                     <div className="flex flex-col gap-0.5 text-sm text-muted-foreground">
                       <span>{lead.phone}</span>
-                      {lead.email && <span className="text-muted-foreground/75 text-xs">{lead.email}</span>}
+                      {lead.email && <span className="text-muted-foreground text-xs">{lead.email}</span>}
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -311,7 +311,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                       {STATUS_LABEL[lead.status]}
                     </span>
                   </td>
-                  <td className="hidden lg:table-cell px-4 py-3 text-muted-foreground/75 text-xs">
+                  <td className="hidden lg:table-cell px-4 py-3 text-muted-foreground text-xs">
                     {new Date(lead.created_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>

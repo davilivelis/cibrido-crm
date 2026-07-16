@@ -21,8 +21,8 @@ const STATUS_CONFIG: Record<RecallStatus, { label: string; color: string; bg: st
   pending:   { label: 'Pendente',   color: '#92400E', bg: '#FEF3C7' },
   contacted: { label: 'Contactado', color: '#1E40AF', bg: '#DBEAFE' },
   scheduled: { label: 'Agendado',   color: '#065F46', bg: '#D1FAE5' },
-  done:      { label: 'Concluído',  color: '#374151', bg: '#F3F4F6' },
-  cancelled: { label: 'Cancelado',  color: '#9CA3AF', bg: '#F9FAFB' },
+  done:      { label: 'Concluído',  color: 'var(--foreground)', bg: '#F3F4F6' },
+  cancelled: { label: 'Cancelado',  color: 'var(--muted-foreground)', bg: '#F9FAFB' },
 }
 
 // Próximo status disponível (fluxo do ciclo de recall)
@@ -144,7 +144,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
         <div className="bg-card rounded-xl border border-border p-12 text-center">
           <Calendar className="w-10 h-10 text-gray-200 mx-auto mb-3" />
           <p className="text-muted-foreground text-sm">Nenhum recall encontrado</p>
-          <p className="text-muted-foreground/75 text-xs mt-1">
+          <p className="text-muted-foreground text-xs mt-1">
             {statusFilter === 'all'
               ? 'Clique em "Novo Recall" para cadastrar o primeiro.'
               : 'Tente outro filtro de status.'}
@@ -189,7 +189,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
                     )}
                   </div>
                   <p className="text-xs text-muted-foreground mt-0.5">{recall.reason}</p>
-                  <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground/75 flex-wrap">
+                  <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground flex-wrap">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {formatDate(recall.recall_date)}
@@ -206,7 +206,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
                     )}
                   </div>
                   {recall.notes && (
-                    <p className="text-xs text-muted-foreground/75 mt-1 italic">{recall.notes}</p>
+                    <p className="text-xs text-muted-foreground mt-1 italic">{recall.notes}</p>
                   )}
                 </div>
 
@@ -230,7 +230,7 @@ export default function RecallsClient({ recalls, leads, team }: RecallsClientPro
                       <Button
                         size="sm"
                         variant="ghost"
-                        className="h-8 w-8 p-0 text-muted-foreground/75 hover:text-muted-foreground"
+                        className="h-8 w-8 p-0 text-muted-foreground hover:text-muted-foreground"
                         disabled={busy}
                       >
                         <ChevronDown className="w-4 h-4" />

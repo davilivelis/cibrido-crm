@@ -58,7 +58,7 @@ export default function AdminSidebar() {
       <div className="px-3 pb-4 pt-3 border-t border-white/[0.08]">
         <Link
           href="/dashboard"
-          className="flex items-center gap-3 px-3 py-3 rounded-lg text-[15px] font-medium text-muted-foreground/75 hover:text-white hover:bg-white/[0.05] transition-all duration-150"
+          className="flex items-center gap-3 px-3 py-3 rounded-lg text-[15px] font-medium text-muted-foreground hover:text-white hover:bg-white/[0.05] transition-all duration-150"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
           Voltar ao CRM

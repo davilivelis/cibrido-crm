@@ -42,7 +42,7 @@ export default function Header({ user }: HeaderProps) {
         </span>
         {user?.clinics?.name && (
           <span
-            className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white hidden sm:inline-block"
+            className="text-[10px] font-bold px-2 py-0.5 rounded-full text-[#131500] hidden sm:inline-block"
             style={{ backgroundColor: '#F5A623' }}
           >
             CRM
@@ -62,15 +62,15 @@ export default function Header({ user }: HeaderProps) {
           </div>
           <div className="text-left hidden sm:block">
             <p className="font-semibold text-foreground leading-none" style={{ fontSize: '15px' }}>{user?.name}</p>
-            <p className="text-muted-foreground/75 mt-0.5" style={{ fontSize: '13px' }}>{roleLabels[user?.role ?? ''] ?? ''}</p>
+            <p className="text-muted-foreground mt-0.5" style={{ fontSize: '13px' }}>{roleLabels[user?.role ?? ''] ?? ''}</p>
           </div>
-          <ChevronDown className="w-4 h-4 text-muted-foreground/75" />
+          <ChevronDown className="w-4 h-4 text-muted-foreground" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-48">
           <div className="px-3 py-2">
             <p className="text-xs font-medium text-foreground truncate">{user?.name}</p>
-            <p className="text-xs text-muted-foreground/75 truncate">{user?.email}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem

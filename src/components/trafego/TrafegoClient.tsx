@@ -108,7 +108,7 @@ export default function TrafegoClient({ campaigns }: TrafegoClientProps) {
           const Icon = card.icon
           return (
             <div key={card.label} className="bg-card p-5 flex items-center gap-4"
-              style={{ borderRadius: '12px', border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+              style={{ borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
               <div className={`w-11 h-11 rounded-lg ${card.bg} flex items-center justify-center shrink-0`}>
                 <Icon className={`w-5 h-5 ${card.color}`} />
               </div>
@@ -124,13 +124,13 @@ export default function TrafegoClient({ campaigns }: TrafegoClientProps) {
       {/* Tabela de campanhas */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-foreground/85">Campanhas</h2>
-          <p className="text-xs text-muted-foreground/75">Clique em ✏️ para editar métricas</p>
+          <h2 className="text-sm font-semibold text-foreground">Campanhas</h2>
+          <p className="text-xs text-muted-foreground">Clique em ✏️ para editar métricas</p>
         </div>
 
         {campaigns.length === 0 ? (
           <div className="p-12 text-center">
-            <p className="text-muted-foreground/75 text-sm">Nenhuma campanha cadastrada.</p>
+            <p className="text-muted-foreground text-sm">Nenhuma campanha cadastrada.</p>
             <p className="text-gray-300 text-xs mt-1">Clique em "Nova Campanha" para começar.</p>
           </div>
         ) : (

@@ -56,28 +56,28 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
   return (
     <div className="p-8">
       <div className="mb-6">
-        <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>Convites</h1>
+        <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>Convites</h1>
         <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Links de acesso gerados para novas clínicas</p>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'auto' }}>
+      <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'auto' }}>
         <table className="w-full min-w-[700px]">
-          <thead style={{ background: '#F8F9FB' }}>
+          <thead style={{ background: 'var(--muted)' }}>
             <tr>
               {['Email', 'Plano', 'Origem', 'Status', 'Expira em', 'Ações'].map(h => (
-                <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {invites.length === 0 && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center" style={{ fontSize: 15, color: '#9ca3af' }}>Nenhum convite gerado ainda.</td></tr>
+              <tr><td colSpan={6} className="px-5 py-12 text-center" style={{ fontSize: 15, color: 'var(--muted-foreground)' }}>Nenhum convite gerado ainda.</td></tr>
             )}
             {invites.map(inv => {
               const isCopied = copiedId === inv.id
               return (
-                <tr key={inv.id} style={{ borderTop: '1px solid #F3F4F6' }} className="hover:bg-[#FAFAFA] transition-colors">
-                  <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 500, color: '#111827' }}>{inv.email}</td>
+                <tr key={inv.id} style={{ borderTop: '1px solid var(--border)' }} className="hover:bg-muted/50 transition-colors">
+                  <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 500, color: 'var(--foreground)' }}>{inv.email}</td>
                   <td className="px-5 py-3.5">
                     <span style={{ fontSize: 13, fontWeight: 600, background: '#f3e8ff', color: '#7e22ce', padding: '3px 10px', borderRadius: 20 }}>
                       {PLAN_LABELS[inv.plan] ?? inv.plan}
@@ -127,7 +127,7 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
                           className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
                           title="Excluir da lista"
                         >
-                          <Trash2 className="w-4 h-4 text-muted-foreground/75 hover:text-red-500" />
+                          <Trash2 className="w-4 h-4 text-muted-foreground hover:text-red-500" />
                         </button>
                       )}
                     </div>

@@ -71,7 +71,7 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
         </div>
         <div>
           <h2 className="text-sm font-semibold text-foreground">Dados da Clínica</h2>
-          <p className="text-xs text-muted-foreground/75">
+          <p className="text-xs text-muted-foreground">
             Plano atual: <span className="font-medium text-muted-foreground">{PLAN_LABELS[clinic?.plan ?? 'trial']}</span>
             {clinic?.created_at && (
               <> · Desde {new Date(clinic.created_at).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</>

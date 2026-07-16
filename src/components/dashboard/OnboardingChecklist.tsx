@@ -79,7 +79,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
       className="bg-card"
       style={{
         borderRadius: '12px',
-        border: '1px solid #E2E5EA',
+        border: '1px solid var(--border)',
         boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
         overflow: 'hidden',
       }}
@@ -87,13 +87,13 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
       {/* Header */}
       <div
         className="flex items-center justify-between px-6 py-4 cursor-pointer select-none"
-        style={{ borderBottom: collapsed ? 'none' : '1px solid #F3F4F6' }}
+        style={{ borderBottom: collapsed ? 'none' : '1px solid var(--border)' }}
         onClick={() => setCollapsed((v) => !v)}
       >
         <div className="flex items-center gap-4 flex-1 min-w-0">
           <div className="flex flex-col gap-1 flex-1 min-w-0">
             <div className="flex items-center gap-3">
-              <span style={{ fontSize: '15px', fontWeight: 600, color: '#111827' }}>
+              <span style={{ fontSize: '15px', fontWeight: 600, color: 'var(--foreground)' }}>
                 Configure seu CRM Livelis
               </span>
               <span
@@ -125,11 +125,11 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
             className="p-1 rounded-lg hover:bg-muted transition-colors"
             title="Fechar"
           >
-            <X className="w-4 h-4 text-muted-foreground/75" />
+            <X className="w-4 h-4 text-muted-foreground" />
           </button>
           {collapsed
-            ? <ChevronDown className="w-4 h-4 text-muted-foreground/75" />
-            : <ChevronUp className="w-4 h-4 text-muted-foreground/75" />
+            ? <ChevronDown className="w-4 h-4 text-muted-foreground" />
+            : <ChevronUp className="w-4 h-4 text-muted-foreground" />
           }
         </div>
       </div>
@@ -150,7 +150,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
               <div className="flex items-start gap-2">
                 {step.done
                   ? <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#16a34a' }} />
-                  : <Circle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: '#d1d5db' }} />
+                  : <Circle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: 'var(--muted-foreground)' }} />
                 }
                 <div>
                   <p style={{ fontSize: '14px', fontWeight: 600, color: step.done ? '#15803d' : '#111827' }}>
@@ -167,7 +167,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   className="mt-auto inline-block text-center rounded-lg text-sm font-semibold py-1.5 transition-colors"
                   style={{
                     backgroundColor: 'var(--primary)',
-                    color: '#fff',
+                    color: '#131500',
                     fontSize: '13px',
                   }}
                 >

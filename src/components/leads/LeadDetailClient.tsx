@@ -167,12 +167,12 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
 
       {/* Breadcrumb */}
       <div className="flex items-center gap-3">
-        <Link href="/leads" className="flex items-center gap-1.5 text-sm text-muted-foreground/75 hover:text-foreground/85 transition-colors">
+        <Link href="/leads" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" />
           Leads
         </Link>
         <span className="text-gray-300">/</span>
-        <span className="text-sm font-medium text-foreground/85">{lead.name}</span>
+        <span className="text-sm font-medium text-foreground">{lead.name}</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -250,7 +250,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                 {editMode ? (
                   <Input value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="opcional" />
                 ) : (
-                  <span className="text-sm text-foreground/85">{lead.email ?? '—'}</span>
+                  <span className="text-sm text-foreground">{lead.email ?? '—'}</span>
                 )}
               </div>
 
@@ -267,7 +267,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                     </SelectContent>
                   </Select>
                 ) : (
-                  <span className="text-sm text-foreground/85 capitalize">{lead.source ?? '—'}</span>
+                  <span className="text-sm text-foreground capitalize">{lead.source ?? '—'}</span>
                 )}
               </div>
 
@@ -291,7 +291,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                       style={{ backgroundColor: `${lead.stage.color}20`, color: lead.stage.color }}>
                       {lead.stage.name}
                     </span>
-                  ) : <span className="text-sm text-muted-foreground/75">Sem etapa</span>
+                  ) : <span className="text-sm text-muted-foreground">Sem etapa</span>
                 )}
               </div>
 
@@ -321,7 +321,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                     </SelectContent>
                   </Select>
                 ) : (
-                  <span className="text-sm text-foreground/85">{lead.assigned_user?.name ?? '—'}</span>
+                  <span className="text-sm text-foreground">{lead.assigned_user?.name ?? '—'}</span>
                 )}
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                 />
               ) : (
                 <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                  {lead.notes || <span className="text-muted-foreground/75">Nenhuma observação.</span>}
+                  {lead.notes || <span className="text-muted-foreground">Nenhuma observação.</span>}
                 </p>
               )}
             </div>
@@ -350,7 +350,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
 
           {/* Ações rápidas */}
           <div className="bg-card rounded-xl border border-border p-4">
-            <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide mb-3">Registrar atividade</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Registrar atividade</p>
             <div className="flex gap-2 mb-3">
               {(['note', 'call', 'whatsapp'] as const).map((t) => (
                 <button
@@ -387,10 +387,10 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
 
         {/* ── COLUNA DIREITA: timeline de eventos ── */}
         <div className="bg-card rounded-xl border border-border p-4">
-          <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide mb-4">Histórico</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-4">Histórico</p>
 
           {events.length === 0 ? (
-            <p className="text-sm text-muted-foreground/75 text-center py-8">Nenhuma atividade registrada.</p>
+            <p className="text-sm text-muted-foreground text-center py-8">Nenhuma atividade registrada.</p>
           ) : (
             <ol className="relative border-l border-border space-y-4 ml-2">
               {events.map((ev) => {
@@ -400,13 +400,13 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                     {/* Ícone na linha do tempo */}
                     <div className="absolute -left-1.5 mt-0.5 w-3 h-3 rounded-full bg-card border-2 border-indigo-300" />
                     <div className="flex items-start gap-2">
-                      <Icon className="w-3.5 h-3.5 text-muted-foreground/75 shrink-0 mt-0.5" />
+                      <Icon className="w-3.5 h-3.5 text-muted-foreground shrink-0 mt-0.5" />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium text-muted-foreground">{EVENT_LABELS[ev.type] ?? ev.type}</p>
                         {ev.description && (
-                          <p className="text-sm text-foreground/85 mt-0.5">{ev.description}</p>
+                          <p className="text-sm text-foreground mt-0.5">{ev.description}</p>
                         )}
-                        <p className="text-xs text-muted-foreground/75 mt-1">
+                        <p className="text-xs text-muted-foreground mt-1">
                           {ev.user?.name && <span>{ev.user.name} · </span>}
                           {new Date(ev.created_at).toLocaleDateString('pt-BR', {
                             day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'

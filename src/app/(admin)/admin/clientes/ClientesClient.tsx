@@ -62,7 +62,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#111827', lineHeight: 1.2 }}>Clientes</h1>
+          <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>Clientes</h1>
           <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Clínicas com acesso ao CRM Livelis</p>
         </div>
         <button
@@ -81,7 +81,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
           { label: 'Ativos',     value: stats.active,  color: '#16a34a' },
           { label: 'Bloqueados', value: stats.blocked, color: '#dc2626' },
         ].map(s => (
-          <div key={s.label} style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+          <div key={s.label} style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
             <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 500, marginBottom: 6 }}>{s.label}</div>
             <div style={{ fontSize: 32, fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
           </div>
@@ -89,27 +89,27 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       </div>
 
       {/* Tabela */}
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
+      <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
         <table className="w-full">
-          <thead style={{ background: '#F8F9FB' }}>
+          <thead style={{ background: 'var(--muted)' }}>
             <tr>
               {['Clínica', 'Responsável', 'Plano', 'Status', 'Desde', 'Ações'].map(h => (
-                <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {clients.length === 0 && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center" style={{ fontSize: 15, color: '#9ca3af' }}>Nenhuma clínica cadastrada ainda.</td></tr>
+              <tr><td colSpan={6} className="px-5 py-12 text-center" style={{ fontSize: 15, color: 'var(--muted-foreground)' }}>Nenhuma clínica cadastrada ainda.</td></tr>
             )}
             {clients.map(c => {
               const sub    = c.subscriptions?.[0]
               const owner  = c.users?.find((u: { role: string }) => u.role === 'owner') ?? c.users?.[0]
               const status = sub?.status ?? (c.is_active ? 'active' : 'blocked')
               return (
-                <tr key={c.id} style={{ borderTop: '1px solid #F3F4F6' }} className="hover:bg-[#FAFAFA] transition-colors">
-                  <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 600, color: '#111827' }}>{c.name}</td>
-                  <td className="px-5 py-3.5" style={{ fontSize: 15, color: '#374151' }}>{owner?.name ?? '—'}</td>
+                <tr key={c.id} style={{ borderTop: '1px solid var(--border)' }} className="hover:bg-muted/50 transition-colors">
+                  <td className="px-5 py-3.5" style={{ fontSize: 15, fontWeight: 600, color: 'var(--foreground)' }}>{c.name}</td>
+                  <td className="px-5 py-3.5" style={{ fontSize: 15, color: 'var(--foreground)' }}>{owner?.name ?? '—'}</td>
                   <td className="px-5 py-3.5">
                     <span style={{ fontSize: 13, fontWeight: 600, background: '#f3e8ff', color: '#7e22ce', padding: '3px 10px', borderRadius: 20 }}>
                       {PLAN_LABELS[sub?.plan ?? 'trial']}
@@ -157,19 +157,19 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-card p-7 w-full max-w-md" style={{ borderRadius: 16, boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: '#111827', marginBottom: 4 }}>Gerar convite de acesso</h2>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--foreground)', marginBottom: 4 }}>Gerar convite de acesso</h2>
             <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 24 }}>O dentista receberá um link único para criar a conta.</p>
 
             {!generatedLink ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Email do dentista</label>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">Email do dentista</label>
                   <input type="email" placeholder="dr.carlos@clinica.com" value={inviteEmail}
                     onChange={e => setInviteEmail(e.target.value)}
                     className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Plano contratado</label>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">Plano contratado</label>
                   <select value={invitePlan} onChange={e => setInvitePlan(e.target.value)}
                     className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary bg-card">
                     <option value="lite">Cibri-Lite — R$497/mês</option>
@@ -178,7 +178,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Validade do convite</label>
+                  <label className="block text-sm font-semibold text-foreground mb-1.5">Validade do convite</label>
                   <select value={inviteDays} onChange={e => setInviteDays(e.target.value)}
                     className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary bg-card">
                     <option value="3">3 dias</option>
@@ -187,7 +187,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                   </select>
                 </div>
                 <div className="flex gap-3 mt-2">
-                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground/85 py-2.5 rounded-lg text-sm font-bold">Cancelar</button>
+                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground py-2.5 rounded-lg text-sm font-bold">Cancelar</button>
                   <button onClick={handleCreateInvite} disabled={creating || !inviteEmail}
                     className="flex-1 bg-brand-lime text-[#131500] py-2.5 rounded-lg text-sm font-bold disabled:opacity-50">
                     {creating ? 'Gerando...' : 'Gerar link'}
@@ -204,7 +204,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                   {generatedLink}
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground/85 py-2.5 rounded-lg text-sm font-bold">Fechar</button>
+                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground py-2.5 rounded-lg text-sm font-bold">Fechar</button>
                   <button onClick={copyLink} className="flex-1 bg-brand-lime text-[#131500] py-2.5 rounded-lg text-sm font-bold">
                     Copiar link
                   </button>

@@ -69,7 +69,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
               Bem-vindo, {firstName}! 👋
             </p>
             <h1 className="text-2xl font-bold text-foreground mb-1">Configure sua clínica</h1>
-            <p className="text-muted-foreground/75 text-sm mb-8">Leva menos de 1 minuto</p>
+            <p className="text-muted-foreground text-sm mb-8">Leva menos de 1 minuto</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
@@ -97,7 +97,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
               </div>
 
               <div className="flex gap-3 pt-2">
-                <Button type="button" variant="ghost" onClick={goToDashboard} className="text-muted-foreground/75 px-4">
+                <Button type="button" variant="ghost" onClick={goToDashboard} className="text-muted-foreground px-4">
                   Pular
                 </Button>
                 <Button type="submit" disabled={saving} className="flex-1 h-12 gap-2 font-semibold">

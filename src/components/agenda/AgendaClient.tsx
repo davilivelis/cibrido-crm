@@ -83,8 +83,8 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
           <div className="w-12 h-12 rounded-full bg-violet-50 flex items-center justify-center">
             <CalendarDays className="w-5 h-5 text-violet-500" />
           </div>
-          <p className="font-medium text-foreground/85">Nenhuma consulta agendada</p>
-          <p className="text-sm text-muted-foreground/75">
+          <p className="font-medium text-foreground">Nenhuma consulta agendada</p>
+          <p className="text-sm text-muted-foreground">
             Consultas são criadas dentro do cadastro de cada lead.
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
         <div className="space-y-6">
           {byDay.map(({ dayKey, dayLabel, appts }) => (
             <div key={dayKey}>
-              <h2 className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide mb-3 capitalize">
+              <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3 capitalize">
                 {dayLabel}
               </h2>
               <div className="space-y-2">
@@ -115,8 +115,8 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                           })}
                         </p>
                         <div className="flex items-center justify-center gap-1 mt-0.5">
-                          <Clock className="w-3 h-3 text-muted-foreground/75" />
-                          <span className="text-xs text-muted-foreground/75">{appt.duration_min}min</span>
+                          <Clock className="w-3 h-3 text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground">{appt.duration_min}min</span>
                         </div>
                       </div>
 
@@ -136,12 +136,12 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                             <span className="text-sm font-medium text-foreground">—</span>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground/75 mt-0.5">
+                        <p className="text-xs text-muted-foreground mt-0.5">
                           {appt.title}
                           {appt.lead?.phone && ` · ${appt.lead.phone}`}
                         </p>
                         {appt.notes && (
-                          <p className="text-xs text-muted-foreground/75 italic mt-0.5 truncate">{appt.notes}</p>
+                          <p className="text-xs text-muted-foreground italic mt-0.5 truncate">{appt.notes}</p>
                         )}
                       </div>
 
@@ -157,7 +157,7 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                             type="button"
                             disabled={busy}
                             onClick={() => setOpenMenu(openMenu === appt.id ? null : appt.id)}
-                            className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground/75 hover:text-muted-foreground hover:bg-muted/60 transition-colors"
+                            className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-muted-foreground hover:bg-muted/60 transition-colors"
                           >
                             <ChevronDown className="w-4 h-4" />
                           </button>
@@ -180,7 +180,7 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                                       className={`w-full text-left px-3 py-2.5 text-xs flex items-center gap-2 transition-colors ${
                                         action.danger
                                           ? 'text-red-600 hover:bg-red-50'
-                                          : 'text-foreground/85 hover:bg-muted/60'
+                                          : 'text-foreground hover:bg-muted/60'
                                       }`}
                                     >
                                       <Icon className="w-3.5 h-3.5" />

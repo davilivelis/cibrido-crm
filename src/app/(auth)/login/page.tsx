@@ -83,7 +83,7 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col items-center text-center">
           {/* Logo só balões — responsiva */}
           <img
-            src="/logo-livelis.png"
+            src="/logo-mark.svg"
             alt="Livelis"
             className="h-16 lg:h-32 w-auto mx-auto -mb-4 lg:-mb-8"
           />
@@ -101,7 +101,7 @@ export default function LoginPage() {
               seu futuro e atual paciente
             </p>
           </div>
-          <p className="text-muted-foreground/75 text-sm lg:text-xl mt-3 lg:mt-5 leading-relaxed max-w-[480px] mx-auto">
+          <p className="text-muted-foreground text-sm lg:text-xl mt-3 lg:mt-5 leading-relaxed max-w-[480px] mx-auto">
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>
@@ -121,8 +121,8 @@ export default function LoginPage() {
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'entrar' ? '#4d6b00' : 'transparent',
-                color: tab === 'entrar' ? '#fff' : '#6b7280',
+                backgroundColor: tab === 'entrar' ? '#BFFF00' : 'transparent',
+                color: tab === 'entrar' ? '#131500' : 'var(--muted-foreground)',
               }}
             >
               Entrar
@@ -132,8 +132,8 @@ export default function LoginPage() {
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'cadastrar' ? '#4d6b00' : 'transparent',
-                color: tab === 'cadastrar' ? '#fff' : '#6b7280',
+                backgroundColor: tab === 'cadastrar' ? '#BFFF00' : 'transparent',
+                color: tab === 'cadastrar' ? '#131500' : 'var(--muted-foreground)',
               }}
             >
               Criar conta
@@ -196,7 +196,7 @@ export default function LoginPage() {
         </div>
 
         {/* Rodapé */}
-        <p className="text-xs text-muted-foreground/75 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
+        <p className="text-xs text-muted-foreground mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
       </div>
     </div>
   )
