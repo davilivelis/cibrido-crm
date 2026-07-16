@@ -103,7 +103,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   padding: '2px 8px',
                   borderRadius: '20px',
                   backgroundColor: completedCount === steps.length - 1 ? '#dcfce7' : '#fef9ec',
-                  color: completedCount === steps.length - 1 ? '#16a34a' : '#92400e',
+                  color: completedCount === steps.length - 1 ? '#166534' : '#92400e',
                 }}
               >
                 {completedCount}/{steps.length} etapas
