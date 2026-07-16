@@ -38,8 +38,8 @@ export default function EsqueceuSenhaPage() {
 
         <div className="text-center mb-8">
           <img src="/logo-livelis.png" alt="Livelis" className="h-12 w-auto mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900">Recuperar senha</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Recuperar senha</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             Informe seu email e enviaremos um link para redefinir sua senha.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function EsqueceuSenhaPage() {
             </p>
             <a
               href="/login"
-              className="inline-block mt-4 text-sm text-gray-500 hover:text-gray-700 underline underline-offset-4"
+              className="inline-block mt-4 text-sm text-muted-foreground hover:text-foreground/85 underline underline-offset-4"
             >
               Voltar para o login
             </a>
@@ -86,7 +86,7 @@ export default function EsqueceuSenhaPage() {
             <div className="text-center">
               <a
                 href="/login"
-                className="text-sm text-gray-500 hover:text-gray-700 underline underline-offset-4"
+                className="text-sm text-muted-foreground hover:text-foreground/85 underline underline-offset-4"
               >
                 Voltar para o login
               </a>

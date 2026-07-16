@@ -76,7 +76,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
 
   return (
     <div
-      className="bg-white"
+      className="bg-card"
       style={{
         borderRadius: '12px',
         border: '1px solid #E2E5EA',
@@ -113,7 +113,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
             <div className="w-full max-w-[240px] h-1.5 rounded-full" style={{ backgroundColor: '#F3F4F6' }}>
               <div
                 className="h-1.5 rounded-full transition-all duration-500"
-                style={{ width: `${progressPct}%`, backgroundColor: '#0D9488' }}
+                style={{ width: `${progressPct}%`, backgroundColor: 'var(--primary)' }}
               />
             </div>
           </div>
@@ -122,14 +122,14 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
         <div className="flex items-center gap-2 ml-3 shrink-0">
           <button
             onClick={(e) => { e.stopPropagation(); handleDismiss() }}
-            className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-lg hover:bg-muted transition-colors"
             title="Fechar"
           >
-            <X className="w-4 h-4 text-gray-400" />
+            <X className="w-4 h-4 text-muted-foreground/75" />
           </button>
           {collapsed
-            ? <ChevronDown className="w-4 h-4 text-gray-400" />
-            : <ChevronUp className="w-4 h-4 text-gray-400" />
+            ? <ChevronDown className="w-4 h-4 text-muted-foreground/75" />
+            : <ChevronUp className="w-4 h-4 text-muted-foreground/75" />
           }
         </div>
       </div>
@@ -166,7 +166,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   href={step.href}
                   className="mt-auto inline-block text-center rounded-lg text-sm font-semibold py-1.5 transition-colors"
                   style={{
-                    backgroundColor: '#0D9488',
+                    backgroundColor: 'var(--primary)',
                     color: '#fff',
                     fontSize: '13px',
                   }}

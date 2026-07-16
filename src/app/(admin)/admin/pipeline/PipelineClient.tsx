@@ -10,7 +10,7 @@ const STAGES = [
   { id: 'lead',             label: 'Lead',             color: '#6366f1' },
   { id: 'qualificado',      label: 'Qualificado',      color: '#f59e0b' },
   { id: 'call_agendada',    label: 'Call Agendada',    color: '#10b981' },
-  { id: 'proposta_enviada', label: 'Proposta Enviada', color: '#0D9488' },
+  { id: 'proposta_enviada', label: 'Proposta Enviada', color: '#4d6b00' },
   { id: 'cliente_ativo',    label: 'Cliente Ativo',    color: '#22c55e' },
   { id: 'churned',          label: 'Churned',          color: '#ef4444' },
 ]
@@ -38,8 +38,8 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
   return (
     <div className="p-8">
       <div className="mb-6">
-        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Pipeline Comercial</h1>
-        <p className="text-sm lg:text-base text-gray-500 mt-1">
+        <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Pipeline Comercial</h1>
+        <p className="text-sm lg:text-base text-muted-foreground mt-1">
           {leads.length} lead{leads.length !== 1 ? 's' : ''} no pipeline
         </p>
       </div>
@@ -56,7 +56,7 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
                 style={{ backgroundColor: `${stage.color}18` }}
               >
                 <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: stage.color }} />
-                <span className="text-sm font-semibold text-gray-800 truncate flex-1">{stage.label}</span>
+                <span className="text-sm font-semibold text-foreground truncate flex-1">{stage.label}</span>
                 <span
                   className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0 text-white"
                   style={{ backgroundColor: stage.color }}
@@ -72,21 +72,21 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
                     <div
                       key={lead.id}
                       className={cn(
-                        'bg-white rounded-xl border p-4 transition-all duration-150',
+                        'bg-card rounded-xl border p-4 transition-all duration-150',
                         'border-[#E2E5EA] shadow-[0_2px_8px_rgba(0,0,0,0.06)]',
                         'hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:border-[#C5CAD3]'
                       )}
                     >
-                      <p className="text-sm font-semibold text-gray-900 mb-2">{lead.name}</p>
+                      <p className="text-sm font-semibold text-foreground mb-2">{lead.name}</p>
                       {lead.phone && (
-                        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground/75">
                           <Phone className="w-3 h-3" />
                           {lead.phone}
                         </div>
                       )}
                       <div className="flex items-center justify-between mt-2.5">
                         {lead.source && (
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full capitalize">
+                          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full capitalize">
                             {SOURCE_LABELS[lead.source] ?? lead.source}
                           </span>
                         )}
@@ -94,7 +94,7 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
                           <button
                             onClick={() => handleAdvance(lead.id, lead.stage)}
                             disabled={isPending}
-                            className="ml-auto text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition-colors"
+                            className="ml-auto text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground hover:bg-slate-200 font-semibold transition-colors"
                           >
                             →
                           </button>

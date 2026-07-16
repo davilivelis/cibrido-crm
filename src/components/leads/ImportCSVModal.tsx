@@ -141,9 +141,9 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
         <div className="space-y-4">
 
           {/* Instruções do formato */}
-          <div className="bg-gray-50 rounded-lg px-4 py-3 text-xs text-gray-600 space-y-1">
-            <p className="font-semibold text-gray-700">Formato esperado (1ª linha = cabeçalho):</p>
-            <p className="font-mono text-[11px] text-gray-500">
+          <div className="bg-muted/60 rounded-lg px-4 py-3 text-xs text-muted-foreground space-y-1">
+            <p className="font-semibold text-foreground/85">Formato esperado (1ª linha = cabeçalho):</p>
+            <p className="font-mono text-[11px] text-muted-foreground">
               nome ; telefone ; email ; origem ; observações
             </p>
             <p>Separador: vírgula ou ponto-e-vírgula. Nome e telefone são obrigatórios.</p>
@@ -154,12 +154,12 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="w-full border-2 border-dashed border-gray-200 rounded-xl p-8 flex flex-col items-center gap-3 hover:border-[#0D9488]/40 hover:bg-pink-50/30 transition-colors"
+              className="w-full border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center gap-3 hover:border-primary/60 hover:bg-accent/50 transition-colors"
             >
               <Upload className="w-8 h-8 text-gray-300" />
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-700">Clique para selecionar o arquivo</p>
-                <p className="text-xs text-gray-400 mt-0.5">Apenas arquivos .csv</p>
+                <p className="text-sm font-medium text-foreground/85">Clique para selecionar o arquivo</p>
+                <p className="text-xs text-muted-foreground/75 mt-0.5">Apenas arquivos .csv</p>
               </div>
             </button>
           )}
@@ -175,15 +175,15 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
           {/* Arquivo selecionado — preview */}
           {fileName && rows.length > 0 && !imported && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
-                <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <FileText className="w-4 h-4 text-gray-400" />
+              <div className="flex items-center justify-between bg-muted/60 rounded-lg px-3 py-2">
+                <div className="flex items-center gap-2 text-sm text-foreground/85">
+                  <FileText className="w-4 h-4 text-muted-foreground/75" />
                   <span className="font-medium truncate max-w-[200px]">{fileName}</span>
                 </div>
                 <button
                   type="button"
                   onClick={reset}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-muted-foreground/75 hover:text-muted-foreground"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -204,9 +204,9 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
               </div>
 
               {/* Preview — primeiras 5 linhas */}
-              <div className="border border-gray-100 rounded-lg overflow-hidden">
+              <div className="border border-border rounded-lg overflow-hidden">
                 <table className="w-full text-xs">
-                  <thead className="bg-gray-50 text-gray-500 uppercase tracking-wide">
+                  <thead className="bg-muted/60 text-muted-foreground uppercase tracking-wide">
                     <tr>
                       <th className="px-3 py-2 text-left">Nome</th>
                       <th className="px-3 py-2 text-left">Telefone</th>
@@ -219,16 +219,16 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
                         key={i}
                         className={`border-t border-gray-50 ${!r.valid ? 'opacity-40' : ''}`}
                       >
-                        <td className="px-3 py-2 text-gray-800 truncate max-w-[120px]">
-                          {r.name || <span className="italic text-gray-400">vazio</span>}
+                        <td className="px-3 py-2 text-foreground truncate max-w-[120px]">
+                          {r.name || <span className="italic text-muted-foreground/75">vazio</span>}
                         </td>
-                        <td className="px-3 py-2 text-gray-600">{r.phone || '—'}</td>
-                        <td className="px-3 py-2 text-gray-500 truncate max-w-[120px]">{r.email || '—'}</td>
+                        <td className="px-3 py-2 text-muted-foreground">{r.phone || '—'}</td>
+                        <td className="px-3 py-2 text-muted-foreground truncate max-w-[120px]">{r.email || '—'}</td>
                       </tr>
                     ))}
                     {rows.length > 5 && (
                       <tr className="border-t border-gray-50">
-                        <td colSpan={3} className="px-3 py-2 text-gray-400 italic text-center">
+                        <td colSpan={3} className="px-3 py-2 text-muted-foreground/75 italic text-center">
                           +{rows.length - 5} linhas adicionais
                         </td>
                       </tr>
@@ -244,13 +244,13 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
             <div className="flex flex-col items-center gap-3 py-6 text-center">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
+                style={{ background: 'linear-gradient(135deg, #BFFF00, #4d6b00)' }}
               >
-                <CheckCircle className="w-6 h-6 text-white" />
+                <CheckCircle className="w-6 h-6 text-[#131500]" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">{imported} leads importados!</p>
-                <p className="text-sm text-gray-500 mt-0.5">Já aparecem na lista de leads.</p>
+                <p className="font-semibold text-foreground">{imported} leads importados!</p>
+                <p className="text-sm text-muted-foreground mt-0.5">Já aparecem na lista de leads.</p>
               </div>
               <Button onClick={handleClose} size="sm">Fechar</Button>
             </div>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Favicon LIVELIS — mark sobre fundo preto (app icon do board) -->
+  <rect width="128" height="128" rx="28" fill="#000000"/>
+  <g fill="none" transform="translate(14 14) scale(0.834)">
+    <path d="M60 6 L108 33 L60 60 L12 33 Z" stroke="#BFFF00" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M60 16 V44 M60 44 L83 31" stroke="#BFFF00" stroke-width="9" stroke-linecap="round"/>
+    <path d="M14 52 L60 78 L106 52" stroke="#BFFF00" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 72 L60 98 L106 72" stroke="#BFFF00" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

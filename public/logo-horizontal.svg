@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" fill="none">
+  <!-- LIVELIS — lockup horizontal (texto branco: usar sobre fundo escuro) -->
+  <g fill="none">
+    <path d="M60 6 L108 33 L60 60 L12 33 Z" stroke="#BFFF00" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M60 16 V44 M60 44 L83 31" stroke="#BFFF00" stroke-width="8" stroke-linecap="round"/>
+    <path d="M14 52 L60 78 L106 52" stroke="#BFFF00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 72 L60 98 L106 72" stroke="#BFFF00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="132" y="76" font-family="Inter, 'Segoe UI', Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="14" fill="#FFFFFF">LIVELIS</text>
+</svg>

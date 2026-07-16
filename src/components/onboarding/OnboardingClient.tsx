@@ -62,14 +62,14 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
                 style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
                 priority
               />
-              <span className="font-bold text-gray-900 text-lg">CRM Livelis</span>
+              <span className="font-bold text-foreground text-lg">CRM Livelis</span>
             </div>
 
-            <p className="text-sm font-medium mb-1" style={{ color: '#0D9488' }}>
+            <p className="text-sm font-medium mb-1" style={{ color: 'var(--primary-strong)' }}>
               Bem-vindo, {firstName}! 👋
             </p>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Configure sua clínica</h1>
-            <p className="text-gray-400 text-sm mb-8">Leva menos de 1 minuto</p>
+            <h1 className="text-2xl font-bold text-foreground mb-1">Configure sua clínica</h1>
+            <p className="text-muted-foreground/75 text-sm mb-8">Leva menos de 1 minuto</p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
@@ -97,7 +97,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
               </div>
 
               <div className="flex gap-3 pt-2">
-                <Button type="button" variant="ghost" onClick={goToDashboard} className="text-gray-400 px-4">
+                <Button type="button" variant="ghost" onClick={goToDashboard} className="text-muted-foreground/75 px-4">
                   Pular
                 </Button>
                 <Button type="submit" disabled={saving} className="flex-1 h-12 gap-2 font-semibold">
@@ -111,12 +111,12 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
           <div className="text-center">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
-              style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
+              style={{ background: 'linear-gradient(135deg, #BFFF00, #4d6b00)' }}
             >
-              <CheckCircle className="w-8 h-8 text-white" />
+              <CheckCircle className="w-8 h-8 text-[#131500]" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Tudo pronto!</h1>
-            <p className="text-gray-500 text-sm mb-8">
+            <h1 className="text-2xl font-bold text-foreground mb-2">Tudo pronto!</h1>
+            <p className="text-muted-foreground text-sm mb-8">
               <strong style={{ color: '#1E2A3A' }}>{name}</strong> está configurada.
             </p>
             <Button onClick={goToDashboard} className="w-full h-12 font-semibold gap-2">

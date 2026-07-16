@@ -25,21 +25,21 @@ interface TeamSectionProps {
 
 export default function TeamSection({ team }: TeamSectionProps) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-6">
+    <div className="bg-card rounded-xl border border-border p-6">
       <div className="flex items-center gap-3 mb-5">
         <div className="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center">
           <Users className="w-4 h-4 text-violet-600" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-gray-900">Equipe</h2>
-          <p className="text-xs text-gray-400">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
+          <h2 className="text-sm font-semibold text-foreground">Equipe</h2>
+          <p className="text-xs text-muted-foreground/75">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
         </div>
       </div>
 
       {/* Convite de equipe — disponível na V2 */}
-      <div className="mb-5 p-4 bg-gray-50 rounded-xl text-center">
-        <p className="text-gray-500 text-sm font-medium">Gerenciamento de equipe estará disponível em breve.</p>
-        <p className="text-gray-400 text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
+      <div className="mb-5 p-4 bg-muted/60 rounded-xl text-center">
+        <p className="text-muted-foreground text-sm font-medium">Gerenciamento de equipe estará disponível em breve.</p>
+        <p className="text-muted-foreground/75 text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
       </div>
 
       {/* Lista de membros */}
@@ -55,8 +55,8 @@ export default function TeamSection({ team }: TeamSectionProps) {
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">{member.name}</p>
-                <p className="text-xs text-gray-400 truncate">{member.email}</p>
+                <p className="text-sm font-medium text-foreground truncate">{member.name}</p>
+                <p className="text-xs text-muted-foreground/75 truncate">{member.email}</p>
               </div>
               <span className={cn('flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full shrink-0', config.style)}>
                 <Icon className="w-3 h-3" />

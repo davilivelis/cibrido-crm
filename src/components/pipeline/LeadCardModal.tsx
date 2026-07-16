@@ -174,9 +174,9 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
       <DialogContent className="p-0 flex flex-col gap-0 overflow-hidden max-sm:!inset-0 max-sm:!translate-x-0 max-sm:!translate-y-0 max-sm:!max-w-none max-sm:!w-screen max-sm:!h-[100dvh] max-sm:!rounded-none sm:max-w-2xl sm:max-h-[90vh] sm:rounded-lg">
 
         {/* ── Cabeçalho ── */}
-        <div className="flex items-start gap-4 p-5 border-b border-gray-100">
+        <div className="flex items-start gap-4 p-5 border-b border-border">
           <div className="flex-1 min-w-0">
-            <h2 className="text-lg font-semibold text-gray-900 truncate">{lead.name}</h2>
+            <h2 className="text-lg font-semibold text-foreground truncate">{lead.name}</h2>
             <div className="flex items-center gap-2 mt-1.5 flex-wrap">
               <span className={cn('text-xs font-medium px-2.5 py-1 rounded-full border', statusCfg?.cls)}>
                 {statusCfg?.label}
@@ -215,7 +215,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               onClick={() => { setShowSchedule((v) => !v); setTab('dados') }}
               className={cn(
                 'w-9 h-9 flex items-center justify-center rounded-lg transition-colors',
-                showSchedule ? 'bg-[#0D9488] text-white' : 'bg-pink-50 text-[#0D9488] hover:bg-pink-100'
+                showSchedule ? 'bg-brand-lime text-[#131500]' : 'bg-pink-50 text-primary-strong hover:bg-pink-100'
               )}
             >
               <CalendarPlus className="w-4 h-4" />
@@ -223,7 +223,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
             <button
               type="button"
               onClick={onClose}
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 transition-colors"
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-muted-foreground/75 hover:bg-muted transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -232,19 +232,19 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
 
         {/* ── Agenda rápida (aparece ao clicar no botão de calendário) ── */}
         {showSchedule && (
-          <div className="px-5 py-3 border-b border-gray-100 bg-pink-50/40 space-y-3">
-            <p className="text-xs font-semibold text-[#0D9488] uppercase tracking-wide">Agendar consulta rápida</p>
+          <div className="px-5 py-3 border-b border-border bg-pink-50/40 space-y-3">
+            <p className="text-xs font-semibold text-primary-strong uppercase tracking-wide">Agendar consulta rápida</p>
             <div className="grid grid-cols-2 gap-2">
               <Input
                 placeholder="Título"
                 value={schedTitle}
                 onChange={(e) => setSchedTitle(e.target.value)}
-                className="h-9 text-sm bg-white"
+                className="h-9 text-sm bg-card"
               />
               <select
                 value={schedDur}
                 onChange={(e) => setSchedDur(e.target.value)}
-                className="h-9 rounded-md border border-input bg-white px-3 text-sm"
+                className="h-9 rounded-md border border-input bg-card px-3 text-sm"
               >
                 {[30,45,60,90,120].map((d) => (
                   <option key={d} value={d}>{d} min</option>
@@ -255,7 +255,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               type="datetime-local"
               value={schedAt}
               onChange={(e) => setSchedAt(e.target.value)}
-              className="h-9 text-sm bg-white"
+              className="h-9 text-sm bg-card"
             />
             {schedDone && (
               <p className="text-xs text-green-600 font-medium flex items-center gap-1">
@@ -274,7 +274,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
         )}
 
         {/* ── Abas ── */}
-        <div className="flex border-b border-gray-100 px-5 bg-white">
+        <div className="flex border-b border-border px-5 bg-card">
           {(['dados', 'historico', 'recall'] as const).map((t) => (
             <button
               key={t}
@@ -283,8 +283,8 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               className={cn(
                 'py-3 px-1 mr-5 text-sm font-medium border-b-2 transition-colors capitalize',
                 tab === t
-                  ? 'border-[#0D9488] text-[#0D9488]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'border-primary text-primary-strong'
+                  : 'border-transparent text-muted-foreground hover:text-foreground/85'
               )}
             >
               {t === 'dados' ? 'Dados' : t === 'historico' ? 'Histórico' : 'Recall'}
@@ -306,17 +306,17 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
 
               {/* Contato */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Contato</p>
-                <div className="text-sm text-gray-700 font-medium">{lead.phone}</div>
-                {lead.email && <div className="text-sm text-gray-500">{lead.email}</div>}
+                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Contato</p>
+                <div className="text-sm text-foreground/85 font-medium">{lead.phone}</div>
+                {lead.email && <div className="text-sm text-muted-foreground">{lead.email}</div>}
                 {lead.source && (
-                  <div className="text-sm text-gray-400 capitalize">Origem: {lead.source}</div>
+                  <div className="text-sm text-muted-foreground/75 capitalize">Origem: {lead.source}</div>
                 )}
               </div>
 
               {/* Mover para etapa */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Etapa do funil</p>
+                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Etapa do funil</p>
                 <select
                   value={stageId}
                   onChange={(e) => handleStageChange(e.target.value)}
@@ -331,7 +331,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
 
               {/* Status */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</p>
+                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Status</p>
                 <div className="flex gap-2">
                   {STATUS_OPTIONS.map((s) => (
                     <button
@@ -339,7 +339,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                       onClick={() => handleStatusChange(s.value)}
                       className={cn(
                         'flex-1 text-xs font-medium py-1.5 rounded-lg border transition-all',
-                        status === s.value ? s.cls : 'border-gray-100 text-gray-400 hover:bg-gray-50'
+                        status === s.value ? s.cls : 'border-border text-muted-foreground/75 hover:bg-muted/60'
                       )}
                     >
                       {s.label}
@@ -351,14 +351,14 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {/* Observações */}
               {lead.notes && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Observações</p>
-                  <p className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3 whitespace-pre-wrap">{lead.notes}</p>
+                  <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Observações</p>
+                  <p className="text-sm text-muted-foreground bg-muted/60 rounded-lg p-3 whitespace-pre-wrap">{lead.notes}</p>
                 </div>
               )}
 
               {/* Registrar atividade */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Registrar atividade</p>
+                <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Registrar atividade</p>
                 <div className="flex gap-1.5">
                   {NOTE_TYPES.map(({ value, label, icon: Icon }) => (
                     <button
@@ -367,8 +367,8 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                       className={cn(
                         'flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition-colors',
                         noteType === value
-                          ? 'bg-pink-50 border-pink-200 text-[#0D9488]'
-                          : 'border-gray-100 text-gray-500 hover:bg-gray-50'
+                          ? 'bg-pink-50 border-pink-200 text-primary-strong'
+                          : 'border-border text-muted-foreground hover:bg-muted/60'
                       )}
                     >
                       <Icon className="w-3 h-3" /> {label}
@@ -393,8 +393,8 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {/* UTMs */}
               {(lead.utm_source || lead.utm_campaign) && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Campanha</p>
-                  <div className="text-xs text-gray-500 bg-gray-50 rounded-lg p-3 space-y-1 font-mono">
+                  <p className="text-xs font-semibold text-muted-foreground/75 uppercase tracking-wide">Campanha</p>
+                  <div className="text-xs text-muted-foreground bg-muted/60 rounded-lg p-3 space-y-1 font-mono">
                     {lead.utm_source   && <p>source: {lead.utm_source}</p>}
                     {lead.utm_medium   && <p>medium: {lead.utm_medium}</p>}
                     {lead.utm_campaign && <p>campaign: {lead.utm_campaign}</p>}
@@ -410,13 +410,13 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
               {loadingData ? (
                 <div className="space-y-3 animate-pulse">
                   {[...Array(4)].map((_, i) => (
-                    <div key={i} className="h-12 bg-gray-100 rounded-lg" />
+                    <div key={i} className="h-12 bg-muted rounded-lg" />
                   ))}
                 </div>
               ) : events.length === 0 ? (
                 <div className="text-center py-10">
                   <Clock className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                  <p className="text-sm text-gray-400">Nenhuma atividade registrada</p>
+                  <p className="text-sm text-muted-foreground/75">Nenhuma atividade registrada</p>
                 </div>
               ) : (
                 <div className="space-y-1">
@@ -424,12 +424,12 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                     const Icon = EVENT_ICONS[ev.type] ?? StickyNote
                     return (
                       <div key={ev.id} className="flex items-start gap-3 py-2.5 border-b border-gray-50 last:border-0">
-                        <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                          <Icon className="w-3.5 h-3.5 text-gray-500" />
+                        <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
+                          <Icon className="w-3.5 h-3.5 text-muted-foreground" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm text-gray-700">{ev.description ?? '—'}</p>
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <p className="text-sm text-foreground/85">{ev.description ?? '—'}</p>
+                          <p className="text-xs text-muted-foreground/75 mt-0.5">
                             {new Date(ev.created_at).toLocaleDateString('pt-BR', {
                               day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
                             })}
@@ -448,15 +448,15 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
             <div className="p-5">
               {loadingData ? (
                 <div className="space-y-3 animate-pulse">
-                  {[...Array(2)].map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded-lg" />)}
+                  {[...Array(2)].map((_, i) => <div key={i} className="h-16 bg-muted rounded-lg" />)}
                 </div>
               ) : recalls.length === 0 ? (
                 <div className="text-center py-10">
                   <RotateCcw className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                  <p className="text-sm text-gray-400">Nenhum recall cadastrado para este paciente</p>
+                  <p className="text-sm text-muted-foreground/75">Nenhum recall cadastrado para este paciente</p>
                   <Link
                     href="/recalls"
-                    className="text-xs text-[#0D9488] hover:underline mt-1 inline-block"
+                    className="text-xs text-primary-strong hover:underline mt-1 inline-block"
                     onClick={onClose}
                   >
                     Ir para módulo de Recall →
@@ -472,17 +472,17 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                         key={r.id}
                         className={cn(
                           'rounded-xl border p-3 flex items-center justify-between gap-3',
-                          overdue ? 'border-amber-300 bg-amber-50/40' : 'border-gray-100'
+                          overdue ? 'border-amber-300 bg-amber-50/40' : 'border-border'
                         )}
                       >
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-gray-800">{r.reason}</p>
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <p className="text-sm font-medium text-foreground">{r.reason}</p>
+                          <p className="text-xs text-muted-foreground/75 mt-0.5">
                             {new Date(r.recall_date + 'T00:00:00').toLocaleDateString('pt-BR')}
                             {overdue && <span className="ml-2 text-amber-600 font-semibold">• Vencido</span>}
                           </p>
                         </div>
-                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full shrink-0 font-medium">
+                        <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-full shrink-0 font-medium">
                           {RECALL_STATUS_LABELS[r.status] ?? r.status}
                         </span>
                       </div>
@@ -490,7 +490,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                   })}
                   <Link
                     href="/recalls"
-                    className="text-xs text-[#0D9488] hover:underline mt-2 inline-block"
+                    className="text-xs text-primary-strong hover:underline mt-2 inline-block"
                     onClick={onClose}
                   >
                     Gerenciar recalls →
@@ -502,7 +502,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
         </div>
 
         {/* ── Rodapé ── */}
-        <div className="border-t border-gray-100 p-4 bg-gray-50/50 flex items-center justify-between gap-3">
+        <div className="border-t border-border p-4 bg-muted/60/50 flex items-center justify-between gap-3">
           {schedDone && (
             <p className="text-xs text-green-600 font-medium flex items-center gap-1">
               <CheckCircle className="w-3.5 h-3.5" /> Consulta agendada!

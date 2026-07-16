@@ -10,7 +10,7 @@ const STATUS_STYLES: Record<string, string> = {
   trial:     'bg-yellow-100 text-yellow-700',
   active:    'bg-green-100 text-green-700',
   blocked:   'bg-red-100 text-red-700',
-  cancelled: 'bg-gray-100 text-gray-500',
+  cancelled: 'bg-muted text-muted-foreground',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,7 +67,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-[#0D9488] text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0F766E] transition-colors"
+          className="bg-brand-lime text-[#131500] px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#a8e000] transition-colors"
         >
           + Novo Convite
         </button>
@@ -76,7 +76,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-4 mb-6">
         {[
-          { label: 'Total',      value: stats.total,   color: '#0D9488' },
+          { label: 'Total',      value: stats.total,   color: '#4d6b00' },
           { label: 'Em trial',   value: stats.trial,   color: '#d97706' },
           { label: 'Ativos',     value: stats.active,  color: '#16a34a' },
           { label: 'Bloqueados', value: stats.blocked, color: '#dc2626' },
@@ -116,7 +116,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                     </span>
                   </td>
                   <td className="px-5 py-3.5">
-                    <span className={`${STATUS_STYLES[status] ?? 'bg-gray-100 text-gray-500'}`} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
+                    <span className={`${STATUS_STYLES[status] ?? 'bg-muted text-muted-foreground'}`} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
                       {status === 'trial' ? 'Trial' : status === 'active' ? 'Ativo' : status === 'blocked' ? 'Bloqueado' : 'Cancelado'}
                     </span>
                   </td>
@@ -127,7 +127,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                     <div className="flex gap-2 items-center">
                       <Link
                         href={`/admin/clientes/${c.id}`}
-                        className="px-3 py-1.5 rounded-lg transition-colors bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        className="px-3 py-1.5 rounded-lg transition-colors bg-muted text-muted-foreground hover:bg-slate-200"
                         style={{ fontSize: 13, fontWeight: 600 }}
                       >
                         Ver detalhes
@@ -156,40 +156,40 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       {/* Modal Novo Convite */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white p-7 w-full max-w-md" style={{ borderRadius: 16, boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
+          <div className="bg-card p-7 w-full max-w-md" style={{ borderRadius: 16, boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
             <h2 style={{ fontSize: 20, fontWeight: 700, color: '#111827', marginBottom: 4 }}>Gerar convite de acesso</h2>
             <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 24 }}>O dentista receberá um link único para criar a conta.</p>
 
             {!generatedLink ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email do dentista</label>
+                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Email do dentista</label>
                   <input type="email" placeholder="dr.carlos@clinica.com" value={inviteEmail}
                     onChange={e => setInviteEmail(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488]" />
+                    className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Plano contratado</label>
+                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Plano contratado</label>
                   <select value={invitePlan} onChange={e => setInvitePlan(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488] bg-white">
+                    className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary bg-card">
                     <option value="lite">Cibri-Lite — R$497/mês</option>
                     <option value="standard">Cibri-Standard — R$897/mês</option>
                     <option value="master">Cibri-Master — R$1.497/mês</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5">Validade do convite</label>
+                  <label className="block text-sm font-semibold text-foreground/85 mb-1.5">Validade do convite</label>
                   <select value={inviteDays} onChange={e => setInviteDays(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:border-[#0D9488] bg-white">
+                    className="w-full border border-border rounded-lg px-3 py-2.5 text-sm outline-none focus:border-primary bg-card">
                     <option value="3">3 dias</option>
                     <option value="7">7 dias</option>
                     <option value="15">15 dias</option>
                   </select>
                 </div>
                 <div className="flex gap-3 mt-2">
-                  <button onClick={closeModal} className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-lg text-sm font-bold">Cancelar</button>
+                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground/85 py-2.5 rounded-lg text-sm font-bold">Cancelar</button>
                   <button onClick={handleCreateInvite} disabled={creating || !inviteEmail}
-                    className="flex-1 bg-[#0D9488] text-white py-2.5 rounded-lg text-sm font-bold disabled:opacity-50">
+                    className="flex-1 bg-brand-lime text-[#131500] py-2.5 rounded-lg text-sm font-bold disabled:opacity-50">
                     {creating ? 'Gerando...' : 'Gerar link'}
                   </button>
                 </div>
@@ -200,12 +200,12 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                   <p className="text-green-700 font-bold text-sm mb-1">✅ Link gerado com sucesso!</p>
                   <p className="text-green-600 text-xs">Envie pelo WhatsApp para <strong>{inviteEmail}</strong></p>
                 </div>
-                <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-600 break-all font-mono">
+                <div className="bg-muted/60 border border-border rounded-lg p-3 text-xs text-muted-foreground break-all font-mono">
                   {generatedLink}
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={closeModal} className="flex-1 bg-slate-100 text-slate-700 py-2.5 rounded-lg text-sm font-bold">Fechar</button>
-                  <button onClick={copyLink} className="flex-1 bg-[#0D9488] text-white py-2.5 rounded-lg text-sm font-bold">
+                  <button onClick={closeModal} className="flex-1 bg-muted text-foreground/85 py-2.5 rounded-lg text-sm font-bold">Fechar</button>
+                  <button onClick={copyLink} className="flex-1 bg-brand-lime text-[#131500] py-2.5 rounded-lg text-sm font-bold">
                     Copiar link
                   </button>
                 </div>

@@ -52,7 +52,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
       {/* Back */}
       <button
         onClick={() => router.push('/admin/clientes')}
-        className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 mb-6 transition-colors"
+        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Voltar para Clientes
@@ -164,13 +164,13 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 onChange={(e) => setNoteText(e.target.value)}
                 placeholder="Ex: Ricardo ligou em 20/04, cliente interessado em upgrade..."
                 rows={2}
-                className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#0D9488] resize-none"
+                className="flex-1 border border-border rounded-lg px-3 py-2 text-sm outline-none focus:border-primary resize-none"
                 style={{ fontSize: 14, color: '#374151' }}
               />
               <button
                 onClick={handleAddNote}
                 disabled={addingNote || !noteText.trim()}
-                className="px-3 rounded-lg bg-[#0D9488] text-white disabled:opacity-40 transition-opacity shrink-0"
+                className="px-3 rounded-lg bg-brand-lime text-[#131500] disabled:opacity-40 transition-opacity shrink-0"
               >
                 <Plus className="w-4 h-4" />
               </button>
@@ -183,7 +183,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {notes.map((note: any) => (
                   <li key={note.id} className="flex gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: '#0D9488' }} />
+                    <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ backgroundColor: 'var(--primary)' }} />
                     <div>
                       <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.5 }}>{note.content}</p>
                       <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>
@@ -206,7 +206,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#fdf2f8' }}>
-                  <Users className="w-5 h-5" style={{ color: '#0D9488' }} />
+                  <Users className="w-5 h-5" style={{ color: 'var(--primary-strong)' }} />
                 </div>
                 <div>
                   <p style={{ fontSize: 22, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{totalLeads}</p>

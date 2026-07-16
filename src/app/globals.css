@@ -4,11 +4,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Tokens Cíbrido ─────────────────────────────────────────────
-   Teal     #0D9488  → primary / CTA / active states
-   Gold     #F5A623  → destaques / badges de alerta
-   Purple   #7B2D8E  → terciário / etapas / ícones
-   Navy     #1E2A3A  → sidebar / fundo escuro
+/* ── Tokens LIVELIS (board Gemini 16/07/2026) ───────────────────
+   Lime      #BFFF00  → primary / CTA / active states (texto SEMPRE escuro sobre lime)
+   Black     #000000  → superfícies dark profundas
+   Charcoal  #1A1F2C  → cards / sidebar no dark
+   Regra de ouro: em dark, texto sempre claro; sobre lime, texto sempre escuro.
 ──────────────────────────────────────────────────────────────── */
 
 @theme inline {
@@ -29,6 +29,7 @@
   --color-secondary:               var(--secondary);
   --color-primary-foreground:      var(--primary-foreground);
   --color-primary:                 var(--primary);
+  --color-primary-strong:          var(--primary-strong);
   --color-popover-foreground:      var(--popover-foreground);
   --color-popover:                 var(--popover);
   --color-card-foreground:         var(--card-foreground);
@@ -42,10 +43,10 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* Tokens de marca disponíveis como classes Tailwind */
-  --color-brand-magenta: #0D9488;
-  --color-brand-gold:    #F5A623;
-  --color-brand-purple:  #7B2D8E;
-  --color-brand-navy:    #1E2A3A;
+  --color-brand-lime:     #BFFF00;
+  --color-brand-black:    #000000;
+  --color-brand-charcoal: #1A1F2C;
+  --color-brand-gold:     #F5A623;
 }
 
 :root {
@@ -53,61 +54,65 @@
 
   /* Superfícies */
   --background:        #ffffff;
-  --foreground:        #0f1923;
+  --foreground:        #14161c;
   --card:              #ffffff;
-  --card-foreground:   #0f1923;
+  --card-foreground:   #14161c;
   --popover:           #ffffff;
-  --popover-foreground:#0f1923;
+  --popover-foreground:#14161c;
 
-  /* Primary → Teal Livelis */
-  --primary:           #0D9488;
-  --primary-foreground:#ffffff;
+  /* Primary → Lime Livelis (botões lime = texto escuro SEMPRE) */
+  --primary:           #BFFF00;
+  --primary-foreground:#131500;
+  /* Lime legível como TEXTO sobre fundo claro (lime puro não tem contraste no branco) */
+  --primary-strong:    #4d6b00;
 
-  /* Secondary → Navy claro */
-  --secondary:         #f1f4f8;
-  --secondary-foreground: #1E2A3A;
+  /* Secondary → grafite claro */
+  --secondary:         #f1f3f7;
+  --secondary-foreground: #1A1F2C;
 
   /* Muted */
-  --muted:             #f4f6f9;
-  --muted-foreground:  #6b7a8d;
+  --muted:             #f4f5f8;
+  --muted-foreground:  #67707f;
 
-  /* Accent → toque de teal suave */
-  --accent:            #fce8f2;
-  --accent-foreground: #0D9488;
+  /* Accent → toque de lime suave */
+  --accent:            #f3ffd1;
+  --accent-foreground: #3c5400;
 
   /* Bordas e inputs */
-  --border:            #e5e9ef;
-  --input:             #e5e9ef;
-  --ring:              #0D9488;
+  --border:            #e5e7ee;
+  --input:             #e5e7ee;
+  --ring:              #9ccf00;
 
   /* Destructive */
   --destructive:       oklch(0.577 0.245 27.325);
 
   /* Marca */
-  --brand-magenta: #0D9488;
-  --brand-gold:    #F5A623;
-  --brand-purple:  #7B2D8E;
-  --brand-navy:    #1E2A3A;
+  --brand-lime:     #BFFF00;
+  --brand-black:    #000000;
+  --brand-charcoal: #1A1F2C;
+  --brand-gold:     #F5A623;
 }
 
 .dark {
-  --background:        #0f1923;
-  --foreground:        #f0f4f8;
-  --card:              #1a2535;
-  --card-foreground:   #f0f4f8;
-  --popover:           #1a2535;
-  --popover-foreground:#f0f4f8;
-  --primary:           #0D9488;
-  --primary-foreground:#ffffff;
-  --secondary:         #253247;
-  --secondary-foreground:#f0f4f8;
-  --muted:             #1f2f42;
-  --muted-foreground:  #8a9ab0;
-  --accent:            #2a1a23;
-  --accent-foreground: #0D9488;
-  --border:            rgba(255,255,255,0.08);
-  --input:             rgba(255,255,255,0.1);
-  --ring:              #0D9488;
+  /* Regra Livelis: em dark, TEXTO SEMPRE CLARO. */
+  --background:        #0b0c10;
+  --foreground:        #f2f4f8;
+  --card:              #1A1F2C;
+  --card-foreground:   #f2f4f8;
+  --popover:           #1A1F2C;
+  --popover-foreground:#f2f4f8;
+  --primary:           #BFFF00;
+  --primary-foreground:#131500;
+  --primary-strong:    #BFFF00;
+  --secondary:         #242b3a;
+  --secondary-foreground:#f2f4f8;
+  --muted:             #20242f;
+  --muted-foreground:  #9aa3b2;
+  --accent:            #232a16;
+  --accent-foreground: #BFFF00;
+  --border:            rgba(255,255,255,0.09);
+  --input:             rgba(255,255,255,0.12);
+  --ring:              #BFFF00;
   --destructive:       oklch(0.704 0.191 22.216);
 }
 
@@ -139,17 +144,26 @@
 
 /* ── Utilitários de marca ──────────────────────────────────────── */
 @layer utilities {
-  .bg-brand-magenta { background-color: #0D9488; }
-  .bg-brand-gold    { background-color: #F5A623; }
-  .bg-brand-purple  { background-color: #7B2D8E; }
-  .bg-brand-navy    { background-color: #1E2A3A; }
+  .bg-brand-lime     { background-color: #BFFF00; }
+  .bg-brand-black    { background-color: #000000; }
+  .bg-brand-charcoal { background-color: #1A1F2C; }
+  .bg-brand-gold     { background-color: #F5A623; }
 
-  .text-brand-magenta { color: #0D9488; }
-  .text-brand-gold    { color: #F5A623; }
-  .text-brand-purple  { color: #7B2D8E; }
-  .text-brand-navy    { color: #1E2A3A; }
+  .text-brand-lime     { color: #BFFF00; }
+  .text-brand-charcoal { color: #1A1F2C; }
+  .text-brand-gold     { color: #F5A623; }
 
-  .border-brand-magenta { border-color: #0D9488; }
+  .border-brand-lime { border-color: #BFFF00; }
+  .ring-brand-lime   { --tw-ring-color: #BFFF00; }
 
-  .ring-brand-magenta { --tw-ring-color: #0D9488; }
+  /* Aliases legados (era teal "magenta"/purple/navy) — apontam pra paleta nova
+     até a varredura completa aposentar os nomes antigos. */
+  .bg-brand-magenta   { background-color: #BFFF00; color: #131500; }
+  .text-brand-magenta { color: var(--primary-strong); }
+  .border-brand-magenta { border-color: #BFFF00; }
+  .ring-brand-magenta { --tw-ring-color: #BFFF00; }
+  .bg-brand-purple  { background-color: #1A1F2C; }
+  .text-brand-purple{ color: var(--primary-strong); }
+  .bg-brand-navy    { background-color: #1A1F2C; }
+  .text-brand-navy  { color: #1A1F2C; }
 }

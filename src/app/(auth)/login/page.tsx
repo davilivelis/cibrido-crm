@@ -97,11 +97,11 @@ export default function LoginPage() {
             <p className="text-xl lg:text-[38px] font-bold leading-tight text-white lg:whitespace-nowrap">
               que organiza e acompanha
             </p>
-            <p className="text-xl lg:text-[38px] font-bold leading-tight text-[#0D9488] lg:whitespace-nowrap">
+            <p className="text-xl lg:text-[38px] font-bold leading-tight text-primary-strong lg:whitespace-nowrap">
               seu futuro e atual paciente
             </p>
           </div>
-          <p className="text-gray-400 text-sm lg:text-xl mt-3 lg:mt-5 leading-relaxed max-w-[480px] mx-auto">
+          <p className="text-muted-foreground/75 text-sm lg:text-xl mt-3 lg:mt-5 leading-relaxed max-w-[480px] mx-auto">
             Desde o primeiro contato até o agendamento, para aumentar o seu faturamento.
           </p>
         </div>
@@ -115,13 +115,13 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
 
           {/* Abas */}
-          <div className="flex bg-white rounded-xl p-1 mb-8 shadow-sm border border-gray-100">
+          <div className="flex bg-card rounded-xl p-1 mb-8 shadow-sm border border-border">
             <button
               onClick={() => switchTab('entrar')}
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'entrar' ? '#0D9488' : 'transparent',
+                backgroundColor: tab === 'entrar' ? '#4d6b00' : 'transparent',
                 color: tab === 'entrar' ? '#fff' : '#6b7280',
               }}
             >
@@ -132,7 +132,7 @@ export default function LoginPage() {
               className="flex-1 py-2.5 rounded-lg transition-all font-semibold"
               style={{
                 fontSize: '16px',
-                backgroundColor: tab === 'cadastrar' ? '#0D9488' : 'transparent',
+                backgroundColor: tab === 'cadastrar' ? '#4d6b00' : 'transparent',
                 color: tab === 'cadastrar' ? '#fff' : '#6b7280',
               }}
             >
@@ -161,11 +161,11 @@ export default function LoginPage() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded accent-[#0D9488] cursor-pointer"
+                    className="w-4 h-4 rounded accent-[#BFFF00] cursor-pointer"
                   />
                   <span style={{ fontSize: '14px', color: '#6b7280' }}>Lembrar de mim</span>
                 </label>
-                <a href="/esqueceu-senha" style={{ fontSize: '14px', color: '#6b7280' }} className="hover:text-gray-900 underline underline-offset-4">
+                <a href="/esqueceu-senha" style={{ fontSize: '14px', color: '#6b7280' }} className="hover:text-foreground underline underline-offset-4">
                   Esqueceu a senha?
                 </a>
               </div>
@@ -187,7 +187,7 @@ export default function LoginPage() {
                 href="https://wa.me/5511985664908?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20CRM%20Livelis."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block w-full py-2.5 rounded-lg bg-[#0D9488] text-white text-sm font-bold"
+                className="inline-block w-full py-2.5 rounded-lg bg-brand-lime text-[#131500] text-sm font-bold"
               >
                 Falar com Davi Junior
               </a>
@@ -196,7 +196,7 @@ export default function LoginPage() {
         </div>
 
         {/* Rodapé */}
-        <p className="text-xs text-gray-400 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
+        <p className="text-xs text-muted-foreground/75 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
       </div>
     </div>
   )

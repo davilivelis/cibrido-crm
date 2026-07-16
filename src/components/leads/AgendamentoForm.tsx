@@ -66,18 +66,18 @@ export default function AgendamentoForm({ leadId, clinicId }: AgendamentoFormPro
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100">
+    <div className="bg-card rounded-xl border border-border">
       {/* Cabeçalho clicável */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors rounded-xl"
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-muted/60 transition-colors rounded-xl"
       >
-        <span className="flex items-center gap-2 text-sm font-medium text-gray-700">
+        <span className="flex items-center gap-2 text-sm font-medium text-foreground/85">
           <CalendarPlus className="w-4 h-4 text-violet-500" />
           Agendar Consulta
         </span>
-        {open ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+        {open ? <ChevronUp className="w-4 h-4 text-muted-foreground/75" /> : <ChevronDown className="w-4 h-4 text-muted-foreground/75" />}
       </button>
 
       {/* Feedback de sucesso */}

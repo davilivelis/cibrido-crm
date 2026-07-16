@@ -71,8 +71,8 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       {/* Título da página */}
       <div>
-        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900 leading-tight">Dashboard</h1>
-        <p className="text-sm lg:text-base text-gray-500 mt-1">Acompanhe seus leads e consultas agendadas</p>
+        <h1 className="text-xl lg:text-[28px] font-bold text-foreground leading-tight">Dashboard</h1>
+        <p className="text-sm lg:text-base text-muted-foreground mt-1">Acompanhe seus leads e consultas agendadas</p>
       </div>
 
       {/* Checklist de configuração inicial */}
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
           return (
             <div
               key={card.label}
-              className="bg-white flex items-center gap-5"
+              className="bg-card flex items-center gap-5"
               style={{
                 padding: '24px',
                 borderRadius: '12px',
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
 
         {/* Gráfico de funil */}
         <div
-          className="lg:col-span-3 bg-white"
+          className="lg:col-span-3 bg-card"
           style={{ padding: '24px', borderRadius: '12px', border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
         >
           <div className="flex items-center justify-between mb-5">
@@ -131,7 +131,7 @@ export default async function DashboardPage() {
                 className="w-14 h-14 rounded-2xl flex items-center justify-center"
                 style={{ backgroundColor: '#fdf2f8' }}
               >
-                <Users className="w-7 h-7" style={{ color: '#0D9488' }} />
+                <Users className="w-7 h-7" style={{ color: 'var(--primary-strong)' }} />
               </div>
               <div className="text-center">
                 <p style={{ fontSize: '16px', fontWeight: 600, color: '#374151' }}>
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
               <a
                 href="/leads"
                 className="px-5 py-2 rounded-lg font-semibold transition-opacity hover:opacity-90"
-                style={{ backgroundColor: '#0D9488', color: '#fff', fontSize: '14px' }}
+                style={{ backgroundColor: '#BFFF00', color: '#131500', fontSize: '14px' }}
               >
                 Cadastrar primeiro paciente
               </a>
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
 
         {/* Atividade recente */}
         <div
-          className="lg:col-span-2 bg-white"
+          className="lg:col-span-2 bg-card"
           style={{ padding: '24px', borderRadius: '12px', border: '1px solid #E2E5EA', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
         >
           <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#374151', marginBottom: '20px' }}>
@@ -179,8 +179,8 @@ export default async function DashboardPage() {
                 const user = ev.user as unknown as { name: string } | null
                 return (
                   <li key={ev.id} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
-                      <Icon className="w-4 h-4 text-gray-400" />
+                    <div className="w-8 h-8 rounded-full bg-muted/60 border border-border flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon className="w-4 h-4 text-muted-foreground/75" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p style={{ fontSize: '15px', color: '#374151', lineHeight: '1.4' }}>

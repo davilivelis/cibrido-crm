@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- LIVELIS — símbolo de camadas em "L" (board Gemini 16/07/2026, lime #BFFF00) -->
+  <!-- Camada topo: losango isométrico -->
+  <path d="M60 6 L108 33 L60 60 L12 33 Z" stroke="#BFFF00" stroke-width="8" stroke-linejoin="round"/>
+  <!-- "L": haste vertical + pé seguindo o eixo isométrico direito -->
+  <path d="M60 16 V44 M60 44 L83 31" stroke="#BFFF00" stroke-width="8" stroke-linecap="round"/>
+  <!-- Camadas inferiores: chevrons -->
+  <path d="M14 52 L60 78 L106 52" stroke="#BFFF00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 72 L60 98 L106 72" stroke="#BFFF00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -9,7 +9,7 @@ const STATUS_STYLES: Record<string, string> = {
   pending:  'bg-yellow-100 text-yellow-700',
   used:     'bg-green-100 text-green-700',
   expired:  'bg-red-100 text-red-700',
-  revoked:  'bg-gray-100 text-gray-500',
+  revoked:  'bg-muted text-muted-foreground',
 }
 const STATUS_LABELS: Record<string, string> = {
   pending: 'Pendente', used: 'Usado', expired: 'Expirado', revoked: 'Revogado',
@@ -127,7 +127,7 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
                           className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
                           title="Excluir da lista"
                         >
-                          <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-500" />
+                          <Trash2 className="w-4 h-4 text-muted-foreground/75 hover:text-red-500" />
                         </button>
                       )}
                     </div>

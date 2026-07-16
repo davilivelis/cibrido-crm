@@ -7,7 +7,7 @@ export default async function CallsPage() {
     fechou:       'bg-green-100 text-green-700',
     pendente:     'bg-yellow-100 text-yellow-700',
     nao_apareceu: 'bg-red-100 text-red-700',
-    perdeu:       'bg-gray-100 text-gray-500',
+    perdeu:       'bg-muted text-muted-foreground',
     agendado:     'bg-blue-100 text-blue-700',
     em_contato:   'bg-purple-100 text-purple-700',
   }
@@ -56,7 +56,7 @@ export default async function CallsPage() {
                 <td className="px-5 py-3.5" style={{ fontSize: 14, color: '#374151', textTransform: 'capitalize' }}>{c.attended_by as string}</td>
                 <td className="px-5 py-3.5">
                   {c.outcome ? (
-                    <span className={OUTCOME_STYLES[c.outcome as string] ?? 'bg-gray-100 text-gray-500'} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
+                    <span className={OUTCOME_STYLES[c.outcome as string] ?? 'bg-muted text-muted-foreground'} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
                       {OUTCOME_LABELS[c.outcome as string] ?? c.outcome as string}
                     </span>
                   ) : <span style={{ fontSize: 14, color: '#d1d5db' }}>—</span>}

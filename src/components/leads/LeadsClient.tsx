@@ -40,8 +40,8 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
     <div className="space-y-5">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Leads</h1>
-          <p className="text-sm lg:text-base text-gray-500 mt-1">{leads.length} leads cadastrados</p>
+          <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Leads</h1>
+          <p className="text-sm lg:text-base text-muted-foreground mt-1">{leads.length} leads cadastrados</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button
@@ -71,13 +71,13 @@ export default function LeadsClient({ leads, stages, clinicId }: LeadsClientProp
       </div>
 
       {leads.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center bg-white rounded-xl border border-gray-100">
+        <div className="flex flex-col items-center justify-center py-16 text-center bg-card rounded-xl border border-border">
           <div className="text-5xl mb-4">👥</div>
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">Nenhum paciente cadastrado</h3>
-          <p className="text-gray-500 mb-6 max-w-md">
+          <h3 className="text-lg font-semibold text-foreground/85 mb-2">Nenhum paciente cadastrado</h3>
+          <p className="text-muted-foreground mb-6 max-w-md">
             Cadastre seu primeiro paciente para começar a acompanhar a jornada dele até a consulta.
           </p>
-          <Button onClick={() => setModalOpen(true)} className="bg-[#0D9488] hover:bg-[#d11a6f]">
+          <Button onClick={() => setModalOpen(true)} className="bg-primary text-primary-foreground hover:bg-[#a8e000]">
             + Cadastrar primeiro paciente
           </Button>
         </div>

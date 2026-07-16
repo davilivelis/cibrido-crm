@@ -34,10 +34,10 @@ export default function Header({ user }: HeaderProps) {
     : '?'
 
   return (
-    <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6">
+    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6">
       {/* Nome da clínica com pill dourado */}
       <div className="flex items-center gap-2.5">
-        <span className="text-sm font-semibold text-gray-800">
+        <span className="text-sm font-semibold text-foreground">
           {user?.clinics?.name ?? ''}
         </span>
         {user?.clinics?.name && (
@@ -56,21 +56,21 @@ export default function Header({ user }: HeaderProps) {
           {/* Avatar magenta */}
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
-            style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
+            style={{ background: 'linear-gradient(135deg, #BFFF00, #4d6b00)' }}
           >
-            <span className="text-xs font-bold text-white">{initials}</span>
+            <span className="text-xs font-bold text-[#131500]">{initials}</span>
           </div>
           <div className="text-left hidden sm:block">
-            <p className="font-semibold text-gray-900 leading-none" style={{ fontSize: '15px' }}>{user?.name}</p>
-            <p className="text-gray-400 mt-0.5" style={{ fontSize: '13px' }}>{roleLabels[user?.role ?? ''] ?? ''}</p>
+            <p className="font-semibold text-foreground leading-none" style={{ fontSize: '15px' }}>{user?.name}</p>
+            <p className="text-muted-foreground/75 mt-0.5" style={{ fontSize: '13px' }}>{roleLabels[user?.role ?? ''] ?? ''}</p>
           </div>
-          <ChevronDown className="w-4 h-4 text-gray-400" />
+          <ChevronDown className="w-4 h-4 text-muted-foreground/75" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-48">
           <div className="px-3 py-2">
-            <p className="text-xs font-medium text-gray-900 truncate">{user?.name}</p>
-            <p className="text-xs text-gray-400 truncate">{user?.email}</p>
+            <p className="text-xs font-medium text-foreground truncate">{user?.name}</p>
+            <p className="text-xs text-muted-foreground/75 truncate">{user?.email}</p>
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuItem

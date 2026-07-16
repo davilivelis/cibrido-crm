@@ -25,8 +25,8 @@ export default async function PipelinePage() {
   return (
     <div className="space-y-5 h-full">
       <div>
-        <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Pipeline</h1>
-        <p className="text-sm lg:text-base text-gray-500 mt-1">
+        <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Pipeline</h1>
+        <p className="text-sm lg:text-base text-muted-foreground mt-1">
           {leadsResult.data?.length ?? 0} leads ativos no funil
         </p>
       </div>

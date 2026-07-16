@@ -113,7 +113,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       <Dialog open={!!deleteTarget} onOpenChange={(v) => !v && setDeleteTarget(null)}>
         <DialogContent>
           <DialogTitle>Excluir paciente</DialogTitle>
-          <p className="text-gray-600 mt-2">
+          <p className="text-muted-foreground mt-2">
             Tem certeza que deseja excluir <strong>{deleteTarget?.name}</strong>? Esta ação não pode ser desfeita.
           </p>
           <div className="flex justify-end gap-2 mt-4">
@@ -127,7 +127,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       {/* Barra de busca + botão filtros */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/75" />
           <Input
             placeholder="Buscar por nome, telefone ou email..."
             value={search}
@@ -141,7 +141,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
             'flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-colors',
             showFilters || hasActiveFilters
               ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
-              : 'border-gray-200 text-gray-500 hover:bg-gray-50'
+              : 'border-border text-muted-foreground hover:bg-muted/60'
           )}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -154,10 +154,10 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
 
       {/* Painel de filtros */}
       {showFilters && (
-        <div className="flex flex-wrap gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+        <div className="flex flex-wrap gap-3 p-4 bg-muted/60 rounded-xl border border-border">
           {/* Status */}
           <div className="space-y-1">
-            <p className="text-xs font-medium text-gray-500">Status</p>
+            <p className="text-xs font-medium text-muted-foreground">Status</p>
             <div className="flex gap-1.5 flex-wrap">
               {STATUS_OPTIONS.map((opt) => (
                 <button
@@ -167,7 +167,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                     'text-xs px-3 py-1.5 rounded-lg border transition-colors',
                     filterStatus === opt.value
                       ? 'bg-indigo-600 border-indigo-600 text-white'
-                      : 'border-gray-200 text-gray-600 hover:bg-white'
+                      : 'border-border text-muted-foreground hover:bg-card'
                   )}
                 >
                   {opt.label}
@@ -178,13 +178,13 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
 
           {/* Etapa */}
           <div className="space-y-1">
-            <p className="text-xs font-medium text-gray-500">Etapa</p>
+            <p className="text-xs font-medium text-muted-foreground">Etapa</p>
             <div className="flex gap-1.5 flex-wrap">
               <button
                 onClick={() => setFilterStage('')}
                 className={cn(
                   'text-xs px-3 py-1.5 rounded-lg border transition-colors',
-                  !filterStage ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-gray-200 text-gray-600 hover:bg-white'
+                  !filterStage ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-border text-muted-foreground hover:bg-card'
                 )}
               >
                 Todas
@@ -197,7 +197,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                     'text-xs px-3 py-1.5 rounded-lg border transition-colors',
                     filterStage === s.id
                       ? 'text-white border-transparent'
-                      : 'border-gray-200 text-gray-600 hover:bg-white'
+                      : 'border-border text-muted-foreground hover:bg-card'
                   )}
                   style={filterStage === s.id ? { backgroundColor: s.color, borderColor: s.color } : {}}
                 >
@@ -209,7 +209,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
 
           {/* Origem */}
           <div className="space-y-1">
-            <p className="text-xs font-medium text-gray-500">Origem</p>
+            <p className="text-xs font-medium text-muted-foreground">Origem</p>
             <div className="flex gap-1.5 flex-wrap">
               {ORIGEM_OPTIONS.map((opt) => (
                 <button
@@ -219,7 +219,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                     'text-xs px-3 py-1.5 rounded-lg border transition-colors',
                     filterOrigem === opt.value
                       ? 'bg-indigo-600 border-indigo-600 text-white'
-                      : 'border-gray-200 text-gray-600 hover:bg-white'
+                      : 'border-border text-muted-foreground hover:bg-card'
                   )}
                 >
                   {opt.label}
@@ -240,33 +240,33 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
       )}
 
       {/* Contador */}
-      <p className="text-xs text-gray-400">
+      <p className="text-xs text-muted-foreground/75">
         {filtered.length} lead{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}
         {hasActiveFilters && <span className="text-indigo-500"> (filtrado)</span>}
       </p>
 
       {/* Tabela */}
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50">
+            <tr className="border-b border-border bg-muted/60">
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
+                className="text-left px-4 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground select-none"
                 onClick={() => toggleSort('name')}
               >
                 Nome <SortIcon field="name" />
               </th>
-              <th className="text-left px-4 py-3 font-medium text-gray-500">Contato</th>
-              <th className="text-left px-4 py-3 font-medium text-gray-500">Etapa</th>
-              <th className="hidden lg:table-cell text-left px-4 py-3 font-medium text-gray-500">Origem</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Contato</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Etapa</th>
+              <th className="hidden lg:table-cell text-left px-4 py-3 font-medium text-muted-foreground">Origem</th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
+                className="text-left px-4 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground select-none"
                 onClick={() => toggleSort('status')}
               >
                 Status <SortIcon field="status" />
               </th>
               <th
-                className="hidden lg:table-cell text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-800 select-none"
+                className="hidden lg:table-cell text-left px-4 py-3 font-medium text-muted-foreground cursor-pointer hover:text-foreground select-none"
                 onClick={() => toggleSort('created_at')}
               >
                 Cadastrado <SortIcon field="created_at" />
@@ -277,7 +277,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-gray-400">
+                <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground/75">
                   {search || hasActiveFilters ? 'Nenhum lead corresponde aos filtros.' : 'Nenhum lead cadastrado ainda.'}
                 </td>
               </tr>
@@ -285,14 +285,14 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
               filtered.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors cursor-pointer"
                   onClick={() => window.location.href = `/leads/${lead.id}`}
                 >
-                  <td className="px-4 py-3 font-medium text-gray-900">{lead.name}</td>
+                  <td className="px-4 py-3 font-medium text-foreground">{lead.name}</td>
                   <td className="px-4 py-3">
-                    <div className="flex flex-col gap-0.5 text-sm text-gray-600">
+                    <div className="flex flex-col gap-0.5 text-sm text-muted-foreground">
                       <span>{lead.phone}</span>
-                      {lead.email && <span className="text-gray-400 text-xs">{lead.email}</span>}
+                      {lead.email && <span className="text-muted-foreground/75 text-xs">{lead.email}</span>}
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -305,13 +305,13 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                       </span>
                     ) : <span className="text-gray-300 text-xs">—</span>}
                   </td>
-                  <td className="hidden lg:table-cell px-4 py-3 text-gray-500 capitalize text-sm">{lead.source ?? '—'}</td>
+                  <td className="hidden lg:table-cell px-4 py-3 text-muted-foreground capitalize text-sm">{lead.source ?? '—'}</td>
                   <td className="px-4 py-3">
                     <span className={cn('text-xs font-medium px-2 py-1 rounded-full', STATUS_STYLE[lead.status])}>
                       {STATUS_LABEL[lead.status]}
                     </span>
                   </td>
-                  <td className="hidden lg:table-cell px-4 py-3 text-gray-400 text-xs">
+                  <td className="hidden lg:table-cell px-4 py-3 text-muted-foreground/75 text-xs">
                     {new Date(lead.created_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>

@@ -20,7 +20,7 @@ export default function AdminSidebar() {
     return cn(
       'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150 text-[15px]',
       active
-        ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
+        ? 'bg-brand-lime text-[#131500] shadow-sm shadow-[#BFFF00]/25'
         : 'text-slate-300 hover:bg-white/8 hover:text-white'
     )
   }
@@ -39,7 +39,7 @@ export default function AdminSidebar() {
           </div>
           <div className="flex flex-col justify-center">
             <span className="text-white font-bold text-sm leading-none block" translate="no">CRM Livelis</span>
-            <span className="text-[11px] text-slate-500 leading-none mt-[2px] block">Painel Admin</span>
+            <span className="text-[11px] text-muted-foreground leading-none mt-[2px] block">Painel Admin</span>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function AdminSidebar() {
       <div className="px-3 pb-4 pt-3 border-t border-white/[0.08]">
         <Link
           href="/dashboard"
-          className="flex items-center gap-3 px-3 py-3 rounded-lg text-[15px] font-medium text-slate-400 hover:text-white hover:bg-white/[0.05] transition-all duration-150"
+          className="flex items-center gap-3 px-3 py-3 rounded-lg text-[15px] font-medium text-muted-foreground/75 hover:text-white hover:bg-white/[0.05] transition-all duration-150"
         >
           <ArrowLeft className="w-4 h-4 shrink-0" />
           Voltar ao CRM

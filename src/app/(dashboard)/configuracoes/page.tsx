@@ -32,8 +32,8 @@ export default async function ConfiguracoesPage() {
     return (
       <div className="space-y-6 max-w-2xl">
         <div>
-          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Configurações</h1>
-          <p className="text-sm lg:text-base text-gray-500 mt-1">Dados da clínica e gerenciamento de equipe</p>
+          <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Configurações</h1>
+          <p className="text-sm lg:text-base text-muted-foreground mt-1">Dados da clínica e gerenciamento de equipe</p>
         </div>
 
         <ClinicForm clinic={clinic} />
@@ -45,8 +45,8 @@ export default async function ConfiguracoesPage() {
     return (
       <div className="space-y-6 max-w-2xl">
         <div>
-          <h1 className="text-xl lg:text-[28px] font-bold text-gray-900">Configurações</h1>
-          <p className="text-sm lg:text-base text-gray-500 mt-1">Dados da clínica e gerenciamento de equipe</p>
+          <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Configurações</h1>
+          <p className="text-sm lg:text-base text-muted-foreground mt-1">Dados da clínica e gerenciamento de equipe</p>
         </div>
         <ClinicForm clinic={null} />
         <TeamSection team={[]} clinicPlan="trial" />

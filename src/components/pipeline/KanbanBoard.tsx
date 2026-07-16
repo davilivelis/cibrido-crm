@@ -47,20 +47,20 @@ function LeadCard({
       {...listeners}
       onClick={() => !isDragging && onClick(lead)}
       className={cn(
-        'bg-white rounded-xl border p-4 select-none cursor-grab transition-all duration-150',
+        'bg-card rounded-xl border p-4 select-none cursor-grab transition-all duration-150',
         'border-[#E2E5EA] shadow-[0_2px_8px_rgba(0,0,0,0.06)]',
         isDragging || isBeingDragged
           ? 'opacity-40 cursor-grabbing'
           : 'hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] hover:border-[#C5CAD3]'
       )}
     >
-      <p className="text-sm font-semibold text-gray-900 mb-2">{lead.name}</p>
-      <div className="flex items-center gap-1.5 text-xs text-gray-400">
+      <p className="text-sm font-semibold text-foreground mb-2">{lead.name}</p>
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground/75">
         <Phone className="w-3 h-3" />
         {lead.phone}
       </div>
       {lead.source && (
-        <span className="mt-2.5 inline-block text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full capitalize">
+        <span className="mt-2.5 inline-block text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full capitalize">
           {lead.source}
         </span>
       )}
@@ -91,7 +91,7 @@ function KanbanColumn({
         style={{ backgroundColor: `${stage.color}18` }}
       >
         <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: stage.color }} />
-        <span className="text-sm font-semibold text-gray-800 truncate flex-1">{stage.name}</span>
+        <span className="text-sm font-semibold text-foreground truncate flex-1">{stage.name}</span>
         <span
           className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0 text-white"
           style={{ backgroundColor: stage.color }}
@@ -222,9 +222,9 @@ export default function KanbanBoard({ stages, leads: initialLeads }: KanbanBoard
 
         <DragOverlay dropAnimation={{ duration: 150, easing: 'ease' }}>
           {activeLead ? (
-            <div className="bg-white rounded-xl border border-indigo-200 shadow-lg p-3 w-60 rotate-1 cursor-grabbing">
-              <p className="text-sm font-medium text-gray-900">{activeLead.name}</p>
-              <div className="flex items-center gap-1 text-xs text-gray-400 mt-1">
+            <div className="bg-card rounded-xl border border-indigo-200 shadow-lg p-3 w-60 rotate-1 cursor-grabbing">
+              <p className="text-sm font-medium text-foreground">{activeLead.name}</p>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground/75 mt-1">
                 <Phone className="w-3 h-3" />
                 {activeLead.phone}
               </div>

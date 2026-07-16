@@ -69,10 +69,10 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
           </div>
           <div className="mt-4">
             <p className="text-xl lg:text-[32px] font-bold leading-tight text-white">Seu acesso foi liberado</p>
-            <p className="text-xl lg:text-[32px] font-bold leading-tight text-[#0D9488]">pela equipe Livelis</p>
+            <p className="text-xl lg:text-[32px] font-bold leading-tight text-primary-strong">pela equipe Livelis</p>
           </div>
           <div className="mt-4 bg-white/5 border border-white/10 rounded-xl px-5 py-3">
-            <p className="text-gray-400 text-sm">Plano ativado</p>
+            <p className="text-muted-foreground/75 text-sm">Plano ativado</p>
             <p className="text-[#F5A623] font-bold text-lg">{planLabel}</p>
           </div>
         </div>
@@ -82,14 +82,14 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
       <div className="flex-1 lg:w-1/2 flex flex-col items-center justify-center p-8" style={{ backgroundColor: '#F8F9FB' }}>
         <div className="w-full max-w-sm">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Ative sua conta</h1>
-            <p className="text-sm text-gray-500 mt-1">Seu email já está confirmado. Só preencha os dados abaixo.</p>
+            <h1 className="text-2xl font-bold text-foreground">Ative sua conta</h1>
+            <p className="text-sm text-muted-foreground mt-1">Seu email já está confirmado. Só preencha os dados abaixo.</p>
           </div>
 
           <form onSubmit={handleActivate} className="space-y-4">
             <div className="space-y-1.5">
               <Label>Email</Label>
-              <Input value={email} disabled className="h-12 bg-gray-100 text-gray-500" />
+              <Input value={email} disabled className="h-12 bg-muted text-muted-foreground" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="name">Seu nome completo</Label>
@@ -111,7 +111,7 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
             </Button>
           </form>
         </div>
-        <p className="text-xs text-gray-400 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
+        <p className="text-xs text-muted-foreground/75 mt-8">© 2026 Livelis · Davi Santos Junior · Todos os direitos reservados</p>
       </div>
     </div>
   )

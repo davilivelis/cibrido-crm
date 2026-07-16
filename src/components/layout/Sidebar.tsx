@@ -8,6 +8,8 @@ import {
 } from 'lucide-react'
 import { UserRole } from '@/types/database'
 import { cn } from '@/lib/utils'
+import ThemeToggle from '@/components/layout/ThemeToggle'
+import { APP_NAME } from '@/lib/branding'
 
 interface NavItem {
   label: string
@@ -42,26 +44,23 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
       'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150',
       'text-[15px]',
       isActive(href)
-        ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
+        ? 'bg-brand-lime text-[#131500] shadow-sm shadow-[#BFFF00]/25'
         : 'text-slate-300 hover:bg-white/8 hover:text-white'
     )
   }
 
   return (
-    <aside className="w-60 hidden lg:flex flex-col" style={{ backgroundColor: '#1E2A3A' }}>
+    <aside className="w-60 hidden lg:flex flex-col" style={{ backgroundColor: '#1A1F2C' }}>
 
       {/* Logo */}
       <div className="h-16 flex items-center px-5 border-b border-white/8">
         <div className="flex items-center gap-2.5">
-          {/* Recorta apenas os balões (parte superior da imagem) */}
-          <div style={{ width: 36, height: 36, overflow: 'hidden', flexShrink: 0, borderRadius: 6 }}>
-            <img
-              src="/logo.png"
-              alt="CRM Livelis"
-              style={{ width: '36px', height: 'auto', display: 'block', objectPosition: 'top' }}
-            />
-          </div>
-          <span className="text-white font-bold text-sm leading-none" translate="no">CRM Livelis</span>
+          <img
+            src="/logo-mark.svg"
+            alt={APP_NAME}
+            style={{ width: 32, height: 32, display: 'block', flexShrink: 0 }}
+          />
+          <span className="text-white font-bold text-sm leading-none tracking-wide" translate="no">{APP_NAME}</span>
         </div>
       </div>
 
@@ -93,6 +92,10 @@ export default function Sidebar({ userRole }: { userRole: UserRole }) {
               </Link>
             )
           })}
+        <div className="flex items-center justify-between px-3 pt-2">
+          <span className="text-xs text-slate-400">Tema</span>
+          <ThemeToggle />
+        </div>
       </div>
     </aside>
   )

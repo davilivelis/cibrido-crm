@@ -22,7 +22,10 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     apple: "/apple-touch-icon.png",
   },
 };
@@ -35,8 +38,18 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Anti-flash: aplica o tema salvo antes do primeiro paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <Toaster position="top-right" richColors />

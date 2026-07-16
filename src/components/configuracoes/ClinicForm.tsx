@@ -64,15 +64,15 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-6">
+    <div className="bg-card rounded-xl border border-border p-6">
       <div className="flex items-center gap-3 mb-5">
         <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center">
           <Building2 className="w-4 h-4 text-indigo-600" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-gray-900">Dados da Clínica</h2>
-          <p className="text-xs text-gray-400">
-            Plano atual: <span className="font-medium text-gray-600">{PLAN_LABELS[clinic?.plan ?? 'trial']}</span>
+          <h2 className="text-sm font-semibold text-foreground">Dados da Clínica</h2>
+          <p className="text-xs text-muted-foreground/75">
+            Plano atual: <span className="font-medium text-muted-foreground">{PLAN_LABELS[clinic?.plan ?? 'trial']}</span>
             {clinic?.created_at && (
               <> · Desde {new Date(clinic.created_at).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</>
             )}

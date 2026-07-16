@@ -65,12 +65,12 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
       {/* Top bar — só mobile (lg:hidden) */}
       <header
         className="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 border-b border-white/10"
-        style={{ backgroundColor: '#1E2A3A' }}
+        style={{ backgroundColor: '#1A1F2C' }}
       >
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div style={{ width: 28, height: 28, overflow: 'hidden', flexShrink: 0, borderRadius: 4 }}>
-            <img src="/logo.png" alt="CRM Livelis" style={{ width: '28px', height: 'auto', display: 'block' }} />
+            <img src="/logo-mark.svg" alt="CRM Livelis" style={{ width: 28, height: 28, display: 'block' }} />
           </div>
           <span className="text-white font-bold text-sm" translate="no">CRM Livelis</span>
         </div>
@@ -102,16 +102,16 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
           'lg:hidden fixed top-0 left-0 bottom-0 z-50 w-72 flex flex-col transition-transform duration-300',
           open ? 'translate-x-0' : '-translate-x-full'
         )}
-        style={{ backgroundColor: '#1E2A3A' }}
+        style={{ backgroundColor: '#1A1F2C' }}
       >
         {/* Cabeçalho do drawer */}
         <div className="h-14 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-2">
             <div
               className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-              style={{ background: 'linear-gradient(135deg, #0D9488, #7B2D8E)' }}
+              style={{ background: 'linear-gradient(135deg, #BFFF00, #4d6b00)' }}
             >
-              <span className="text-[11px] font-bold text-white">{userInitials}</span>
+              <span className="text-[11px] font-bold text-[#131500]">{userInitials}</span>
             </div>
             <div className="leading-none">
               <p className="text-white text-sm font-semibold truncate max-w-[160px]">{userName}</p>
@@ -141,7 +141,7 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150 text-[15px]',
                     isActive(item.href)
-                      ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
+                      ? 'bg-brand-lime text-[#131500] shadow-sm shadow-[#BFFF00]/25'
                       : 'text-slate-300 hover:bg-white/8 hover:text-white'
                   )}
                   translate="no"
@@ -167,7 +167,7 @@ export default function MobileNav({ userRole, userName, userInitials, clinicName
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg font-medium transition-all duration-150 text-[15px]',
                     isActive(item.href)
-                      ? 'bg-[#0D9488] text-white shadow-sm shadow-[#0D9488]/30'
+                      ? 'bg-brand-lime text-[#131500] shadow-sm shadow-[#BFFF00]/25'
                       : 'text-slate-300 hover:bg-white/8 hover:text-white'
                   )}
                   translate="no"
