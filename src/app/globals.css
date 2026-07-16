@@ -53,7 +53,7 @@
   --radius: 0.625rem;
 
   /* Superfícies */
-  --background:        #ffffff;
+  --background:        #eef0f4;
   --foreground:        #14161c;
   --card:              #ffffff;
   --card-foreground:   #14161c;
@@ -72,15 +72,15 @@
 
   /* Muted */
   --muted:             #f4f5f8;
-  --muted-foreground:  #67707f;
+  --muted-foreground:  #525c6b;
 
   /* Accent → toque de lime suave */
   --accent:            #f3ffd1;
   --accent-foreground: #3c5400;
 
   /* Bordas e inputs */
-  --border:            #e5e7ee;
-  --input:             #e5e7ee;
+  --border:            #d8dde6;
+  --input:             #d8dde6;
   --ring:              #9ccf00;
 
   /* Destructive */
@@ -107,10 +107,10 @@
   --secondary:         #242b3a;
   --secondary-foreground:#f2f4f8;
   --muted:             #20242f;
-  --muted-foreground:  #9aa3b2;
+  --muted-foreground:  #aeb8c7;
   --accent:            #232a16;
   --accent-foreground: #BFFF00;
-  --border:            rgba(255,255,255,0.09);
+  --border:            rgba(255,255,255,0.14);
   --input:             rgba(255,255,255,0.12);
   --ring:              #BFFF00;
   --destructive:       oklch(0.704 0.191 22.216);
