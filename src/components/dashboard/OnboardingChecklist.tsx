@@ -142,8 +142,8 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
               key={step.id}
               className="flex flex-col gap-2 p-4 rounded-xl"
               style={{
-                backgroundColor: step.done ? '#f0fdf4' : '#FAFAFA',
-                border: `1px solid ${step.done ? '#bbf7d0' : '#E2E5EA'}`,
+                backgroundColor: step.done ? 'color-mix(in srgb, #22c55e 12%, var(--card))' : 'var(--muted)',
+                border: `1px solid ${step.done ? 'color-mix(in srgb, #22c55e 35%, var(--border))' : 'var(--border)'}`,
                 opacity: step.done ? 0.85 : 1,
               }}
             >
@@ -153,7 +153,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   : <Circle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: 'var(--muted-foreground)' }} />
                 }
                 <div>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: step.done ? '#15803d' : '#111827' }}>
+                  <p style={{ fontSize: '14px', fontWeight: 600, color: step.done ? 'var(--primary-strong)' : 'var(--foreground)' }}>
                     {step.label}
                   </p>
                   <p style={{ fontSize: '13px', color: 'var(--muted-foreground)', marginTop: '2px', lineHeight: '1.4' }}>
