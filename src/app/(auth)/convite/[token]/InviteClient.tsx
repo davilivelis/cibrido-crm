@@ -79,7 +79,7 @@ export default function InviteClient({ token, email, plan, planLabel }: Props) {
       </div>
 
       {/* Lado direito */}
-      <div className="flex-1 lg:w-1/2 flex flex-col items-center justify-center p-8" style={{ backgroundColor: '#F8F9FB' }}>
+      <div className="flex-1 lg:w-1/2 flex flex-col items-center justify-center p-8" style={{ backgroundColor: 'var(--background)' }}>
         <div className="w-full max-w-sm">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-foreground">Ative sua conta</h1>

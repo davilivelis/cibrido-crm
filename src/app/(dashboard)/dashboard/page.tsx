@@ -129,7 +129,7 @@ export default async function DashboardPage() {
             <div className="flex flex-col items-center justify-center py-10 gap-4">
               <div
                 className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{ backgroundColor: '#fdf2f8' }}
+                style={{ backgroundColor: 'var(--muted)' }}
               >
                 <Users className="w-7 h-7" style={{ color: 'var(--primary-strong)' }} />
               </div>

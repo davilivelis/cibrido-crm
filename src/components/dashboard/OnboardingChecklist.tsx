@@ -110,7 +110,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
               </span>
             </div>
             {/* Barra de progresso */}
-            <div className="w-full max-w-[240px] h-1.5 rounded-full" style={{ backgroundColor: '#F3F4F6' }}>
+            <div className="w-full max-w-[240px] h-1.5 rounded-full" style={{ backgroundColor: 'var(--muted)' }}>
               <div
                 className="h-1.5 rounded-full transition-all duration-500"
                 style={{ width: `${progressPct}%`, backgroundColor: 'var(--primary)' }}

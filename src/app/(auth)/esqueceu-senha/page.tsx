@@ -33,7 +33,7 @@ export default function EsqueceuSenhaPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8" style={{ backgroundColor: '#F8F9FB' }}>
+    <div className="min-h-screen flex items-center justify-center p-8" style={{ backgroundColor: 'var(--background)' }}>
       <div className="w-full max-w-sm">
 
         <div className="text-center mb-8">

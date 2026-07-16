@@ -42,7 +42,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: '#F8F9FB' }}>
+    <div className="flex h-screen" style={{ backgroundColor: 'var(--background)' }}>
       {/* Sidebar desktop */}
       <Sidebar userRole={profile.role} />
 

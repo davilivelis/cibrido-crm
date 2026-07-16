@@ -205,7 +205,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
             <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 16 }}>Uso do CRM</h2>
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#fdf2f8' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--muted)' }}>
                   <Users className="w-5 h-5" style={{ color: 'var(--primary-strong)' }} />
                 </div>
                 <div>
@@ -214,7 +214,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--muted)' }}>
                   <CalendarCheck className="w-5 h-5" style={{ color: '#16a34a' }} />
                 </div>
                 <div>
@@ -223,7 +223,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#eff6ff' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--muted)' }}>
                   <Users className="w-5 h-5" style={{ color: '#2563eb' }} />
                 </div>
                 <div>

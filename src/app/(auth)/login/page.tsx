@@ -110,7 +110,7 @@ export default function LoginPage() {
       {/* Lado direito — mobile: full width abaixo | desktop: 50% */}
       <div
         className="flex-1 lg:w-1/2 flex flex-col items-center justify-center p-8"
-        style={{ backgroundColor: '#F8F9FB' }}
+        style={{ backgroundColor: 'var(--background)' }}
       >
         <div className="w-full max-w-sm">
 

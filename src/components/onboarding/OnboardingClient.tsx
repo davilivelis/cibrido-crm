@@ -47,7 +47,7 @@ export default function OnboardingClient({ userName }: OnboardingClientProps) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F8F9FB' }}>
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--background)' }}>
       <div className="w-full max-w-md px-6">
 
         {!done ? (
