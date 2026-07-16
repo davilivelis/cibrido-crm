@@ -104,7 +104,7 @@ export default async function DashboardPage() {
                 <p style={{ fontSize: '32px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>
                   {card.value}
                 </p>
-                <p style={{ fontSize: '16px', fontWeight: 500, color: '#6b7280', marginTop: '4px' }}>
+                <p style={{ fontSize: '16px', fontWeight: 500, color: 'var(--muted-foreground)', marginTop: '4px' }}>
                   {card.label}
                 </p>
               </div>

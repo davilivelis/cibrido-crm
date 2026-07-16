@@ -57,7 +57,7 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
     <div className="p-8">
       <div className="mb-6">
         <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>Convites</h1>
-        <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Links de acesso gerados para novas clínicas</p>
+        <p style={{ fontSize: '15px', color: 'var(--muted-foreground)', marginTop: 4 }}>Links de acesso gerados para novas clínicas</p>
       </div>
 
       <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'auto' }}>
@@ -83,7 +83,7 @@ export default function ConvitesClient({ invites }: { invites: any[] }) {
                       {PLAN_LABELS[inv.plan] ?? inv.plan}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: '#6b7280' }}>{ORIGIN_LABELS[inv.origin] ?? inv.origin}</td>
+                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>{ORIGIN_LABELS[inv.origin] ?? inv.origin}</td>
                   <td className="px-5 py-3.5">
                     <span className={STATUS_STYLES[inv.status]} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
                       {STATUS_LABELS[inv.status]}

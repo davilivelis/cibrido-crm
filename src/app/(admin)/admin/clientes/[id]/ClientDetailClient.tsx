@@ -109,7 +109,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                   <div>
                     <p style={{ fontSize: 12, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Responsável</p>
                     <p style={{ fontSize: 15, color: 'var(--foreground)', fontWeight: 500 }}>{owner.name}</p>
-                    <p style={{ fontSize: 13, color: '#6b7280' }}>{owner.email}</p>
+                    <p style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>{owner.email}</p>
                   </div>
                 </div>
               )}
@@ -210,7 +210,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 </div>
                 <div>
                   <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{totalLeads}</p>
-                  <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Leads cadastrados</p>
+                  <p style={{ fontSize: 13, color: 'var(--muted-foreground)', marginTop: 2 }}>Leads cadastrados</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -219,7 +219,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 </div>
                 <div>
                   <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{totalAppointments}</p>
-                  <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Consultas agendadas</p>
+                  <p style={{ fontSize: 13, color: 'var(--muted-foreground)', marginTop: 2 }}>Consultas agendadas</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -228,7 +228,7 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                 </div>
                 <div>
                   <p style={{ fontSize: 22, fontWeight: 700, color: 'var(--foreground)', lineHeight: 1 }}>{clinic.users?.length ?? 0}</p>
-                  <p style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }}>Usuários na conta</p>
+                  <p style={{ fontSize: 13, color: 'var(--muted-foreground)', marginTop: 2 }}>Usuários na conta</p>
                 </div>
               </div>
             </div>
@@ -239,16 +239,16 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
             <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)', marginBottom: 12 }}>Assinatura</h2>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span style={{ fontSize: 13, color: '#6b7280' }}>Plano</span>
+                <span style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>Plano</span>
                 <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>{PLAN_LABELS[sub?.plan ?? 'trial']}</span>
               </div>
               <div className="flex justify-between">
-                <span style={{ fontSize: 13, color: '#6b7280' }}>Status</span>
+                <span style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>Status</span>
                 <span style={{ fontSize: 13, fontWeight: 600, color: statusStyle.text }}>{statusStyle.label}</span>
               </div>
               {sub?.paid_until && (
                 <div className="flex justify-between">
-                  <span style={{ fontSize: 13, color: '#6b7280' }}>Pago até</span>
+                  <span style={{ fontSize: 13, color: 'var(--muted-foreground)' }}>Pago até</span>
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>
                     {new Date(sub.paid_until).toLocaleDateString('pt-BR')}
                   </span>

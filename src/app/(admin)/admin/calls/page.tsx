@@ -26,7 +26,7 @@ export default async function CallsPage() {
     <div className="p-8">
       <div className="mb-6">
         <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>Calls</h1>
-        <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Histórico de reuniões comerciais</p>
+        <p style={{ fontSize: '15px', color: 'var(--muted-foreground)', marginTop: 4 }}>Histórico de reuniões comerciais</p>
       </div>
 
       <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
@@ -61,7 +61,7 @@ export default async function CallsPage() {
                     </span>
                   ) : <span style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>—</span>}
                 </td>
-                <td className="px-5 py-3.5" style={{ fontSize: 14, color: '#6b7280' }}>{(c.next_step as string) ?? '—'}</td>
+                <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>{(c.next_step as string) ?? '—'}</td>
               </tr>
             ))}
           </tbody>

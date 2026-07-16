@@ -156,7 +156,7 @@ export default function OnboardingChecklist({ totalLeads, totalAppointments, cli
                   <p style={{ fontSize: '14px', fontWeight: 600, color: step.done ? '#15803d' : '#111827' }}>
                     {step.label}
                   </p>
-                  <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '2px', lineHeight: '1.4' }}>
+                  <p style={{ fontSize: '13px', color: 'var(--muted-foreground)', marginTop: '2px', lineHeight: '1.4' }}>
                     {step.description}
                   </p>
                 </div>

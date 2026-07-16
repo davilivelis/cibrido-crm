@@ -163,9 +163,9 @@ export default function LoginPage() {
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-4 h-4 rounded accent-[#BFFF00] cursor-pointer"
                   />
-                  <span style={{ fontSize: '14px', color: '#6b7280' }}>Lembrar de mim</span>
+                  <span style={{ fontSize: '14px', color: 'var(--muted-foreground)' }}>Lembrar de mim</span>
                 </label>
-                <a href="/esqueceu-senha" style={{ fontSize: '14px', color: '#6b7280' }} className="hover:text-foreground underline underline-offset-4">
+                <a href="/esqueceu-senha" style={{ fontSize: '14px', color: 'var(--muted-foreground)' }} className="hover:text-foreground underline underline-offset-4">
                   Esqueceu a senha?
                 </a>
               </div>

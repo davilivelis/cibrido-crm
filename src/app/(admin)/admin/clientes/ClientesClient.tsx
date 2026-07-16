@@ -63,7 +63,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 style={{ fontSize: '28px', fontWeight: 700, color: 'var(--foreground)', lineHeight: 1.2 }}>Clientes</h1>
-          <p style={{ fontSize: '15px', color: '#6b7280', marginTop: 4 }}>Clínicas com acesso ao CRM Livelis</p>
+          <p style={{ fontSize: '15px', color: 'var(--muted-foreground)', marginTop: 4 }}>Clínicas com acesso ao CRM Livelis</p>
         </div>
         <button
           onClick={() => setShowModal(true)}
@@ -82,7 +82,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
           { label: 'Bloqueados', value: stats.blocked, color: '#dc2626' },
         ].map(s => (
           <div key={s.label} style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
-            <div style={{ fontSize: 13, color: '#6b7280', fontWeight: 500, marginBottom: 6 }}>{s.label}</div>
+            <div style={{ fontSize: 13, color: 'var(--muted-foreground)', fontWeight: 500, marginBottom: 6 }}>{s.label}</div>
             <div style={{ fontSize: 32, fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
           </div>
         ))}
@@ -120,7 +120,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                       {status === 'trial' ? 'Trial' : status === 'active' ? 'Ativo' : status === 'blocked' ? 'Bloqueado' : 'Cancelado'}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: '#6b7280' }}>
+                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>
                     {new Date(c.created_at).toLocaleDateString('pt-BR')}
                   </td>
                   <td className="px-5 py-3.5">
@@ -158,7 +158,7 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-card p-7 w-full max-w-md" style={{ borderRadius: 16, boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
             <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--foreground)', marginBottom: 4 }}>Gerar convite de acesso</h2>
-            <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 24 }}>O dentista receberá um link único para criar a conta.</p>
+            <p style={{ fontSize: 14, color: 'var(--muted-foreground)', marginBottom: 24 }}>O dentista receberá um link único para criar a conta.</p>
 
             {!generatedLink ? (
               <div className="space-y-4">
