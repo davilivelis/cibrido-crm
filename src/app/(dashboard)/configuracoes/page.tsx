@@ -36,6 +36,16 @@ export default async function ConfiguracoesPage() {
           <p className="text-sm lg:text-base text-muted-foreground mt-1">Dados da clínica e gerenciamento de equipe</p>
         </div>
 
+        <a
+          href="/configuracoes/notificacoes"
+          className="block bg-card border border-border rounded-xl px-5 py-4 hover:border-primary transition-colors"
+        >
+          <p className="font-semibold text-foreground text-sm">🔔 Notificações automáticas</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Confirmação de consulta, lembretes, aniversário, recall e relatório semanal — no WhatsApp, sem ninguém apertar botão
+          </p>
+        </a>
+
         <ClinicForm clinic={clinic} />
         <TeamSection team={team ?? []} clinicPlan={clinic?.plan ?? 'trial'} />
       </div>

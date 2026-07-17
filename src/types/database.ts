@@ -54,6 +54,7 @@ export interface Lead {
   name: string
   phone: string
   email: string | null
+  birth_date: string | null   // DATE YYYY-MM-DD — usado pelo motor de notificações (aniversário)
   source: string | null
   utm_source: string | null
   utm_medium: string | null

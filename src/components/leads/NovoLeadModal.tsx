@@ -38,6 +38,7 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
     name:     '',
     phone:    '',
     email:    '',
+    birth_date: '',
     source:   '',
     stage_id: stages[0]?.id ?? '',
     notes:    '',
@@ -48,7 +49,7 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
   }
 
   function reset() {
-    setForm({ name: '', phone: '', email: '', source: '', stage_id: stages[0]?.id ?? '', notes: '' })
+    setForm({ name: '', phone: '', email: '', birth_date: '', source: '', stage_id: stages[0]?.id ?? '', notes: '' })
     setError(null)
   }
 
@@ -70,6 +71,7 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
         name:     form.name,
         phone:    form.phone,
         email:    form.email  || null,
+        birth_date: form.birth_date || null,
         source:   form.source || null,
         stage_id: form.stage_id || null,
         notes:    form.notes  || null,
@@ -123,6 +125,17 @@ export default function NovoLeadModal({ open, onClose, stages }: NovoLeadModalPr
               value={form.email}
               onChange={(e) => set('email', e.target.value)}
             />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="birth_date">Data de nascimento</Label>
+            <Input
+              id="birth_date"
+              type="date"
+              value={form.birth_date}
+              onChange={(e) => set('birth_date', e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">Usada pelo robô de aniversário 🎉</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

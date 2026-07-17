@@ -45,6 +45,7 @@ export async function updateLead(
     name?: string
     phone?: string
     email?: string | null
+    birth_date?: string | null
     source?: string | null
     stage_id?: string | null
     status?: string
@@ -72,6 +73,7 @@ export async function createLead(data: {
   name:     string
   phone:    string
   email?:   string | null
+  birth_date?: string | null
   source?:  string | null
   stage_id?: string | null
   notes?:   string | null
@@ -90,6 +92,7 @@ export async function createLead(data: {
     name:      data.name.trim(),
     phone:     data.phone.trim(),
     email:     data.email?.trim()  || null,
+    birth_date: data.birth_date    || null,
     source:    data.source?.trim() || null,
     stage_id:  data.stage_id       || null,
     notes:     data.notes?.trim()  || null,

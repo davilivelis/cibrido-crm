@@ -42,7 +42,9 @@ export async function proxy(request: NextRequest) {
     path.startsWith('/convite') ||
     path.startsWith('/esqueceu-senha') ||
     path.startsWith('/redefinir-senha') ||
-    path.startsWith('/api/webhooks')
+    path.startsWith('/api/webhooks') ||
+    path.startsWith('/api/cron') ||        // motor de notificações (auth própria via CRON_SECRET)
+    path.startsWith('/confirmar')          // confirmação de consulta pelo paciente (token único)
 
   // Não autenticado tentando acessar rota protegida → login
   if (!user && !isPublic) {

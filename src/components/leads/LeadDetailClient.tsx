@@ -64,6 +64,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
     name:        lead.name,
     phone:       lead.phone,
     email:       lead.email ?? '',
+    birth_date:  lead.birth_date ?? '',
     source:      lead.source ?? '',
     stage_id:    lead.stage_id ?? '',
     status:      lead.status,
@@ -84,6 +85,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
           name:        form.name,
           phone:       form.phone,
           email:       form.email || null,
+          birth_date:  form.birth_date || null,
           source:      form.source || null,
           stage_id:    form.stage_id || null,
           status:      form.status,
@@ -251,6 +253,18 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
                   <Input value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="opcional" />
                 ) : (
                   <span className="text-sm text-foreground">{lead.email ?? '—'}</span>
+                )}
+              </div>
+
+              {/* Aniversário */}
+              <div className="space-y-1.5">
+                <Label className="flex items-center gap-1.5 text-muted-foreground">
+                  <Tag className="w-3.5 h-3.5" /> Nascimento
+                </Label>
+                {editMode ? (
+                  <Input type="date" value={form.birth_date} onChange={(e) => set('birth_date', e.target.value)} />
+                ) : (
+                  <span className="text-sm text-foreground">{lead.birth_date ? new Date(lead.birth_date + 'T12:00:00').toLocaleDateString('pt-BR') : '—'}</span>
                 )}
               </div>
 
