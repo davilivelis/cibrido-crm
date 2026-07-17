@@ -61,8 +61,8 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { event, payment } = body
 
-    // Só processa pagamentos confirmados
-    if (event !== 'PAYMENT_CONFIRMED' && event !== 'PAYMENT_RECEIVED') {
+    // Eventos tratados: pagamento confirmado (convite/reativação) e atraso (bloqueio)
+    if (event !== 'PAYMENT_CONFIRMED' && event !== 'PAYMENT_RECEIVED' && event !== 'PAYMENT_OVERDUE') {
       return NextResponse.json({ ok: true, skipped: true })
     }
 
@@ -78,6 +78,65 @@ export async function POST(request: Request) {
 
     const plan  = getPlanFromAsaas(description)
     const admin = createAdminClient()
+
+    // Localiza cliente existente pelo email do responsável
+    const { data: existingUser } = await admin
+      .from('users')
+      .select('clinic_id, clinics(id, name, is_active)')
+      .eq('email', email)
+      .not('clinic_id', 'is', null)
+      .limit(1)
+      .maybeSingle()
+    const clientClinic = (existingUser?.clinics as unknown as { id: string; name: string; is_active: boolean } | null)
+
+    // ── INADIMPLÊNCIA (S5): bloqueia sozinho e avisa o Davi ──────────
+    if (event === 'PAYMENT_OVERDUE') {
+      if (!clientClinic) {
+        return NextResponse.json({ ok: true, skipped: 'overdue sem clínica correspondente' })
+      }
+      if (clientClinic.is_active) {
+        await admin.from('clinics')
+          .update({ is_active: false, blocked_reason: 'payment_overdue', updated_at: new Date().toISOString() })
+          .eq('id', clientClinic.id)
+        await admin.from('subscriptions')
+          .update({ status: 'blocked', updated_at: new Date().toISOString() })
+          .eq('clinic_id', clientClinic.id)
+      }
+      const davi = process.env.NOTIFY_PHONE_DAVI
+      if (davi) {
+        await sendWhatsApp(davi, [
+          `*[COBRANÇA ATRASADA - CRM LIVELIS]* ⚠️`,
+          ``,
+          `*Clínica:* ${clientClinic.name}`,
+          `*Responsável:* ${name || email}`,
+          `*Fatura:* ${description || paymentId || '(sem descrição)'}`,
+          ``,
+          `Acesso bloqueado automaticamente. Libera de novo em /admin quando resolver.`,
+          ``,
+          `-- Livelis Automacao`,
+        ].join('\n'))
+      }
+      return NextResponse.json({ ok: true, blocked: clientClinic.id })
+    }
+
+    // ── PAGAMENTO de cliente EXISTENTE: reativa se estava bloqueado ──
+    if (clientClinic) {
+      const paidUntil = new Date()
+      paidUntil.setDate(paidUntil.getDate() + 30)
+      await admin.from('subscriptions')
+        .update({ status: 'active', paid_until: paidUntil.toISOString(), asaas_payment_id: paymentId ?? null, updated_at: new Date().toISOString() })
+        .eq('clinic_id', clientClinic.id)
+      if (!clientClinic.is_active) {
+        await admin.from('clinics')
+          .update({ is_active: true, blocked_reason: null, updated_at: new Date().toISOString() })
+          .eq('id', clientClinic.id)
+        const davi = process.env.NOTIFY_PHONE_DAVI
+        if (davi) {
+          await sendWhatsApp(davi, `*[CRM LIVELIS]* ✅ Pagamento de *${clientClinic.name}* confirmado — acesso reativado sozinho.`)
+        }
+      }
+      return NextResponse.json({ ok: true, renewed: clientClinic.id })
+    }
 
     // Verifica se já existe convite pendente para esse email
     const { data: existing } = await admin

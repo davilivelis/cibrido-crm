@@ -1,6 +1,7 @@
 // Layout principal do CRM — envolve todas as páginas autenticadas
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import Sidebar from '@/components/layout/Sidebar'
 import Header from '@/components/layout/Header'
 import MobileNav from '@/components/layout/MobileNav'
@@ -22,6 +23,14 @@ export default async function DashboardLayout({
 
   // Sem clínica → onboarding
   if (!clinicId) redirect('/onboarding')
+
+  // Clínica bloqueada (ex.: pagamento em atraso) → tela de aviso (S5)
+  const { data: clinicRow } = await createAdminClient()
+    .from('clinics')
+    .select('is_active')
+    .eq('id', clinicId)
+    .maybeSingle()
+  if (clinicRow && clinicRow.is_active === false) redirect('/bloqueado')
 
   // Dados do perfil via metadados do auth (sempre acessíveis) + fallbacks
   const meta = user.user_metadata ?? {}

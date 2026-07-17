@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { toggleClientAccess, createInvite } from '@/lib/actions/admin'
 
 const PLAN_LABELS: Record<string, string> = { lite: 'Lite', standard: 'Standard', master: 'Master', trial: 'Trial' }
+// Preços de tabela (mesmos do modal de convite) — base do MRR
+const PLAN_PRICES: Record<string, number> = { lite: 497, standard: 897, master: 1497 }
 const STATUS_STYLES: Record<string, string> = {
   trial:     'bg-yellow-100 text-yellow-700',
   active:    'bg-green-100 text-green-700',
@@ -29,6 +31,20 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
     trial:    clients.filter(c => c.subscriptions?.[0]?.status === 'trial').length,
     active:   clients.filter(c => c.subscriptions?.[0]?.status === 'active').length,
     blocked:  clients.filter(c => !c.is_active).length,
+    // MRR = soma dos planos com assinatura ativa
+    mrr: clients.reduce((acc, c) => {
+      const sub = c.subscriptions?.[0]
+      return sub?.status === 'active' ? acc + (PLAN_PRICES[sub.plan] ?? 0) : acc
+    }, 0),
+  }
+
+  function fmtActivity(iso: string | null | undefined): string {
+    if (!iso) return 'sem uso'
+    const diffH = (Date.now() - new Date(iso).getTime()) / 3600_000
+    if (diffH < 1)  return 'agora há pouco'
+    if (diffH < 24) return `há ${Math.floor(diffH)}h`
+    const d = Math.floor(diffH / 24)
+    return d === 1 ? 'ontem' : `há ${d} dias`
   }
 
   function handleToggle(clinicId: string, current: boolean) {
@@ -74,12 +90,13 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-5 gap-4 mb-6">
         {[
           { label: 'Total',      value: stats.total,   color: '#4d6b00' },
           { label: 'Em trial',   value: stats.trial,   color: '#d97706' },
           { label: 'Ativos',     value: stats.active,  color: '#16a34a' },
           { label: 'Bloqueados', value: stats.blocked, color: '#dc2626' },
+          { label: 'MRR',        value: `R$ ${stats.mrr.toLocaleString('pt-BR')}`, color: '#4d6b00' },
         ].map(s => (
           <div key={s.label} style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
             <div style={{ fontSize: 13, color: 'var(--muted-foreground)', fontWeight: 500, marginBottom: 6 }}>{s.label}</div>
@@ -93,14 +110,14 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
         <table className="w-full">
           <thead style={{ background: 'var(--muted)' }}>
             <tr>
-              {['Clínica', 'Responsável', 'Plano', 'Status', 'Desde', 'Ações'].map(h => (
+              {['Clínica', 'Responsável', 'Plano', 'Status', 'Leads', 'Última atividade', 'Desde', 'Ações'].map(h => (
                 <th key={h} className="px-5 py-3 text-left" style={{ fontSize: 12, fontWeight: 600, color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {clients.length === 0 && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center" style={{ fontSize: 15, color: 'var(--muted-foreground)' }}>Nenhuma clínica cadastrada ainda.</td></tr>
+              <tr><td colSpan={8} className="px-5 py-12 text-center" style={{ fontSize: 15, color: 'var(--muted-foreground)' }}>Nenhuma clínica cadastrada ainda.</td></tr>
             )}
             {clients.map(c => {
               const sub    = c.subscriptions?.[0]
@@ -119,6 +136,12 @@ export default function ClientesClient({ clients }: { clients: any[] }) {
                     <span className={`${STATUS_STYLES[status] ?? 'bg-muted text-muted-foreground'}`} style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', borderRadius: 20 }}>
                       {status === 'trial' ? 'Trial' : status === 'active' ? 'Ativo' : status === 'blocked' ? 'Bloqueado' : 'Cancelado'}
                     </span>
+                  </td>
+                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>
+                    {c.usage?.leads_count ?? 0}
+                  </td>
+                  <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>
+                    {fmtActivity(c.usage?.last_activity)}
                   </td>
                   <td className="px-5 py-3.5" style={{ fontSize: 14, color: 'var(--muted-foreground)' }}>
                     {new Date(c.created_at).toLocaleDateString('pt-BR')}

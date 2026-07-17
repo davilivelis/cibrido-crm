@@ -20,17 +20,23 @@ export async function getAdminClients() {
   await assertAdmin()
   const admin = createAdminClient()
 
-  const { data: clinics, error } = await admin
-    .from('clinics')
-    .select(`
-      id, name, phone, email, is_active, created_at,
-      users(id, name, email, role),
-      subscriptions(plan, status, trial_ends_at, paid_until)
-    `)
-    .order('created_at', { ascending: false })
+  const [{ data: clinics, error }, { data: usage }] = await Promise.all([
+    admin
+      .from('clinics')
+      .select(`
+        id, name, phone, email, is_active, blocked_reason, created_at,
+        users(id, name, email, role),
+        subscriptions(plan, status, trial_ends_at, paid_until)
+      `)
+      .order('created_at', { ascending: false }),
+    admin.from('admin_clinic_usage').select('*'),
+  ])
 
   if (error) throw new Error(error.message)
-  return clinics ?? []
+
+  // Cola o uso (leads, atividade) em cada clínica
+  const usageMap = new Map((usage ?? []).map((u) => [u.clinic_id, u]))
+  return (clinics ?? []).map((c) => ({ ...c, usage: usageMap.get(c.id) ?? null }))
 }
 
 export async function toggleClientAccess(clinicId: string, isActive: boolean) {
