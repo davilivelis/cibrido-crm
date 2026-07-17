@@ -21,6 +21,12 @@ export async function createCampaign(data: {
 
   if (!profile) throw new Error('Usuário sem clínica')
 
+  // Código do link rastreável /t/{codigo} — curto, único, fácil de ler
+  const trackingCode = Array.from(
+    crypto.getRandomValues(new Uint8Array(5)),
+    (b) => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b % 32]
+  ).join('')
+
   const { error } = await supabase.from('campaigns').insert({
     clinic_id:      profile.clinic_id,
     name:           data.name.trim(),
@@ -32,6 +38,7 @@ export async function createCampaign(data: {
     impressions:    0,
     clicks:         0,
     leads_generated: 0,
+    tracking_code:  trackingCode,
   })
 
   if (error) throw new Error(error.message)

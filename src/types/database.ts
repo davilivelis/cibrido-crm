@@ -119,6 +119,7 @@ export interface Campaign {
   impressions: number
   clicks: number
   leads_generated: number
+  tracking_code: string | null
   started_at: string | null
   ended_at: string | null
   created_at: string

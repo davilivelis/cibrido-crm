@@ -242,6 +242,41 @@ export async function POST(request: Request) {
       throw new Error(`Erro gravando conversa: ${convErr.message}`)
     }
 
+    // Atribuição de anúncio (S4): mensagem traz [#CODIGO] do link rastreável
+    // → carimba o lead com a campanha (primeiro toque vence, nunca sobrescreve)
+    if (!fromMe) {
+      const codeMatch = text.match(/#([A-Za-z0-9]{4,8})\b/)
+      if (codeMatch) {
+        const { data: campaign } = await admin
+          .from('campaigns')
+          .select('id, name, platform')
+          .eq('clinic_id', clinic.id)
+          .eq('tracking_code', codeMatch[1].toUpperCase())
+          .maybeSingle()
+        if (campaign) {
+          const { data: current } = await admin
+            .from('leads')
+            .select('campaign_id')
+            .eq('id', lead.id)
+            .single()
+          if (!current?.campaign_id) {
+            await admin.from('leads').update({
+              campaign_id: campaign.id,
+              source: 'anuncio',
+              utm_source: campaign.platform,
+              utm_campaign: campaign.name,
+            }).eq('id', lead.id)
+            await admin.from('lead_events').insert({
+              clinic_id: clinic.id,
+              lead_id: lead.id,
+              type: 'campaign_attributed',
+              description: `Lead veio do anúncio "${campaign.name}" (${campaign.platform})`,
+            })
+          }
+        }
+      }
+    }
+
     // SIM/NÃO do paciente → confirma/cancela a consulta pendente
     if (!fromMe) {
       const answer = detectYesNo(text)

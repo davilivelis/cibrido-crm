@@ -3,14 +3,24 @@
 // Tela de Tráfego Pago com botão de nova campanha e edição de status
 
 import { useState } from 'react'
-import { Plus, BarChart3, TrendingUp, MousePointerClick, Users, Pencil } from 'lucide-react'
+import { Plus, BarChart3, TrendingUp, MousePointerClick, Users, Pencil, Link2, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import NovaCampanhaModal from '@/components/trafego/NovaCampanhaModal'
 import { updateCampaignMetrics } from '@/lib/actions/campaigns'
 import { Campaign } from '@/types/database'
+import { toast } from 'sonner'
+
+// Números REAIS medidos pelo link rastreável /t/{codigo} (S4)
+export interface CampaignAttribution {
+  clicks: number
+  leads: number
+  appointments: number
+  attended: number
+}
 
 interface TrafegoClientProps {
   campaigns: Campaign[]
+  attribution?: Record<string, CampaignAttribution>
 }
 
 const PLATFORM_COLORS: Record<string, string> = {
@@ -31,11 +41,21 @@ const STATUS_LABELS: Record<string, string> = {
   ended:  'Encerrada',
 }
 
-export default function TrafegoClient({ campaigns }: TrafegoClientProps) {
+export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoClientProps) {
   const [modalOpen,   setModalOpen]   = useState(false)
   const [editingId,   setEditingId]   = useState<string | null>(null)
   const [editValues,  setEditValues]  = useState<Record<string, string>>({})
   const [savingId,    setSavingId]    = useState<string | null>(null)
+  const [copiedId,    setCopiedId]    = useState<string | null>(null)
+
+  async function copyTrackingLink(c: Campaign) {
+    if (!c.tracking_code) return
+    const link = `https://crm.livelis.com.br/t/${c.tracking_code}`
+    await navigator.clipboard.writeText(link)
+    setCopiedId(c.id)
+    toast.success('Link do anúncio copiado! Cole na campanha.')
+    setTimeout(() => setCopiedId(null), 2500)
+  }
 
   // Totais consolidados
   const totals = campaigns.reduce(
@@ -261,6 +281,66 @@ export default function TrafegoClient({ campaigns }: TrafegoClientProps) {
                           </td>
                         </>
                       )}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Atribuição REAL — medida pelo link rastreável, sem digitação manual */}
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="px-4 py-3 border-b border-border">
+          <h2 className="text-sm font-semibold text-foreground">Atribuição real — do anúncio à cadeira</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Medido pelo link rastreável: cole o link no anúncio e o CRM conta sozinho quem clicou, virou conversa, marcou e compareceu
+          </p>
+        </div>
+
+        {campaigns.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-muted-foreground text-sm">Crie uma campanha pra ganhar o link rastreável dela.</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-50 bg-muted/60">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Campanha</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Link do anúncio</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Cliques</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Conversas</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Consultas</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Compareceram</th>
+                </tr>
+              </thead>
+              <tbody>
+                {campaigns.map((c) => {
+                  const a = attribution[c.id] ?? { clicks: 0, leads: 0, appointments: 0, attended: 0 }
+                  return (
+                    <tr key={c.id} className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors">
+                      <td className="px-4 py-3 font-medium text-foreground">{c.name}</td>
+                      <td className="px-4 py-3">
+                        {c.tracking_code ? (
+                          <button
+                            type="button"
+                            onClick={() => copyTrackingLink(c)}
+                            className="inline-flex items-center gap-1.5 text-xs font-mono px-2 py-1 rounded-lg border border-border hover:border-primary text-foreground transition-colors"
+                            title="Copiar link rastreável"
+                          >
+                            {copiedId === c.id ? <Check className="w-3.5 h-3.5 text-primary-strong" /> : <Link2 className="w-3.5 h-3.5" />}
+                            /t/{c.tracking_code}
+                          </button>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">—</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-right text-muted-foreground">{a.clicks}</td>
+                      <td className="px-4 py-3 text-right text-muted-foreground">{a.leads}</td>
+                      <td className="px-4 py-3 text-right text-muted-foreground">{a.appointments}</td>
+                      <td className="px-4 py-3 text-right font-medium text-foreground">{a.attended}</td>
                     </tr>
                   )
                 })}
