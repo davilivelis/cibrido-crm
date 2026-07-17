@@ -9,6 +9,7 @@ export async function updateClinic(data: {
   phone: string
   email: string
   address: string
+  google_calendar_id?: string
 }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -75,6 +76,7 @@ export async function updateClinic(data: {
       phone:   data.phone.trim() || null,
       email:   data.email.trim() || null,
       address: data.address.trim() || null,
+      google_calendar_id: data.google_calendar_id?.trim() || null,
     }).eq('id', clinicId)
 
     // Atualiza metadados

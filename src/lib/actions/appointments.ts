@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { syncAppointmentToGoogle } from '@/lib/google/calendar'
 
 export async function createAppointment(data: {
   leadId: string
@@ -14,7 +15,7 @@ export async function createAppointment(data: {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { error } = await supabase.from('appointments').insert({
+  const { data: created, error } = await supabase.from('appointments').insert({
     clinic_id:    data.clinicId,
     lead_id:      data.leadId,
     scheduled_by: user?.id ?? null,
@@ -23,9 +24,12 @@ export async function createAppointment(data: {
     duration_min: data.durationMin,
     notes:        data.notes || null,
     status:       'scheduled',
-  })
+  }).select('id').single()
 
   if (error) throw new Error(error.message)
+
+  // Agenda Google (S3.5): reflete a consulta na agenda da clínica
+  if (created) await syncAppointmentToGoogle(created.id)
 
   // Registra na timeline do lead
   await supabase.from('lead_events').insert({
@@ -68,6 +72,9 @@ export async function updateAppointmentStatus(
     .eq('id', appointmentId)
 
   if (error) throw new Error(error.message)
+
+  // Agenda Google (S3.5): confirmada atualiza, cancelada/faltou remove
+  await syncAppointmentToGoogle(appointmentId)
 
   revalidatePath('/agenda')
 }

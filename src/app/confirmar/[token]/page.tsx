@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { APP_NAME } from '@/lib/branding'
+import { syncAppointmentToGoogle } from '@/lib/google/calendar'
 import { revalidatePath } from 'next/cache'
 import { CheckCircle2, XCircle, CalendarDays } from 'lucide-react'
 
@@ -48,6 +49,7 @@ export default async function ConfirmarPage({
       .from('appointments')
       .update({ status: resposta === 'sim' ? 'confirmed' : 'cancelled' })
       .eq('id', apt.id)
+    await syncAppointmentToGoogle(apt.id)
     revalidatePath(`/confirmar/${token}`)
   }
 

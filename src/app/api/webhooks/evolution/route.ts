@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { EvolutionSender, phoneAllowed } from '@/lib/notifications/sender'
+import { syncAppointmentToGoogle } from '@/lib/google/calendar'
 
 // Webhook de ENTRADA do WhatsApp (Evolution API) — S3 Conversas Vivas.
 // Configurado na instância Evolution com a URL:
@@ -102,6 +103,7 @@ async function processYesNo(
 
   const newStatus = answer === 'sim' ? 'confirmed' : 'cancelled'
   await admin.from('appointments').update({ status: newStatus }).eq('id', apt.id)
+  await syncAppointmentToGoogle(apt.id)
 
   const d = new Date(new Date(apt.scheduled_at).getTime() - 3 * 3600_000)
   const when = `${String(d.getUTCDate()).padStart(2, '0')}/${String(d.getUTCMonth() + 1).padStart(2, '0')} às ${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`

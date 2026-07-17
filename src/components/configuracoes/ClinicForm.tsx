@@ -14,9 +14,11 @@ interface ClinicFormProps {
     phone: string | null
     email: string | null
     address: string | null
+    google_calendar_id?: string | null
     plan: string
     created_at: string
   } | null
+  calendarSaEmail?: string | null
 }
 
 const PLAN_LABELS: Record<string, string> = {
@@ -25,7 +27,7 @@ const PLAN_LABELS: Record<string, string> = {
   pro:   'Pro',
 }
 
-export default function ClinicForm({ clinic }: ClinicFormProps) {
+export default function ClinicForm({ clinic, calendarSaEmail }: ClinicFormProps) {
   const [, startTransition] = useTransition()
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -36,6 +38,7 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
     phone:   clinic?.phone   ?? '',
     email:   clinic?.email   ?? '',
     address: clinic?.address ?? '',
+    google_calendar_id: clinic?.google_calendar_id ?? '',
   })
 
   function set(field: keyof typeof form, value: string) {
@@ -122,6 +125,22 @@ export default function ClinicForm({ clinic }: ClinicFormProps) {
             onChange={(e) => set('address', e.target.value)}
             placeholder="Rua, número, bairro, cidade - UF"
           />
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="google_calendar_id">Agenda Google (opcional)</Label>
+          <Input
+            id="google_calendar_id"
+            value={form.google_calendar_id}
+            onChange={(e) => set('google_calendar_id', e.target.value)}
+            placeholder="ID da agenda — ex: contato@suaclinica.com.br"
+          />
+          <p className="text-xs text-muted-foreground">
+            Consultas do CRM aparecem sozinhas na sua agenda Google.
+            {calendarSaEmail
+              ? <> Compartilhe a agenda com <span className="font-medium text-foreground">{calendarSaEmail}</span> (permissão &quot;Fazer alterações em eventos&quot;) e cole aqui o ID da agenda.</>
+              : ' Recurso em ativação — fale com o suporte pra conectar.'}
+          </p>
         </div>
 
         {error && (

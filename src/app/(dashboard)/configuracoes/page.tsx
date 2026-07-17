@@ -46,7 +46,7 @@ export default async function ConfiguracoesPage() {
           </p>
         </a>
 
-        <ClinicForm clinic={clinic} />
+        <ClinicForm clinic={clinic} calendarSaEmail={process.env.GOOGLE_CALENDAR_SA_EMAIL ?? null} />
         <TeamSection team={team ?? []} clinicPlan={clinic?.plan ?? 'trial'} />
       </div>
     )
