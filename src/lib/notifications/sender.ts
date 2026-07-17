@@ -17,6 +17,22 @@ function normalizePhone(phone: string): string {
   return `55${digits}`
 }
 
+// ── MODO SEGURO (trava anti-mensagem-indesejada) ─────────────────────
+// Com NOTIFICATIONS_ALLOWED_PHONES definida (lista separada por vírgula),
+// só sai mensagem pra número da lista. Sem a env → aberto.
+// Vale pra TODO envio do CRM: motor de notificações E chat das conversas.
+function normDigits(phone: string): string {
+  const d = phone.replace(/\D/g, '')
+  return d.startsWith('55') ? d.slice(2) : d
+}
+
+export function phoneAllowed(phone: string): boolean {
+  const allowed = process.env.NOTIFICATIONS_ALLOWED_PHONES
+  if (allowed === undefined) return true
+  const list = allowed.split(',').map(normDigits).filter(Boolean)
+  return list.includes(normDigits(phone))
+}
+
 export class EvolutionSender implements Sender {
   constructor(private instance?: string) {}
 

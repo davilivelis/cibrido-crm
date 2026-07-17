@@ -5,7 +5,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { DEFAULT_TEMPLATES, renderTemplate, firstName, NotificationType } from './templates'
-import { getSender } from './sender'
+import { getSender, phoneAllowed } from './sender'
 
 // São Paulo é UTC-3 fixo (sem horário de verão desde 2019)
 const SP_OFFSET_MS = -3 * 3600_000
@@ -35,19 +35,6 @@ function fmtData(iso: string): string {
 }
 function token(): string {
   return crypto.randomUUID().replace(/-/g, '')
-}
-
-// Modo seguro: com NOTIFICATIONS_ALLOWED_PHONES definida (lista separada
-// por vírgula), só sai mensagem pra número da lista. Sem a env → aberto.
-function normDigits(phone: string): string {
-  const d = phone.replace(/\D/g, '')
-  return d.startsWith('55') ? d.slice(2) : d
-}
-function phoneAllowed(phone: string): boolean {
-  const allowed = process.env.NOTIFICATIONS_ALLOWED_PHONES
-  if (allowed === undefined) return true
-  const list = allowed.split(',').map(normDigits).filter(Boolean)
-  return list.includes(normDigits(phone))
 }
 
 interface Due {
