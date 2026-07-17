@@ -37,6 +37,19 @@ function token(): string {
   return crypto.randomUUID().replace(/-/g, '')
 }
 
+// Modo seguro: com NOTIFICATIONS_ALLOWED_PHONES definida (lista separada
+// por vírgula), só sai mensagem pra número da lista. Sem a env → aberto.
+function normDigits(phone: string): string {
+  const d = phone.replace(/\D/g, '')
+  return d.startsWith('55') ? d.slice(2) : d
+}
+function phoneAllowed(phone: string): boolean {
+  const allowed = process.env.NOTIFICATIONS_ALLOWED_PHONES
+  if (allowed === undefined) return true
+  const list = allowed.split(',').map(normDigits).filter(Boolean)
+  return list.includes(normDigits(phone))
+}
+
 interface Due {
   targetId: string | null
   phone: string
@@ -307,6 +320,21 @@ export async function runNotificationEngine(now = new Date()): Promise<EngineRes
         if (insErr.code === '23505') { result.skipped++; continue } // unique_violation = dedup
         result.failed++
         result.details.push({ type: rule.type, dedupKey: item.dedupKey, status: 'failed', error: insErr.message })
+        continue
+      }
+
+      // ── MODO SEGURO (trava anti-mensagem-indesejada) ─────────────
+      // Se NOTIFICATIONS_ALLOWED_PHONES estiver definida no ambiente,
+      // NENHUMA mensagem sai para número fora da lista — o item vira
+      // 'skipped' no log. Proteção contra dado de teste/demo com
+      // telefone que pode pertencer a alguém de verdade.
+      if (!phoneAllowed(item.phone)) {
+        result.skipped++
+        await admin.from('notification_log')
+          .update({ status: 'skipped', error: 'modo seguro: número fora da lista NOTIFICATIONS_ALLOWED_PHONES' })
+          .eq('clinic_id', rule.clinic_id)
+          .eq('dedup_key', item.dedupKey)
+        result.details.push({ type: rule.type, dedupKey: item.dedupKey, status: 'skipped', error: 'modo seguro' })
         continue
       }
 
