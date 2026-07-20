@@ -51,7 +51,7 @@ interface RuleRow {
   template: string | null
   channel: string
   config: Record<string, unknown>
-  clinics: { id: string; name: string; phone: string | null } | null
+  clinics: { id: string; name: string; phone: string | null; wa_cloud_phone_id: string | null; wa_cloud_token: string | null } | null
 }
 
 type Admin = ReturnType<typeof createAdminClient>
@@ -86,7 +86,11 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
   const clinicName = rule.clinics?.name ?? 'sua clínica'
   const template = rule.template?.trim() || DEFAULT_TEMPLATES[rule.type]
   const spHour = spWall(now).getUTCHours()
-  const morning = spHour >= 8 && spHour < 12
+  // Personalização por negócio: horário de envio das notificações do dia
+  // (default 8h) e antecedência do "1h antes" (default 60min) — vêm do config.
+  const sendHour = typeof rule.config.send_hour === 'number' ? rule.config.send_hour : 8
+  const atSendHour = spHour === sendHour
+  const minutesBefore = typeof rule.config.minutes_before === 'number' ? rule.config.minutes_before : 60
   const today = spDateStr(now)
   const out: Due[] = []
 
@@ -123,7 +127,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'vespera': {
-      if (!morning) break
+      if (!atSendHour) break
       const r = spDayUtcRange(spDateStr(addDays(now, 1)))
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, r.start, r.end)) {
         if (!apt.lead?.phone) continue
@@ -138,7 +142,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'no_dia': {
-      if (!morning) break
+      if (!atSendHour) break
       const r = spDayUtcRange(today)
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, r.start, r.end)) {
         if (!apt.lead?.phone) continue
@@ -153,9 +157,9 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'hora_antes': {
-      // Janela 45–80 min à frente (cron roda a cada 15 min → nunca escapa)
-      const start = new Date(now.getTime() + 45 * 60_000).toISOString()
-      const end = new Date(now.getTime() + 80 * 60_000).toISOString()
+      // Janela [minutesBefore, minutesBefore+20] à frente (cron 15min + dedup → dispara 1x)
+      const start = new Date(now.getTime() + minutesBefore * 60_000).toISOString()
+      const end = new Date(now.getTime() + (minutesBefore + 20) * 60_000).toISOString()
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, start, end)) {
         if (!apt.lead?.phone) continue
         out.push({
@@ -169,7 +173,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'aniversario': {
-      if (!morning) break
+      if (!atSendHour) break
       const { data } = await admin
         .from('leads')
         .select('id, name, phone, birth_date')
@@ -192,7 +196,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'recall': {
-      if (!morning) break
+      if (!atSendHour) break
       const { data } = await admin
         .from('recalls')
         .select('id, reason, lead:leads(id, name, phone)')
@@ -215,7 +219,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
     }
 
     case 'avaliacao': {
-      if (!morning) break
+      if (!atSendHour) break
       const r = spDayUtcRange(spDateStr(addDays(now, -1)))
       const reviewLink = typeof rule.config.review_link === 'string' ? rule.config.review_link : ''
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, r.start, r.end, ['attended'])) {
@@ -235,7 +239,7 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
 
     case 'relatorio_dono': {
       // Segunda-feira de manhã, no WhatsApp cadastrado da clínica
-      if (!morning || spWall(now).getUTCDay() !== 1) break
+      if (!atSendHour || spWall(now).getUTCDay() !== 1) break
       const ownerPhone = rule.clinics?.phone
       if (!ownerPhone) break
       const weekStart = new Date(now.getTime() - 7 * 86400_000).toISOString()
@@ -278,7 +282,7 @@ export async function runNotificationEngine(now = new Date()): Promise<EngineRes
 
   const { data: rules, error } = await admin
     .from('notification_rules')
-    .select('id, clinic_id, type, template, channel, config, clinics(id, name, phone)')
+    .select('id, clinic_id, type, template, channel, config, clinics(id, name, phone, wa_cloud_phone_id, wa_cloud_token)')
     .eq('enabled', true)
   if (error) throw new Error(`Erro lendo notification_rules: ${error.message}`)
 
@@ -325,7 +329,10 @@ export async function runNotificationEngine(now = new Date()): Promise<EngineRes
         continue
       }
 
-      const sender = getSender(rule.channel, rule.config ?? {})
+      const sender = getSender(rule.channel, rule.config ?? {}, {
+        phoneId: rule.clinics?.wa_cloud_phone_id,
+        token: rule.clinics?.wa_cloud_token,
+      })
       const sendRes = await sender.send(item.phone, item.message)
       if (sendRes.ok) {
         result.sent++

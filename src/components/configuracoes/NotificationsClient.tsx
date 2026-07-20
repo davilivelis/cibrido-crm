@@ -19,6 +19,17 @@ const ORDER: NotificationType[] = [
   'aniversario', 'recall', 'avaliacao', 'relatorio_dono',
 ]
 
+// Tipos que disparam "de manhã" — o negócio escolhe o horário
+const HOUR_TYPES = new Set<NotificationType>(['vespera', 'no_dia', 'aniversario', 'recall', 'avaliacao', 'relatorio_dono'])
+
+interface RuleState {
+  enabled: boolean
+  template: string
+  review_link: string
+  send_hour: string
+  minutes_before: string
+}
+
 export default function NotificationsClient({
   rules,
   log,
@@ -30,8 +41,8 @@ export default function NotificationsClient({
   const [open, setOpen] = useState<NotificationType | null>(null)
   const [pending, startTransition] = useTransition()
 
-  // Estado local por tipo (enabled, template, review_link)
-  const [state, setState] = useState<Record<string, { enabled: boolean; template: string; review_link: string }>>(
+  // Estado local por tipo
+  const [state, setState] = useState<Record<string, RuleState>>(
     Object.fromEntries(
       ORDER.map((t) => {
         const r = byType.get(t)
@@ -39,12 +50,14 @@ export default function NotificationsClient({
           enabled: r?.enabled ?? false,
           template: r?.template ?? '',
           review_link: typeof r?.config?.review_link === 'string' ? (r.config.review_link as string) : '',
+          send_hour: typeof r?.config?.send_hour === 'number' ? String(r.config.send_hour) : '',
+          minutes_before: typeof r?.config?.minutes_before === 'number' ? String(r.config.minutes_before) : '',
         }]
       })
     )
   )
 
-  function save(type: NotificationType, next: { enabled: boolean; template: string; review_link: string }) {
+  function save(type: NotificationType, next: RuleState) {
     setState((s) => ({ ...s, [type]: next }))
     startTransition(async () => {
       const res = await saveNotificationRule({
@@ -52,6 +65,8 @@ export default function NotificationsClient({
         enabled: next.enabled,
         template: next.template || null,
         review_link: type === 'avaliacao' ? next.review_link : undefined,
+        send_hour: HOUR_TYPES.has(type) && next.send_hour !== '' ? Number(next.send_hour) : undefined,
+        minutes_before: type === 'hora_antes' && next.minutes_before !== '' ? Number(next.minutes_before) : undefined,
       })
       if (res.ok) toast.success(`${NOTIFICATION_LABELS[type].label}: salvo`)
       else toast.error(res.error ?? 'Erro ao salvar')
@@ -116,6 +131,32 @@ export default function NotificationsClient({
                       placeholder="Link de avaliação do Google (ex.: https://g.page/r/...)"
                       className="w-full rounded-lg border border-input bg-background text-foreground p-2.5 text-sm"
                     />
+                  )}
+                  {HOUR_TYPES.has(type) && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground">Horário de envio:</label>
+                      <input
+                        type="number" min={0} max={23}
+                        value={st.send_hour}
+                        onChange={(e) => setState((s) => ({ ...s, [type]: { ...st, send_hour: e.target.value } }))}
+                        placeholder="8"
+                        className="w-16 rounded-lg border border-input bg-background text-foreground p-2 text-sm text-center"
+                      />
+                      <span className="text-xs text-muted-foreground">h (padrão 8h)</span>
+                    </div>
+                  )}
+                  {type === 'hora_antes' && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground">Enviar</label>
+                      <input
+                        type="number" min={15} max={1440}
+                        value={st.minutes_before}
+                        onChange={(e) => setState((s) => ({ ...s, [type]: { ...st, minutes_before: e.target.value } }))}
+                        placeholder="60"
+                        className="w-20 rounded-lg border border-input bg-background text-foreground p-2 text-sm text-center"
+                      />
+                      <span className="text-xs text-muted-foreground">min antes (padrão 60)</span>
+                    </div>
                   )}
                   <div className="flex gap-2">
                     <button

@@ -61,12 +61,61 @@ export class EvolutionSender implements Sender {
   }
 }
 
-// Futuro (onboarding por clínica): CloudApiSender com token/número da conta
-// Meta da própria clínica — templates de utilidade aprovados, zero banimento.
+// WhatsApp Cloud API OFICIAL da Meta, por clínica (anti-banimento).
+// Duas formas de enviar:
+//  • send()        → texto livre — só entregue DENTRO da janela de 24h de
+//    atendimento (resposta a quem escreveu). Fora da janela a Meta rejeita.
+//  • sendTemplate()→ template de UTILIDADE aprovado — é o que permite a
+//    notificação PROATIVA (confirmação/lembrete/falta) sem cair. É o caminho
+//    das notificações; exige templates aprovados na conta Meta da clínica.
+const GRAPH_VERSION = 'v21.0'
 
-// channel vem da notification_rule; config pode trazer instância própria da clínica
-export function getSender(channel: string, config: Record<string, unknown>): Sender {
-  // 'cloud_api' cai na Evolution até a ativação oficial existir por clínica
+export class CloudApiSender implements Sender {
+  constructor(private phoneId: string, private token: string) {}
+
+  private async post(payload: Record<string, unknown>): Promise<SendResult> {
+    try {
+      const res = await fetch(`https://graph.facebook.com/${GRAPH_VERSION}/${this.phoneId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+        body: JSON.stringify({ messaging_product: 'whatsapp', ...payload }),
+      })
+      if (!res.ok) return { ok: false, error: `Cloud API ${res.status}: ${(await res.text()).slice(0, 300)}` }
+      const json = (await res.json().catch(() => null)) as { messages?: { id?: string }[] } | null
+      return { ok: true, externalId: json?.messages?.[0]?.id }
+    } catch (err) {
+      return { ok: false, error: err instanceof Error ? err.message : String(err) }
+    }
+  }
+
+  async send(phone: string, message: string): Promise<SendResult> {
+    return this.post({ to: normalizePhone(phone), type: 'text', text: { body: message } })
+  }
+
+  async sendTemplate(phone: string, templateName: string, lang: string, params: string[]): Promise<SendResult> {
+    return this.post({
+      to: normalizePhone(phone),
+      type: 'template',
+      template: {
+        name: templateName,
+        language: { code: lang },
+        components: params.length ? [{ type: 'body', parameters: params.map((t) => ({ type: 'text', text: t })) }] : undefined,
+      },
+    })
+  }
+}
+
+// channel vem da notification_rule; cloud traz as credenciais Meta da clínica.
+// Só usa Cloud API quando o canal é 'cloud_api' E a clínica tem credenciais —
+// senão cai na Evolution (default). Nunca quebra: sem credencial → Evolution.
+export function getSender(
+  channel: string,
+  config: Record<string, unknown>,
+  cloud?: { phoneId?: string | null; token?: string | null }
+): Sender {
+  if (channel === 'cloud_api' && cloud?.phoneId && cloud?.token) {
+    return new CloudApiSender(cloud.phoneId, cloud.token)
+  }
   const instance = typeof config.instance === 'string' && config.instance ? config.instance : undefined
   return new EvolutionSender(instance)
 }

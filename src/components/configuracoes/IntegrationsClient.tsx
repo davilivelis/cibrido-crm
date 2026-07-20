@@ -2,14 +2,24 @@
 
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
-import { Link2, Copy, Check, RefreshCw, ArrowUpRight } from 'lucide-react'
-import { generateInboundToken, saveOutboundWebhook, type IntegrationConfig } from '@/lib/actions/integrations'
+import { Link2, Copy, Check, RefreshCw, ArrowUpRight, ShieldCheck } from 'lucide-react'
+import { generateInboundToken, saveOutboundWebhook, saveCloudApi, type IntegrationConfig, type CloudApiStatus } from '@/lib/actions/integrations'
 
-export default function IntegrationsClient({ config }: { config: IntegrationConfig }) {
+export default function IntegrationsClient({ config, cloud }: { config: IntegrationConfig; cloud: CloudApiStatus }) {
   const [inboundUrl, setInboundUrl] = useState(config.inboundUrl)
   const [outboundUrl, setOutboundUrl] = useState(config.outboundUrl ?? '')
+  const [phoneId, setPhoneId] = useState(cloud.phoneId ?? '')
+  const [token, setToken] = useState('')
   const [copied, setCopied] = useState(false)
   const [pending, startTransition] = useTransition()
+
+  function saveCloud() {
+    startTransition(async () => {
+      const res = await saveCloudApi(phoneId, token)
+      if (res.ok) { toast.success('WhatsApp oficial salvo.'); setToken('') }
+      else toast.error(res.error ?? 'Erro ao salvar')
+    })
+  }
 
   function copy() {
     if (!inboundUrl) return
@@ -41,6 +51,50 @@ export default function IntegrationsClient({ config }: { config: IntegrationConf
 
   return (
     <div className="space-y-6">
+      {/* WHATSAPP OFICIAL — anti-ban */}
+      <div className="bg-card border border-border rounded-xl p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center">
+            <ShieldCheck className="w-4 h-4 text-primary-strong" />
+          </div>
+          <div className="min-w-0">
+            <h2 className="text-sm font-semibold text-foreground">WhatsApp Oficial (anti-banimento)</h2>
+            <p className="text-xs text-muted-foreground">
+              Conta oficial da Meta: as notificações saem por template aprovado e o número não cai.
+            </p>
+          </div>
+          {cloud.configured && (
+            <span className="ml-auto shrink-0 text-xs font-bold px-2 py-1 rounded-full bg-primary/15 text-primary-strong">ativo</span>
+          )}
+        </div>
+        <div className="space-y-2">
+          <input
+            value={phoneId}
+            onChange={(e) => setPhoneId(e.target.value)}
+            placeholder="Phone Number ID (do painel da Meta)"
+            className="w-full rounded-lg border border-input bg-background text-foreground px-3 py-2.5 text-sm"
+          />
+          <input
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+            type="password"
+            placeholder={cloud.configured ? 'Token salvo — preencha só pra trocar' : 'Token de acesso permanente'}
+            className="w-full rounded-lg border border-input bg-background text-foreground px-3 py-2.5 text-sm"
+          />
+          <button
+            onClick={saveCloud}
+            disabled={pending}
+            className="h-10 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 disabled:opacity-50 transition-opacity"
+          >
+            Salvar WhatsApp oficial
+          </button>
+        </div>
+        <div className="text-xs text-muted-foreground bg-muted/60 rounded-lg p-3 leading-relaxed">
+          Precisa de uma conta WhatsApp Business verificada na Meta + templates de utilidade aprovados —
+          o suporte configura isso com você no onboarding. É o que faz o número não cair.
+        </div>
+      </div>
+
       {/* ENTRADA — receber conversões */}
       <div className="bg-card border border-border rounded-xl p-6 space-y-4">
         <div className="flex items-center gap-3">

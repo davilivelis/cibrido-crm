@@ -61,6 +61,34 @@ export async function generateInboundToken(): Promise<{ ok: boolean; url?: strin
   return { ok: true, url: `${base}/api/webhooks/in/${token}` }
 }
 
+// ── WhatsApp Cloud API oficial (anti-ban) — hand-off da conta Meta da clínica ──
+export interface CloudApiStatus {
+  configured: boolean
+  phoneId: string | null
+}
+
+export async function getCloudApiStatus(): Promise<CloudApiStatus> {
+  const clinicId = await clinicOf()
+  if (!clinicId) return { configured: false, phoneId: null }
+  const admin = createAdminClient()
+  const { data } = await admin.from('clinics')
+    .select('wa_cloud_phone_id, wa_cloud_token').eq('id', clinicId).maybeSingle()
+  return { configured: Boolean(data?.wa_cloud_phone_id && data?.wa_cloud_token), phoneId: data?.wa_cloud_phone_id ?? null }
+}
+
+export async function saveCloudApi(phoneId: string, token: string): Promise<{ ok: boolean; error?: string }> {
+  const clinicId = await clinicOf()
+  if (!clinicId) return { ok: false, error: 'Não autorizado' }
+  const admin = createAdminClient()
+  const { error } = await admin.from('clinics').update({
+    wa_cloud_phone_id: phoneId.trim() || null,
+    wa_cloud_token: token.trim() || null,
+  }).eq('id', clinicId)
+  if (error) return { ok: false, error: error.message }
+  revalidatePath('/configuracoes/integracoes')
+  return { ok: true }
+}
+
 // Configura a URL de saída (o CRM envia eventos pra lá). Gera o segredo HMAC.
 export async function saveOutboundWebhook(rawUrl: string): Promise<{ ok: boolean; secret?: string; error?: string }> {
   const clinicId = await clinicOf()

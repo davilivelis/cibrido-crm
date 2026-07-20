@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { getIntegrationConfig } from '@/lib/actions/integrations'
+import { getIntegrationConfig, getCloudApiStatus } from '@/lib/actions/integrations'
 import { ArrowLeft } from 'lucide-react'
 import IntegrationsClient from '@/components/configuracoes/IntegrationsClient'
 
@@ -13,7 +13,7 @@ export default async function IntegracoesPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const config = await getIntegrationConfig()
+  const [config, cloud] = await Promise.all([getIntegrationConfig(), getCloudApiStatus()])
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -33,7 +33,7 @@ export default async function IntegracoesPage() {
         </div>
       </div>
 
-      <IntegrationsClient config={config} />
+      <IntegrationsClient config={config} cloud={cloud} />
     </div>
   )
 }

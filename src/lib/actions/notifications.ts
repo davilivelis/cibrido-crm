@@ -34,6 +34,8 @@ export async function saveNotificationRule(input: {
   enabled: boolean
   template: string | null
   review_link?: string
+  send_hour?: number       // horário de envio das notificações do dia (0-23)
+  minutes_before?: number  // antecedência do lembrete "1h antes" (15-1440)
 }): Promise<{ ok: boolean; error?: string }> {
   const supabase = await createClient()
 
@@ -47,6 +49,13 @@ export async function saveNotificationRule(input: {
 
   const config: Record<string, unknown> = {}
   if (input.review_link !== undefined) config.review_link = input.review_link.trim()
+  // Validação server-side: valores dentro de faixa sã (nunca confia no cliente)
+  if (typeof input.send_hour === 'number' && input.send_hour >= 0 && input.send_hour <= 23) {
+    config.send_hour = Math.floor(input.send_hour)
+  }
+  if (typeof input.minutes_before === 'number' && input.minutes_before >= 15 && input.minutes_before <= 1440) {
+    config.minutes_before = Math.floor(input.minutes_before)
+  }
 
   const { error } = await supabase.from('notification_rules').upsert(
     {
