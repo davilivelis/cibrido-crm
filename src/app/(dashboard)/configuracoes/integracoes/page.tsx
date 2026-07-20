@@ -28,7 +28,7 @@ export default async function IntegracoesPage() {
         <div>
           <h1 className="text-xl lg:text-[28px] font-bold text-foreground">Integrações</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            Conecte a Tintim, a Trinks ou seu sistema — as vendas viram prova de qual anúncio deu dinheiro
+            Conecte suas plataformas e sistemas — as vendas viram prova de qual anúncio deu dinheiro
           </p>
         </div>
       </div>

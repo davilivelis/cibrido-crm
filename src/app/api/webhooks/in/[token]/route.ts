@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { fireOutbound } from '@/lib/integrations/outbound'
 
-// Webhook de ENTRADA por clínica (N3 + integração Tintim/Trinks/sistema clínico).
+// Webhook de ENTRADA por clínica (N3 + integração com plataformas externas / sistema clínico).
 // A plataforma externa manda eventos de conversão pra:
 //   https://crm.livelis.com.br/api/webhooks/in/{webhook_in_token}?source=trinks
 // O CRM casa com o lead pelo telefone, carimba a campanha de origem e grava a

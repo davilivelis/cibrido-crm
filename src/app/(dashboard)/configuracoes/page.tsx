@@ -52,7 +52,7 @@ export default async function ConfiguracoesPage() {
         >
           <p className="font-semibold text-foreground text-sm">🔌 Integrações</p>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Conecte a Tintim, a Trinks ou seu sistema — as vendas viram prova de qual anúncio deu dinheiro
+            Conecte suas plataformas e sistemas — as vendas viram prova de qual anúncio deu dinheiro
           </p>
         </a>
 

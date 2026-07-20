@@ -104,7 +104,7 @@ export default function IntegrationsClient({ config, cloud }: { config: Integrat
           <div>
             <h2 className="text-sm font-semibold text-foreground">Receber conversões (entrada)</h2>
             <p className="text-xs text-muted-foreground">
-              Dê este link à Tintim, Trinks ou seu sistema. Quando um cliente comprar, a venda cai aqui e vira prova.
+              Dê este link à sua plataforma de rastreamento ou ao seu sistema. Quando um cliente comprar, a venda cai aqui e vira prova.
             </p>
           </div>
         </div>

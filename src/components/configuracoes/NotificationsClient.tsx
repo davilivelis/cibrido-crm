@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
-import { ChevronDown, ChevronUp, MessageCircle } from 'lucide-react'
+import { ChevronDown, ChevronUp, MessageCircle, Pencil } from 'lucide-react'
 import {
   NOTIFICATION_LABELS,
   DEFAULT_TEMPLATES,
@@ -75,6 +75,11 @@ export default function NotificationsClient({
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-muted-foreground">
+        Ligue/desligue cada notificação no botão à esquerda e clique em{' '}
+        <strong className="text-foreground">Editar mensagem</strong> pra personalizar o texto, o horário de envio e a antecedência.
+      </p>
+
       <div className="bg-card border border-border rounded-xl divide-y divide-border">
         {ORDER.map((type) => {
           const meta = NOTIFICATION_LABELS[type]
@@ -106,9 +111,9 @@ export default function NotificationsClient({
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : type)}
-                  className="text-xs font-semibold text-primary-strong flex items-center gap-1 shrink-0"
+                  className="text-xs font-semibold text-primary-strong flex items-center gap-1.5 shrink-0 border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition-colors"
                 >
-                  mensagem {isOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  <Pencil className="w-3 h-3" /> Editar mensagem {isOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                 </button>
               </div>
 

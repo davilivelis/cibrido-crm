@@ -48,7 +48,7 @@ export default async function TrafegoPagoPage() {
       attribution[cid].appointments++
       if (a.status === 'attended') attribution[cid].attended++
     }
-    // N3 — faturamento por campanha (das conversões: webhook Trinks/Tintim ou manual)
+    // N3 — faturamento por campanha (das conversões: webhook externo ou manual)
     for (const cv of convsRes.data ?? []) {
       if (cv.campaign_id) attribution[cv.campaign_id].revenue += Number(cv.value ?? 0)
     }

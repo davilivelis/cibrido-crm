@@ -1,7 +1,7 @@
 'use server'
 
 // Server Actions da tela Configurações → Integrações.
-// A clínica gera o token de entrada (pra dar à Tintim/Trinks/sistema) e,
+// A clínica gera o token de entrada (pra dar à plataforma externa/sistema) e,
 // opcionalmente, configura pra onde o CRM envia seus eventos.
 
 import { revalidatePath } from 'next/cache'
