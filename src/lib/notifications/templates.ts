@@ -10,6 +10,7 @@ export type NotificationType =
   | 'aniversario'
   | 'recall'
   | 'avaliacao'
+  | 'pesquisa'
   | 'relatorio_dono'
 
 export const NOTIFICATION_LABELS: Record<NotificationType, { label: string; desc: string }> = {
@@ -20,6 +21,7 @@ export const NOTIFICATION_LABELS: Record<NotificationType, { label: string; desc
   aniversario:    { label: 'Aniversário',              desc: 'Parabéns no aniversário do paciente' },
   recall:         { label: 'Recall automático',        desc: 'Chama de volta o paciente com retorno vencido' },
   avaliacao:      { label: 'Pedido de avaliação',      desc: 'No dia seguinte à consulta realizada, pede avaliação no Google' },
+  pesquisa:       { label: 'Pesquisa de satisfação',   desc: 'No dia seguinte à consulta, pede nota do profissional e da recepção (interno + relatório)' },
   relatorio_dono: { label: 'Relatório semanal (dono)', desc: 'Toda segunda de manhã, resumo da semana no WhatsApp do dono' },
 }
 
@@ -38,6 +40,8 @@ export const DEFAULT_TEMPLATES: Record<NotificationType, string> = {
     'Oi, {primeiro_nome}! Aqui é da {clinica}.\n\nJá faz um tempo desde: {motivo}. Que tal agendar seu retorno? É só responder essa mensagem. 😊',
   avaliacao:
     '{primeiro_nome}, obrigado pela visita à {clinica} ontem! 💚\n\nSua opinião vale muito: pode deixar uma avaliação rapidinho? {link}',
+  pesquisa:
+    'Oi, {primeiro_nome}! Aqui é da {clinica}. 💚\n\nComo foi seu atendimento ontem? Leva 30 segundos pra avaliar (e ajuda a gente a melhorar):\n{link}',
   relatorio_dono:
     '*[{clinica} — Resumo da semana]* 📊\n\n{resumo}\n\n— CRM Livelis, trabalhando por você.',
 }

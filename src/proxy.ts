@@ -45,6 +45,7 @@ export async function proxy(request: NextRequest) {
     path.startsWith('/api/webhooks') ||
     path.startsWith('/api/cron') ||        // motor de notificações (auth própria via CRON_SECRET)
     path.startsWith('/confirmar') ||       // confirmação de consulta pelo paciente (token único)
+    path.startsWith('/avaliar') ||         // pesquisa de satisfação pelo paciente (token único)
     path.startsWith('/t/')                 // link rastreável de anúncio (S4) — redirect público
 
   // Não autenticado tentando acessar rota protegida → login

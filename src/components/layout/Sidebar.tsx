@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Users, KanbanSquare, MessageSquare,
-  CalendarDays, BarChart3, Settings, RotateCcw,
+  CalendarDays, BarChart3, Settings, RotateCcw, Smile,
 } from 'lucide-react'
 import { UserRole } from '@/types/database'
 import { cn } from '@/lib/utils'
@@ -26,6 +26,7 @@ const navItems: NavItem[] = [
   { label: 'Agenda',       href: '/agenda',       icon: CalendarDays,    roles: ['owner','gestor','atendente'] },
   { label: 'Tráfego Pago', href: '/trafego',      icon: BarChart3,       roles: ['owner','gestor'] },
   { label: 'Recall',       href: '/recalls',      icon: RotateCcw,       roles: ['owner','gestor','atendente'] },
+  { label: 'Satisfação',   href: '/satisfacao',   icon: Smile,           roles: ['owner','gestor'] },
 ]
 
 const bottomItems: NavItem[] = [

@@ -16,11 +16,11 @@ import {
 
 const ORDER: NotificationType[] = [
   'confirmacao', 'vespera', 'no_dia', 'hora_antes',
-  'aniversario', 'recall', 'avaliacao', 'relatorio_dono',
+  'aniversario', 'recall', 'avaliacao', 'pesquisa', 'relatorio_dono',
 ]
 
 // Tipos que disparam "de manhã" — o negócio escolhe o horário
-const HOUR_TYPES = new Set<NotificationType>(['vespera', 'no_dia', 'aniversario', 'recall', 'avaliacao', 'relatorio_dono'])
+const HOUR_TYPES = new Set<NotificationType>(['vespera', 'no_dia', 'aniversario', 'recall', 'avaliacao', 'pesquisa', 'relatorio_dono'])
 
 interface RuleState {
   enabled: boolean

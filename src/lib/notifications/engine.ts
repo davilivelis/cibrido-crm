@@ -68,16 +68,47 @@ async function confirmLink(admin: Admin, apt: { id: string; confirm_token: strin
   return `${base}/confirmar/${t}`
 }
 
+// Link da pesquisa de satisfação (find-or-create 1 pesquisa por consulta)
+async function surveyLink(
+  admin: Admin,
+  clinicId: string,
+  apt: { id: string; professional: string | null; lead: { id: string; name: string } | null }
+): Promise<string> {
+  const { data: existing } = await admin
+    .from('satisfaction_surveys').select('token').eq('appointment_id', apt.id).maybeSingle()
+  let t = existing?.token
+  if (!t) {
+    t = token()
+    const { error: insErr } = await admin.from('satisfaction_surveys').insert({
+      clinic_id: clinicId,
+      appointment_id: apt.id,
+      lead_id: apt.lead?.id ?? null,
+      token: t,
+      professional: apt.professional ?? null,
+      status: 'pending',
+      sent_at: new Date().toISOString(),
+    })
+    if (insErr) {
+      // corrida (unique appointment_id) → re-busca o token que já existe
+      const { data: retry } = await admin
+        .from('satisfaction_surveys').select('token').eq('appointment_id', apt.id).maybeSingle()
+      t = retry?.token ?? t
+    }
+  }
+  const base = process.env.NEXT_PUBLIC_CRM_URL ?? 'https://crm.livelis.com.br'
+  return `${base}/avaliar/${t}`
+}
+
 async function appointmentsInRange(admin: Admin, clinicId: string, startIso: string, endIso: string, statuses = APPT_ACTIVE) {
   const { data } = await admin
     .from('appointments')
-    .select('id, scheduled_at, confirm_token, status, lead:leads(id, name, phone)')
+    .select('id, scheduled_at, confirm_token, status, professional, lead:leads(id, name, phone)')
     .eq('clinic_id', clinicId)
     .in('status', statuses)
     .gte('scheduled_at', startIso)
     .lt('scheduled_at', endIso)
   return (data ?? []) as unknown as Array<{
-    id: string; scheduled_at: string; confirm_token: string | null; status: string
+    id: string; scheduled_at: string; confirm_token: string | null; status: string; professional: string | null
     lead: { id: string; name: string; phone: string | null } | null
   }>
 }
@@ -232,6 +263,26 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
             clinica: clinicName, link: reviewLink, data: fmtData(apt.scheduled_at), hora: '', motivo: '',
           }).trim(),
           dedupKey: `avaliacao:apt:${apt.id}`,
+        })
+      }
+      break
+    }
+
+    case 'pesquisa': {
+      // No dia seguinte à consulta realizada → link da pesquisa interna
+      if (!atSendHour) break
+      const r = spDayUtcRange(spDateStr(addDays(now, -1)))
+      for (const apt of await appointmentsInRange(admin, rule.clinic_id, r.start, r.end, ['attended'])) {
+        if (!apt.lead?.phone) continue
+        const link = await surveyLink(admin, rule.clinic_id, apt)
+        out.push({
+          targetId: apt.id,
+          phone: apt.lead.phone,
+          message: renderTemplate(template, {
+            nome: apt.lead.name, primeiro_nome: firstName(apt.lead.name),
+            clinica: clinicName, link, data: '', hora: '', motivo: '',
+          }),
+          dedupKey: `pesquisa:apt:${apt.id}`,
         })
       }
       break
