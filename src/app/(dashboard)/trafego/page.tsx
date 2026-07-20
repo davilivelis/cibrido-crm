@@ -22,9 +22,10 @@ export default async function TrafegoPagoPage() {
   const attribution: Record<string, CampaignAttribution> = {}
 
   if (ids.length > 0) {
-    const [clicksRes, leadsRes] = await Promise.all([
+    const [clicksRes, leadsRes, convsRes] = await Promise.all([
       supabase.from('tracking_clicks').select('campaign_id').in('campaign_id', ids),
       supabase.from('leads').select('id, campaign_id').in('campaign_id', ids),
+      supabase.from('conversions').select('campaign_id, value').in('campaign_id', ids),
     ])
 
     const leadIds = (leadsRes.data ?? []).map((l) => l.id)
@@ -34,7 +35,7 @@ export default async function TrafegoPagoPage() {
 
     const leadCampaign = new Map((leadsRes.data ?? []).map((l) => [l.id, l.campaign_id as string]))
 
-    for (const id of ids) attribution[id] = { clicks: 0, leads: 0, appointments: 0, attended: 0 }
+    for (const id of ids) attribution[id] = { clicks: 0, leads: 0, appointments: 0, attended: 0, revenue: 0 }
     for (const c of clicksRes.data ?? []) {
       if (c.campaign_id) attribution[c.campaign_id].clicks++
     }
@@ -46,6 +47,10 @@ export default async function TrafegoPagoPage() {
       if (!cid) continue
       attribution[cid].appointments++
       if (a.status === 'attended') attribution[cid].attended++
+    }
+    // N3 — faturamento por campanha (das conversões: webhook Trinks/Tintim ou manual)
+    for (const cv of convsRes.data ?? []) {
+      if (cv.campaign_id) attribution[cv.campaign_id].revenue += Number(cv.value ?? 0)
     }
   }
 

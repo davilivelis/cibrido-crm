@@ -10,12 +10,13 @@ import { updateCampaignMetrics } from '@/lib/actions/campaigns'
 import { Campaign } from '@/types/database'
 import { toast } from 'sonner'
 
-// Números REAIS medidos pelo link rastreável /t/{codigo} (S4)
+// Números REAIS medidos pelo link rastreável /t/{codigo} (S4) + faturamento (N3)
 export interface CampaignAttribution {
   clicks: number
   leads: number
   appointments: number
   attended: number
+  revenue: number
 }
 
 interface TrafegoClientProps {
@@ -314,11 +315,12 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Conversas</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Consultas</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Compareceram</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Faturamento</th>
                 </tr>
               </thead>
               <tbody>
                 {campaigns.map((c) => {
-                  const a = attribution[c.id] ?? { clicks: 0, leads: 0, appointments: 0, attended: 0 }
+                  const a = attribution[c.id] ?? { clicks: 0, leads: 0, appointments: 0, attended: 0, revenue: 0 }
                   return (
                     <tr key={c.id} className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors">
                       <td className="px-4 py-3 font-medium text-foreground">{c.name}</td>
@@ -340,7 +342,10 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
                       <td className="px-4 py-3 text-right text-muted-foreground">{a.clicks}</td>
                       <td className="px-4 py-3 text-right text-muted-foreground">{a.leads}</td>
                       <td className="px-4 py-3 text-right text-muted-foreground">{a.appointments}</td>
-                      <td className="px-4 py-3 text-right font-medium text-foreground">{a.attended}</td>
+                      <td className="px-4 py-3 text-right text-muted-foreground">{a.attended}</td>
+                      <td className="px-4 py-3 text-right font-bold text-primary-strong">
+                        {a.revenue > 0 ? `R$ ${a.revenue.toLocaleString('pt-BR')}` : '—'}
+                      </td>
                     </tr>
                   )
                 })}

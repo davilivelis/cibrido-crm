@@ -51,18 +51,22 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
   const [statusMap, setStatusMap]     = useState<Record<string, AppointmentStatus>>({})
   const [loadingId, setLoadingId]     = useState<string | null>(null)
   const [openMenu,  setOpenMenu]      = useState<string | null>(null)
+  // Modal de valor ao marcar presença (N3 manual — faturamento por consulta)
+  const [attendingId, setAttendingId] = useState<string | null>(null)
+  const [attendValue, setAttendValue] = useState('')
 
   function getStatus(appt: Appt): AppointmentStatus {
     return statusMap[appt.id] ?? appt.status
   }
 
-  async function handleAction(apptId: string, next: AppointmentStatus) {
+  async function handleAction(apptId: string, next: AppointmentStatus, value?: number) {
     // Atualiza localmente primeiro (otimista)
     setStatusMap((prev) => ({ ...prev, [apptId]: next }))
     setOpenMenu(null)
+    setAttendingId(null)
     setLoadingId(apptId)
     try {
-      await updateAppointmentStatus(apptId, next)
+      await updateAppointmentStatus(apptId, next, value)
     } catch {
       // Reverte em caso de erro
       setStatusMap((prev) => { const c = { ...prev }; delete c[apptId]; return c })
@@ -176,7 +180,15 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
                                     <button
                                       key={action.next}
                                       type="button"
-                                      onClick={() => handleAction(appt.id, action.next)}
+                                      onClick={() => {
+                                        if (action.next === 'attended') {
+                                          setOpenMenu(null)
+                                          setAttendValue('')
+                                          setAttendingId(appt.id)
+                                        } else {
+                                          handleAction(appt.id, action.next)
+                                        }
+                                      }}
                                       className={`w-full text-left px-3 py-2.5 text-xs flex items-center gap-2 transition-colors ${
                                         action.danger
                                           ? 'text-red-600 hover:bg-red-50'
@@ -199,6 +211,52 @@ export default function AgendaClient({ byDay, total }: AgendaClientProps) {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Modal de valor ao marcar presença (N3 manual) */}
+      {attendingId && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={() => setAttendingId(null)}
+        >
+          <div
+            className="bg-card border border-border rounded-2xl p-6 w-full max-w-sm space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div>
+              <h2 className="text-base font-bold text-foreground">Marcar presença</h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                Quanto essa consulta gerou? (opcional) — vira a prova de faturamento por anúncio.
+              </p>
+            </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">R$</span>
+              <input
+                type="number"
+                inputMode="decimal"
+                autoFocus
+                value={attendValue}
+                onChange={(e) => setAttendValue(e.target.value)}
+                placeholder="0,00"
+                className="w-full rounded-lg border border-input bg-background text-foreground pl-9 pr-3 py-2.5 text-sm"
+              />
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleAction(attendingId, 'attended', parseFloat(attendValue.replace(',', '.')) || 0)}
+                className="flex-1 bg-primary text-primary-foreground py-2.5 rounded-lg text-sm font-bold hover:opacity-90"
+              >
+                Confirmar presença
+              </button>
+              <button
+                onClick={() => setAttendingId(null)}
+                className="px-4 py-2.5 rounded-lg border border-border text-sm font-semibold text-muted-foreground hover:bg-muted"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -2,7 +2,9 @@
 
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { syncAppointmentToGoogle } from '@/lib/google/calendar'
+import { fireOutbound } from '@/lib/integrations/outbound'
 
 export async function createAppointment(data: {
   leadId: string
@@ -62,7 +64,8 @@ export async function createAppointment(data: {
 // Atualiza o status de uma consulta (ex: marcar como compareceu, não veio, cancelada)
 export async function updateAppointmentStatus(
   appointmentId: string,
-  status: 'scheduled' | 'confirmed' | 'attended' | 'no_show' | 'cancelled'
+  status: 'scheduled' | 'confirmed' | 'attended' | 'no_show' | 'cancelled',
+  value?: number
 ) {
   const supabase = await createClient()
 
@@ -76,5 +79,34 @@ export async function updateAppointmentStatus(
   // Agenda Google (S3.5): confirmada atualiza, cancelada/faltou remove
   await syncAppointmentToGoogle(appointmentId)
 
+  // N3 manual: compareceu + valor informado → registra a conversão (faturamento
+  // por campanha). Fallback universal pra clínica sem integração de sistema.
+  if (status === 'attended' && value && value > 0) {
+    const admin = createAdminClient()
+    const { data: apt } = await admin
+      .from('appointments')
+      .select('clinic_id, lead_id, lead:leads(campaign_id)')
+      .eq('id', appointmentId)
+      .maybeSingle()
+    if (apt) {
+      // relação to-one: runtime é objeto, mas o tipo inferido pode vir como array
+      const leadRel = apt.lead as unknown as { campaign_id: string | null } | { campaign_id: string | null }[] | null
+      const campaignId = (Array.isArray(leadRel) ? leadRel[0]?.campaign_id : leadRel?.campaign_id) ?? null
+      // dedup por consulta (external_id apt:{id}) — remarcar não duplica
+      await admin.from('conversions').insert({
+        clinic_id: apt.clinic_id,
+        lead_id: apt.lead_id,
+        campaign_id: campaignId,
+        appointment_id: appointmentId,
+        source: 'manual',
+        external_id: `apt:${appointmentId}`,
+        value,
+        occurred_at: new Date().toISOString(),
+      })
+      fireOutbound(apt.clinic_id, 'conversion.created', { leadId: apt.lead_id, campaignId, value, source: 'manual' }).catch(() => {})
+    }
+  }
+
   revalidatePath('/agenda')
+  revalidatePath('/trafego')
 }

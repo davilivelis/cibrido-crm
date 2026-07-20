@@ -46,6 +46,16 @@ export default async function ConfiguracoesPage() {
           </p>
         </a>
 
+        <a
+          href="/configuracoes/integracoes"
+          className="block bg-card border border-border rounded-xl px-5 py-4 hover:border-primary transition-colors"
+        >
+          <p className="font-semibold text-foreground text-sm">🔌 Integrações</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Conecte a Tintim, a Trinks ou seu sistema — as vendas viram prova de qual anúncio deu dinheiro
+          </p>
+        </a>
+
         <ClinicForm clinic={clinic} calendarSaEmail={process.env.GOOGLE_CALENDAR_SA_EMAIL ?? null} />
         <TeamSection team={team ?? []} clinicPlan={clinic?.plan ?? 'trial'} />
       </div>
