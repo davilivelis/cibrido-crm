@@ -111,6 +111,21 @@ export async function inviteUser(data: {
     const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
     if (!clinicId) return { error: 'Clínica não encontrada' }
 
+    // Só o dono convida
+    const { data: role } = await supabase.rpc('get_user_role')
+    if (role !== 'owner') return { error: 'Apenas o dono convida membros da equipe' }
+
+    // Trava de assentos (modelo comercial por membro)
+    const adminSeat = createAdminClient()
+    const [{ data: clinicSeat }, { count: memberCount }] = await Promise.all([
+      adminSeat.from('clinics').select('seat_limit').eq('id', clinicId).maybeSingle(),
+      adminSeat.from('users').select('id', { count: 'exact', head: true }).eq('clinic_id', clinicId).eq('is_active', true),
+    ])
+    const limit = clinicSeat?.seat_limit ?? 3
+    if ((memberCount ?? 0) >= limit) {
+      return { error: `Limite de ${limit} membro${limit > 1 ? 's' : ''} atingido no seu plano. Fale com o suporte pra liberar mais assentos.` }
+    }
+
     const { supabaseAdmin } = await import('@/lib/supabase/admin')
 
     // Gera senha temporária forte (usuário pode redefinir depois)

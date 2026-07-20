@@ -1,7 +1,11 @@
 'use client'
 
-import { Users, Shield, UserCheck } from 'lucide-react'
+import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { Users, Shield, UserCheck, UserPlus } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { inviteUser } from '@/lib/actions/clinic'
 
 const ROLE_CONFIG: Record<string, { label: string; icon: React.ElementType; style: string }> = {
   owner:     { label: 'Proprietário', icon: Shield,    style: 'bg-indigo-50 text-indigo-700' },
@@ -18,12 +22,34 @@ interface TeamMember {
   created_at: string
 }
 
-interface TeamSectionProps {
-  team: TeamMember[]
-  clinicPlan: string
-}
+export default function TeamSection({ team, seatLimit }: { team: TeamMember[]; seatLimit: number }) {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [role, setRole] = useState('atendente')
+  const [pending, startTransition] = useTransition()
 
-export default function TeamSection({ team }: TeamSectionProps) {
+  const used = team.length
+  const full = used >= seatLimit
+
+  function invite() {
+    if (!email.trim() || !name.trim()) {
+      toast.error('Preencha nome e email do membro')
+      return
+    }
+    startTransition(async () => {
+      const res = await inviteUser({ email: email.trim(), name: name.trim(), role })
+      if (res.success) {
+        toast.success('Membro adicionado! Ele entra com o email e cria a senha em “Esqueci a senha”.')
+        setEmail('')
+        setName('')
+        router.refresh()
+      } else {
+        toast.error(res.error ?? 'Erro ao convidar')
+      }
+    })
+  }
+
   return (
     <div className="bg-card rounded-xl border border-border p-6">
       <div className="flex items-center gap-3 mb-5">
@@ -32,15 +58,56 @@ export default function TeamSection({ team }: TeamSectionProps) {
         </div>
         <div>
           <h2 className="text-sm font-semibold text-foreground">Equipe</h2>
-          <p className="text-xs text-muted-foreground">{team.length} membro{team.length !== 1 ? 's' : ''}</p>
+          <p className="text-xs text-muted-foreground">
+            {used} de {seatLimit} assento{seatLimit !== 1 ? 's' : ''} usado{used !== 1 ? 's' : ''}
+          </p>
         </div>
       </div>
 
-      {/* Convite de equipe — disponível na V2 */}
-      <div className="mb-5 p-4 bg-muted/60 rounded-xl text-center">
-        <p className="text-muted-foreground text-sm font-medium">Gerenciamento de equipe estará disponível em breve.</p>
-        <p className="text-muted-foreground text-xs mt-1">Na próxima atualização você poderá convidar membros da sua equipe.</p>
-      </div>
+      {full ? (
+        <div className="mb-5 p-4 bg-muted/60 rounded-xl text-center">
+          <p className="text-foreground text-sm font-medium">Você atingiu o limite de {seatLimit} membros do seu plano.</p>
+          <p className="text-muted-foreground text-xs mt-1">Fale com o suporte pra liberar mais assentos.</p>
+        </div>
+      ) : (
+        <div className="mb-5 p-4 bg-muted/40 rounded-xl space-y-3">
+          <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+            <UserPlus className="w-3.5 h-3.5" /> Adicionar membro
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Nome"
+              className="rounded-lg border border-input bg-background text-foreground px-3 py-2 text-sm"
+            />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="email@exemplo.com"
+              className="rounded-lg border border-input bg-background text-foreground px-3 py-2 text-sm"
+            />
+          </div>
+          <div className="flex gap-2">
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="rounded-lg border border-input bg-background text-foreground px-3 py-2 text-sm flex-1"
+            >
+              <option value="atendente">Atendente</option>
+              <option value="gestor">Gestor</option>
+            </select>
+            <button
+              onClick={invite}
+              disabled={pending}
+              className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 disabled:opacity-50 transition-opacity"
+            >
+              {pending ? 'Adicionando…' : 'Adicionar'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Lista de membros */}
       <div className="space-y-2">

@@ -27,6 +27,7 @@ export default async function ConfiguracoesPage() {
     const clinic = profile.clinics as {
       id: string; name: string; phone: string | null
       email: string | null; address: string | null; plan: string; created_at: string
+      google_calendar_id: string | null; seat_limit: number
     } | null
 
     return (
@@ -57,7 +58,7 @@ export default async function ConfiguracoesPage() {
         </a>
 
         <ClinicForm clinic={clinic} calendarSaEmail={process.env.GOOGLE_CALENDAR_SA_EMAIL ?? null} />
-        <TeamSection team={team ?? []} clinicPlan={clinic?.plan ?? 'trial'} />
+        <TeamSection team={team ?? []} seatLimit={clinic?.seat_limit ?? 3} />
       </div>
     )
   } catch {
@@ -69,7 +70,7 @@ export default async function ConfiguracoesPage() {
           <p className="text-sm lg:text-base text-muted-foreground mt-1">Dados da clínica e gerenciamento de equipe</p>
         </div>
         <ClinicForm clinic={null} />
-        <TeamSection team={[]} clinicPlan="trial" />
+        <TeamSection team={[]} seatLimit={3} />
       </div>
     )
   }
