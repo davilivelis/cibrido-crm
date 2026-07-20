@@ -17,16 +17,12 @@ export async function createRecall(data: {
 }) {
   const supabase = await createClient()
 
-  // Busca a clinic_id do usuário logado via RLS helper (tabela users)
-  const { data: profile } = await supabase
-    .from('users')
-    .select('clinic_id')
-    .single()
-
-  if (!profile) throw new Error('Usuário sem clínica')
+  // clinic_id do usuário via RPC user-scoped (o .single() sobre users quebra com 2+ membros)
+  const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
+  if (!clinicId) throw new Error('Usuário sem clínica')
 
   const { error } = await supabase.from('recalls').insert({
-    clinic_id:   profile.clinic_id,
+    clinic_id:   clinicId,
     lead_id:     data.lead_id,
     recall_date: data.recall_date,
     reason:      data.reason,

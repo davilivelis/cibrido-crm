@@ -9,9 +9,14 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 async function assertOwner(): Promise<string | null> {
   const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('clinic_id, role').single()
-  if (!profile || profile.role !== 'owner') return null
-  return profile.clinic_id as string
+  // RPCs SECURITY DEFINER são user-scoped — evita o .single() sobre users, que
+  // retorna TODOS os membros da clínica (RLS por clínica) e quebra com 2+ membros.
+  const [{ data: clinicId }, { data: role }] = await Promise.all([
+    supabase.rpc('get_user_clinic_id'),
+    supabase.rpc('get_user_role'),
+  ])
+  if (!clinicId || role !== 'owner') return null
+  return clinicId as string
 }
 
 export async function saveStages(input: {

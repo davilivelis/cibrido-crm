@@ -69,42 +69,54 @@ export async function updateAppointmentStatus(
 ) {
   const supabase = await createClient()
 
-  const { error } = await supabase
+  // .select() confirma que o UPDATE casou uma linha da PRÓPRIA clínica (RLS).
+  // Se não casou (consulta de outra clínica), para aqui — sem sync/conversão
+  // cross-tenant (um usuário da clínica A não injeta faturamento na clínica B).
+  const { data: updated, error } = await supabase
     .from('appointments')
     .update({ status })
     .eq('id', appointmentId)
+    .select('id, clinic_id')
+    .maybeSingle()
 
   if (error) throw new Error(error.message)
+  if (!updated) return
 
   // Agenda Google (S3.5): confirmada atualiza, cancelada/faltou remove
   await syncAppointmentToGoogle(appointmentId)
 
-  // N3 manual: compareceu + valor informado → registra a conversão (faturamento
+  // N3 manual: compareceu + valor → registra/ATUALIZA a conversão (faturamento
   // por campanha). Fallback universal pra clínica sem integração de sistema.
   if (status === 'attended' && value && value > 0) {
     const admin = createAdminClient()
     const { data: apt } = await admin
       .from('appointments')
-      .select('clinic_id, lead_id, lead:leads(campaign_id)')
+      .select('lead_id, lead:leads(campaign_id)')
       .eq('id', appointmentId)
       .maybeSingle()
-    if (apt) {
-      // relação to-one: runtime é objeto, mas o tipo inferido pode vir como array
-      const leadRel = apt.lead as unknown as { campaign_id: string | null } | { campaign_id: string | null }[] | null
-      const campaignId = (Array.isArray(leadRel) ? leadRel[0]?.campaign_id : leadRel?.campaign_id) ?? null
-      // dedup por consulta (external_id apt:{id}) — remarcar não duplica
+    // relação to-one: runtime é objeto, mas o tipo inferido pode vir como array
+    const leadRel = apt?.lead as unknown as { campaign_id: string | null } | { campaign_id: string | null }[] | null
+    const campaignId = (Array.isArray(leadRel) ? leadRel[0]?.campaign_id : leadRel?.campaign_id) ?? null
+    const extId = `apt:${appointmentId}`
+
+    // Remarcar com valor corrigido ATUALIZA (não perde a correção nem duplica)
+    const { data: existing } = await admin
+      .from('conversions').select('id').eq('clinic_id', updated.clinic_id).eq('external_id', extId).maybeSingle()
+    if (existing) {
+      await admin.from('conversions').update({ value, occurred_at: new Date().toISOString() }).eq('id', existing.id)
+    } else {
       await admin.from('conversions').insert({
-        clinic_id: apt.clinic_id,
-        lead_id: apt.lead_id,
+        clinic_id: updated.clinic_id,
+        lead_id: apt?.lead_id ?? null,
         campaign_id: campaignId,
         appointment_id: appointmentId,
         source: 'manual',
-        external_id: `apt:${appointmentId}`,
+        external_id: extId,
         value,
         occurred_at: new Date().toISOString(),
       })
-      fireOutbound(apt.clinic_id, 'conversion.created', { leadId: apt.lead_id, campaignId, value, source: 'manual' }).catch(() => {})
     }
+    fireOutbound(updated.clinic_id, 'conversion.created', { leadId: apt?.lead_id, campaignId, value, source: 'manual' }).catch(() => {})
   }
 
   revalidatePath('/agenda')

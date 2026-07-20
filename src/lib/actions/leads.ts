@@ -80,15 +80,11 @@ export async function createLead(data: {
 }) {
   const supabase = await createClient()
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('clinic_id')
-    .single()
-
-  if (!profile?.clinic_id) throw new Error('Usuário sem clínica vinculada')
+  const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
+  if (!clinicId) throw new Error('Usuário sem clínica vinculada')
 
   const { error } = await supabase.from('leads').insert({
-    clinic_id: profile.clinic_id,
+    clinic_id: clinicId,
     name:      data.name.trim(),
     phone:     data.phone.trim(),
     email:     data.email?.trim()  || null,
@@ -116,15 +112,11 @@ export async function importLeads(rows: {
 }[]) {
   const supabase = await createClient()
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('clinic_id')
-    .single()
-
-  if (!profile) throw new Error('Usuário sem clínica')
+  const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
+  if (!clinicId) throw new Error('Usuário sem clínica')
 
   const records = rows.map((r) => ({
-    clinic_id: profile.clinic_id,
+    clinic_id: clinicId,
     name:   r.name.trim(),
     phone:  r.phone.trim(),
     email:  r.email?.trim() || null,

@@ -23,7 +23,10 @@ export async function submitSurvey(input: {
 
   const clamp = (n: number) => Math.max(1, Math.min(5, Math.round(n)))
 
-  const { error } = await admin
+  // Compare-and-swap: só grava se ainda estiver 'pending'. Dois envios
+  // concorrentes (double-tap / duas abas) — o segundo casa 0 linhas e não
+  // sobrescreve a primeira resposta.
+  const { data: updated, error } = await admin
     .from('satisfaction_surveys')
     .update({
       reception_rating: input.reception ? clamp(input.reception) : null,
@@ -33,7 +36,11 @@ export async function submitSurvey(input: {
       responded_at: new Date().toISOString(),
     })
     .eq('id', survey.id)
+    .eq('status', 'pending')
+    .select('id')
+    .maybeSingle()
 
   if (error) return { ok: false, error: error.message }
+  if (!updated) return { ok: false, error: 'Esta pesquisa já foi respondida' }
   return { ok: true }
 }

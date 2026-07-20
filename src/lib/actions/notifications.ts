@@ -39,11 +39,11 @@ export async function saveNotificationRule(input: {
 }): Promise<{ ok: boolean; error?: string }> {
   const supabase = await createClient()
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('clinic_id, role')
-    .single()
-  if (!profile || profile.role !== 'owner') {
+  const [{ data: clinicId }, { data: role }] = await Promise.all([
+    supabase.rpc('get_user_clinic_id'),
+    supabase.rpc('get_user_role'),
+  ])
+  if (!clinicId || role !== 'owner') {
     return { ok: false, error: 'Apenas o dono da clínica altera notificações' }
   }
 
@@ -59,7 +59,7 @@ export async function saveNotificationRule(input: {
 
   const { error } = await supabase.from('notification_rules').upsert(
     {
-      clinic_id: profile.clinic_id,
+      clinic_id: clinicId as string,
       type: input.type,
       enabled: input.enabled,
       template: input.template?.trim() || null,

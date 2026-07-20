@@ -19,10 +19,16 @@ function b64url(input: string | Buffer): string {
 }
 
 // Access token via JWT assinado com a chave da SA (RS256) — sem SDK
+let cachedToken: { token: string; exp: number } | null = null
+
 async function getAccessToken(): Promise<string | null> {
   const email = process.env.GOOGLE_CALENDAR_SA_EMAIL
   const key = process.env.GOOGLE_CALENDAR_SA_KEY?.replace(/\\n/g, '\n')
   if (!email || !key) return null
+
+  // Cache do access token (~1h de vida) — evita assinar JWT + round-trip a cada
+  // syncAppointmentToGoogle (um lote de status geraria N tokens à toa).
+  if (cachedToken && cachedToken.exp > Date.now()) return cachedToken.token
 
   const now = Math.floor(Date.now() / 1000)
   const header = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }))
@@ -47,6 +53,7 @@ async function getAccessToken(): Promise<string | null> {
     return null
   }
   const json = (await res.json()) as { access_token?: string }
+  if (json.access_token) cachedToken = { token: json.access_token, exp: Date.now() + 3_300_000 }
   return json.access_token ?? null
 }
 

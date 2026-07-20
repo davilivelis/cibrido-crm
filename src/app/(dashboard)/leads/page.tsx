@@ -18,14 +18,14 @@ export default async function LeadsPage() {
       .select('*')
       .eq('is_active', true)
       .order('position'),
-    supabase.from('users').select('clinic_id').single(),
+    supabase.rpc('get_user_clinic_id'),
   ])
 
   return (
     <LeadsClient
       leads={leadsResult.data ?? []}
       stages={stagesResult.data ?? []}
-      clinicId={profileResult.data?.clinic_id ?? ''}
+      clinicId={(profileResult.data as string) ?? ''}
     />
   )
 }

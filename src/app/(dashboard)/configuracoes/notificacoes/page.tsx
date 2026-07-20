@@ -10,8 +10,8 @@ export const metadata: Metadata = { title: 'Notificações automáticas' }
 
 export default async function NotificacoesPage() {
   const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('role').single()
-  if (profile?.role !== 'owner') redirect('/dashboard')
+  const { data: role } = await supabase.rpc('get_user_role')
+  if (role !== 'owner') redirect('/dashboard')
 
   const [rules, log] = await Promise.all([getNotificationRules(), getNotificationLog()])
 

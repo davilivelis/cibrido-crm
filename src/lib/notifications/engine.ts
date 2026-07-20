@@ -120,7 +120,9 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
   // Personalização por negócio: horário de envio das notificações do dia
   // (default 8h) e antecedência do "1h antes" (default 60min) — vêm do config.
   const sendHour = typeof rule.config.send_hour === 'number' ? rule.config.send_hour : 8
-  const atSendHour = spHour === sendHour
+  // >= (não ==): dispara no 1º ciclo do cron a partir do horário escolhido; a
+  // dedup por dia garante 1 envio. Robusto mesmo se o cron não bater a hora exata.
+  const atSendHour = spHour >= sendHour
   const minutesBefore = typeof rule.config.minutes_before === 'number' ? rule.config.minutes_before : 60
   const today = spDateStr(now)
   const out: Due[] = []
@@ -177,6 +179,8 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
       const r = spDayUtcRange(today)
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, r.start, r.end)) {
         if (!apt.lead?.phone) continue
+        // garante o confirm_token (mesmo sem link na msg) → o "sim" do paciente confirma
+        await confirmLink(admin, apt)
         out.push({
           targetId: apt.id,
           phone: apt.lead.phone,
@@ -193,6 +197,8 @@ async function dueForRule(admin: Admin, rule: RuleRow, now: Date): Promise<Due[]
       const end = new Date(now.getTime() + (minutesBefore + 20) * 60_000).toISOString()
       for (const apt of await appointmentsInRange(admin, rule.clinic_id, start, end)) {
         if (!apt.lead?.phone) continue
+        // garante o confirm_token → o "sim" do paciente confirma
+        await confirmLink(admin, apt)
         out.push({
           targetId: apt.id,
           phone: apt.lead.phone,

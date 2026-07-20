@@ -7,6 +7,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { isSafeWebhookUrl } from '@/lib/integrations/outbound'
 
 function randomToken(len = 40): string {
   const bytes = crypto.getRandomValues(new Uint8Array(len))
@@ -95,7 +96,9 @@ export async function saveOutboundWebhook(rawUrl: string): Promise<{ ok: boolean
   if (!clinicId) return { ok: false, error: 'Não autorizado' }
 
   const url = rawUrl.trim()
-  if (url && !/^https:\/\//i.test(url)) return { ok: false, error: 'A URL precisa começar com https://' }
+  if (url && !isSafeWebhookUrl(url)) {
+    return { ok: false, error: 'URL inválida — use https:// e um endereço público (não interno)' }
+  }
 
   const admin = createAdminClient()
   if (!url) {

@@ -132,6 +132,13 @@ export async function POST(request: Request) {
 
     // ── PAGAMENTO de cliente EXISTENTE: reativa se estava bloqueado ──
     if (clientClinic) {
+      // Dedup: o Asaas manda PAYMENT_CONFIRMED e PAYMENT_RECEIVED (+ retries) pro
+      // mesmo pagamento — processa 1x só (não bombardeia paid_until nem o alerta).
+      const { data: subExisting } = await admin
+        .from('subscriptions').select('asaas_payment_id').eq('clinic_id', clientClinic.id).maybeSingle()
+      if (paymentId && subExisting?.asaas_payment_id === paymentId) {
+        return NextResponse.json({ ok: true, skipped: 'pagamento já processado' })
+      }
       const paidUntil = new Date()
       paidUntil.setDate(paidUntil.getDate() + 30)
       await admin.from('subscriptions')
