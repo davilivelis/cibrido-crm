@@ -72,7 +72,8 @@ function normalizeText(text: string): string {
 }
 
 const YES_WORDS = new Set(['sim', 'confirmo', 'confirmado', 'confirmar', 'ok', 'pode confirmar', 'sim confirmo', 'confirmada'])
-const NO_WORDS = new Set(['nao', 'nao posso', 'nao posso ir', 'cancela', 'cancelar', 'nao vou', 'nao consigo', 'remarcar', 'nao vou conseguir'])
+// 'remarcar' fora daqui de propósito: remarcar ≠ cancelar (não deve auto-cancelar a consulta)
+const NO_WORDS = new Set(['nao', 'nao posso', 'nao posso ir', 'cancela', 'cancelar', 'nao vou', 'nao consigo', 'nao vou conseguir'])
 
 function detectYesNo(text: string): 'sim' | 'nao' | null {
   const norm = normalizeText(text)
@@ -89,11 +90,15 @@ async function processYesNo(
   lead: { id: string; name: string; phone: string },
   answer: 'sim' | 'nao'
 ): Promise<void> {
+  // Só age se a confirmação foi REALMENTE pedida: consulta agendada, futura, com
+  // confirm_token setado (o motor/agente já mandou o pedido de confirmação). Sem isso,
+  // um "ok" solto numa conversa qualquer NÃO confirma nem cancela nada.
   const { data: apt } = await admin
     .from('appointments')
     .select('id, scheduled_at, status')
     .eq('lead_id', lead.id)
     .eq('status', 'scheduled')
+    .not('confirm_token', 'is', null)
     .gte('scheduled_at', new Date().toISOString())
     .order('scheduled_at', { ascending: true })
     .limit(1)
@@ -134,6 +139,7 @@ async function processYesNo(
         channel: 'whatsapp',
         direction: 'outbound',
         content: reply,
+        external_id: res.externalId ?? null,  // dedup do eco fromMe
         status: 'sent',
       })
     }
@@ -179,14 +185,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, skipped: `instância "${instance}" sem clínica` })
     }
 
-    // Localiza o lead pelo telefone (variações com/sem 55 e com/sem 9)
+    // Localiza o lead pelo telefone normalizado (phone_digits = só dígitos, coluna
+    // gerada) — casa com lead cadastrado formatado "(11) 99999-8888". Variações
+    // cobrem com/sem 55 e com/sem o 9.
     const phone = jidToPhone(remoteJid)
     const variants = phoneVariants(phone)
     const { data: leads } = await admin
       .from('leads')
       .select('id, name, phone')
       .eq('clinic_id', clinic.id)
-      .in('phone', variants)
+      .in('phone_digits', variants)
       .limit(1)
     let lead = leads?.[0] ?? null
 

@@ -6,15 +6,16 @@ import { MessageSquare, ArrowDownLeft, ArrowUpRight } from 'lucide-react'
 export const metadata: Metadata = { title: 'Conversas' }
 
 // Caixa de entrada: uma linha por paciente, com a última mensagem.
-// Clique abre o chat completo em /conversas/[leadId].
+// Usa a view `conversation_threads` (última msg POR lead) — não perde paciente
+// antigo cuja última mensagem cai fora das N mais recentes. Clique abre o chat.
 
-interface ConvRow {
-  id: string
+interface Thread {
   lead_id: string
   direction: string
   content: string
   created_at: string
-  lead: { id: string; name: string; phone: string | null } | null
+  msg_count: number
+  lead_name: string | null
 }
 
 function fmtWhen(iso: string): string {
@@ -29,19 +30,12 @@ export default async function ConversasPage() {
   const supabase = await createClient()
 
   const { data } = await supabase
-    .from('conversations')
-    .select(`id, lead_id, direction, content, created_at, lead:leads(id, name, phone)`)
+    .from('conversation_threads')
+    .select('lead_id, direction, content, created_at, msg_count, lead_name')
     .order('created_at', { ascending: false })
-    .limit(300)
+    .limit(100)
 
-  // Agrupa por lead mantendo só a mensagem mais recente (a query já vem ordenada)
-  const byLead = new Map<string, { last: ConvRow; count: number }>()
-  for (const conv of (data ?? []) as unknown as ConvRow[]) {
-    const entry = byLead.get(conv.lead_id)
-    if (entry) entry.count++
-    else byLead.set(conv.lead_id, { last: conv, count: 1 })
-  }
-  const threads = [...byLead.values()]
+  const threads = (data ?? []) as unknown as Thread[]
 
   return (
     <div className="space-y-5">
@@ -64,34 +58,36 @@ export default async function ConversasPage() {
         </div>
       ) : (
         <div className="bg-card rounded-xl border border-border divide-y divide-border">
-          {threads.map(({ last, count }) => (
+          {threads.map((t) => (
             <Link
-              key={last.lead_id}
-              href={`/conversas/${last.lead_id}`}
+              key={t.lead_id}
+              href={`/conversas/${t.lead_id}`}
               className="flex items-start gap-4 px-4 py-3 hover:bg-muted/60 transition-colors"
             >
               <div className="mt-1 w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-primary-strong">
-                  {(last.lead?.name ?? '?').trim().charAt(0).toUpperCase()}
+                  {(t.lead_name ?? '?').trim().charAt(0).toUpperCase()}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-sm font-medium text-foreground truncate">
-                    {last.lead?.name ?? 'Lead desconhecido'}
+                    {t.lead_name ?? 'Lead desconhecido'}
                   </span>
-                  <span className="text-xs text-muted-foreground shrink-0">{fmtWhen(last.created_at)}</span>
+                  <span className="text-xs text-muted-foreground shrink-0">{fmtWhen(t.created_at)}</span>
                 </div>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  {last.direction === 'inbound' ? (
+                  {t.direction === 'inbound' ? (
                     <ArrowDownLeft className="w-3.5 h-3.5 shrink-0 text-primary-strong" />
                   ) : (
                     <ArrowUpRight className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
                   )}
-                  <p className="text-sm text-muted-foreground truncate">{last.content}</p>
+                  <p className="text-sm text-muted-foreground truncate">{t.content}</p>
                 </div>
               </div>
-              <span className="mt-1 text-xs text-muted-foreground shrink-0">{count} msg{count > 1 ? 's' : ''}</span>
+              <span className="mt-1 text-xs text-muted-foreground shrink-0">
+                {t.msg_count} msg{t.msg_count > 1 ? 's' : ''}
+              </span>
             </Link>
           ))}
         </div>

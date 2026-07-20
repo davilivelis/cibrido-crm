@@ -25,12 +25,15 @@ export default async function ConversaPage({
     .maybeSingle()
   if (!lead) notFound()
 
-  const { data: messages } = await supabase
+  // Pega as 500 mensagens MAIS RECENTES (order desc + limit) e reverte p/ exibir
+  // em ordem cronológica. Antes pegava as 500 mais VELHAS e escondia as novas.
+  const { data: latest } = await supabase
     .from('conversations')
     .select('id, direction, content, created_at, status')
     .eq('lead_id', leadId)
-    .order('created_at', { ascending: true })
+    .order('created_at', { ascending: false })
     .limit(500)
+  const messages = (latest ?? []).slice().reverse()
 
   return (
     <div className="space-y-4 h-full flex flex-col">

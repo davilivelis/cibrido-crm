@@ -5,6 +5,7 @@
 export interface SendResult {
   ok: boolean
   error?: string
+  externalId?: string  // id da mensagem na Evolution — grava como external_id p/ dedup do eco fromMe
 }
 
 export interface Sender {
@@ -52,7 +53,8 @@ export class EvolutionSender implements Sender {
         body: JSON.stringify({ number: normalizePhone(phone), text: message }),
       })
       if (!res.ok) return { ok: false, error: `Evolution ${res.status}: ${(await res.text()).slice(0, 300)}` }
-      return { ok: true }
+      const json = (await res.json().catch(() => null)) as { key?: { id?: string } } | null
+      return { ok: true, externalId: json?.key?.id }
     } catch (err) {
       return { ok: false, error: err instanceof Error ? err.message : String(err) }
     }

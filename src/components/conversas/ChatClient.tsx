@@ -65,7 +65,12 @@ export function ChatClient({
       const res = await sendChatMessage(leadId, value)
       if (res.ok) {
         setText('')
-        // O INSERT chega via realtime; nada mais a fazer
+        // Apende na hora (fallback se o realtime cair); dedup por id evita duplicar
+        // quando o INSERT também chega pelo realtime.
+        if (res.message) {
+          const m = res.message
+          setMessages((prev) => (prev.some((x) => x.id === m.id) ? prev : [...prev, m]))
+        }
       } else {
         toast.error(res.error ?? 'Falha ao enviar')
       }

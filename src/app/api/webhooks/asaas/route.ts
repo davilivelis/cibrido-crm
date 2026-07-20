@@ -82,17 +82,28 @@ export async function POST(request: Request) {
     // Localiza cliente existente pelo email do responsável
     const { data: existingUser } = await admin
       .from('users')
-      .select('clinic_id, clinics(id, name, is_active)')
+      .select('clinic_id, clinics(id, name, is_active, blocked_reason)')
       .eq('email', email)
       .not('clinic_id', 'is', null)
       .limit(1)
       .maybeSingle()
-    const clientClinic = (existingUser?.clinics as unknown as { id: string; name: string; is_active: boolean } | null)
+    const clientClinic = (existingUser?.clinics as unknown as { id: string; name: string; is_active: boolean; blocked_reason: string | null } | null)
 
     // ── INADIMPLÊNCIA (S5): bloqueia sozinho e avisa o Davi ──────────
     if (event === 'PAYMENT_OVERDUE') {
       if (!clientClinic) {
         return NextResponse.json({ ok: true, skipped: 'overdue sem clínica correspondente' })
+      }
+      // Só bloqueia se estiver REALMENTE em atraso — um evento fora de ordem
+      // (fatura antiga chegando depois de um pagamento) não pode bloquear quem
+      // já pagou adiantado.
+      const { data: sub } = await admin
+        .from('subscriptions')
+        .select('paid_until')
+        .eq('clinic_id', clientClinic.id)
+        .maybeSingle()
+      if (sub?.paid_until && new Date(sub.paid_until) > new Date()) {
+        return NextResponse.json({ ok: true, skipped: 'overdue ignorado: assinatura paga em dia' })
       }
       if (clientClinic.is_active) {
         await admin.from('clinics')
@@ -126,7 +137,9 @@ export async function POST(request: Request) {
       await admin.from('subscriptions')
         .update({ status: 'active', paid_until: paidUntil.toISOString(), asaas_payment_id: paymentId ?? null, updated_at: new Date().toISOString() })
         .eq('clinic_id', clientClinic.id)
-      if (!clientClinic.is_active) {
+      // Só reativa sozinho se o bloqueio foi por INADIMPLÊNCIA. Bloqueio MANUAL
+      // do admin (ex.: disputa de contrato) não é desfeito por um pagamento avulso.
+      if (!clientClinic.is_active && clientClinic.blocked_reason === 'payment_overdue') {
         await admin.from('clinics')
           .update({ is_active: true, blocked_reason: null, updated_at: new Date().toISOString() })
           .eq('id', clientClinic.id)

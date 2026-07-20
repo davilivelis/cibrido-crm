@@ -43,9 +43,15 @@ export async function toggleClientAccess(clinicId: string, isActive: boolean) {
   await assertAdmin()
   const admin = createAdminClient()
 
+  // blocked_reason='manual' ao bloquear → o webhook Asaas NÃO reativa por um
+  // pagamento avulso (só reativa bloqueio 'payment_overdue'). Ao liberar, limpa.
   const { error } = await admin
     .from('clinics')
-    .update({ is_active: isActive, updated_at: new Date().toISOString() })
+    .update({
+      is_active: isActive,
+      blocked_reason: isActive ? null : 'manual',
+      updated_at: new Date().toISOString(),
+    })
     .eq('id', clinicId)
 
   if (error) throw new Error(error.message)
