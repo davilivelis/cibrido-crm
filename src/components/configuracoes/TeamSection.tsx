@@ -115,7 +115,7 @@ export default function TeamSection({ team, seatLimit }: { team: TeamMember[]; s
           const config = ROLE_CONFIG[member.role] ?? ROLE_CONFIG.atendente!
           const Icon = config.icon
           return (
-            <div key={member.id} className="flex items-center gap-3 py-2.5 border-b border-gray-50 last:border-0">
+            <div key={member.id} className="flex items-center gap-3 py-2.5 border-b border-border last:border-0">
               <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
                 <span className="text-xs font-semibold text-indigo-700">
                   {member.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}

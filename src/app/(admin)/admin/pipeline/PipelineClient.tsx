@@ -105,7 +105,7 @@ export default function PipelineClient({ leads }: { leads: any[] }) {
                 </div>
 
                 {stageLeads.length === 0 && (
-                  <p className="text-xs text-gray-300 text-center pt-6">Vazio</p>
+                  <p className="text-xs text-muted-foreground text-center pt-6">Vazio</p>
                 )}
               </div>
 

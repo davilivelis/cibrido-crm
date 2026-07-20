@@ -152,13 +152,13 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
         {campaigns.length === 0 ? (
           <div className="p-12 text-center">
             <p className="text-muted-foreground text-sm">Nenhuma campanha cadastrada.</p>
-            <p className="text-gray-300 text-xs mt-1">Clique em "Nova Campanha" para começar.</p>
+            <p className="text-muted-foreground text-xs mt-1">Clique em "Nova Campanha" para começar.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-50 bg-muted/60">
+                <tr className="border-b border-border bg-muted/60">
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Campanha</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Plataforma</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Verba</th>
@@ -176,7 +176,7 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
                   const isSaving  = savingId === c.id
 
                   return (
-                    <tr key={c.id} className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors">
+                    <tr key={c.id} className="border-b border-border last:border-0 hover:bg-muted/60 transition-colors">
                       <td className="px-4 py-3 font-medium text-foreground">{c.name}</td>
                       <td className="px-4 py-3">
                         <span className={`text-xs font-medium px-2 py-1 rounded-full capitalize ${PLATFORM_COLORS[c.platform] ?? ''}`}>
@@ -274,7 +274,7 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
                             <button
                               type="button"
                               onClick={() => startEdit(c)}
-                              className="text-gray-300 hover:text-muted-foreground transition-colors"
+                              className="text-muted-foreground hover:text-muted-foreground transition-colors"
                               title="Editar métricas"
                             >
                               <Pencil className="w-3.5 h-3.5" />
@@ -308,7 +308,7 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-50 bg-muted/60">
+                <tr className="border-b border-border bg-muted/60">
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Campanha</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Link do anúncio</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Cliques</th>
@@ -322,7 +322,7 @@ export default function TrafegoClient({ campaigns, attribution = {} }: TrafegoCl
                 {campaigns.map((c) => {
                   const a = attribution[c.id] ?? { clicks: 0, leads: 0, appointments: 0, attended: 0, revenue: 0 }
                   return (
-                    <tr key={c.id} className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors">
+                    <tr key={c.id} className="border-b border-border last:border-0 hover:bg-muted/60 transition-colors">
                       <td className="px-4 py-3 font-medium text-foreground">{c.name}</td>
                       <td className="px-4 py-3">
                         {c.tracking_code ? (

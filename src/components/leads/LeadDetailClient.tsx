@@ -173,7 +173,7 @@ export default function LeadDetailClient({ lead, stages, teamMembers, events }: 
           <ArrowLeft className="w-4 h-4" />
           Leads
         </Link>
-        <span className="text-gray-300">/</span>
+        <span className="text-muted-foreground">/</span>
         <span className="text-sm font-medium text-foreground">{lead.name}</span>
       </div>
 

@@ -123,7 +123,7 @@ function KanbanColumn({
         </SortableContext>
 
         {leads.length === 0 && !isOver && (
-          <p className="text-xs text-gray-300 text-center pt-6">Solte aqui</p>
+          <p className="text-xs text-muted-foreground text-center pt-6">Solte aqui</p>
         )}
       </div>
     </div>

@@ -89,7 +89,7 @@ export default function AgendamentoForm({ leadId, clinicId }: AgendamentoFormPro
 
       {/* Formulário expansível */}
       {open && (
-        <form onSubmit={handleSubmit} className="px-4 pb-4 space-y-3 border-t border-gray-50 pt-3">
+        <form onSubmit={handleSubmit} className="px-4 pb-4 space-y-3 border-t border-border pt-3">
           {/* Título */}
           <div className="space-y-1.5">
             <Label>Tipo de consulta</Label>

@@ -156,7 +156,7 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
               onClick={() => inputRef.current?.click()}
               className="w-full border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center gap-3 hover:border-primary/60 hover:bg-accent/50 transition-colors"
             >
-              <Upload className="w-8 h-8 text-gray-300" />
+              <Upload className="w-8 h-8 text-muted-foreground" />
               <div className="text-center">
                 <p className="text-sm font-medium text-foreground">Clique para selecionar o arquivo</p>
                 <p className="text-xs text-muted-foreground mt-0.5">Apenas arquivos .csv</p>
@@ -217,7 +217,7 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
                     {rows.slice(0, 5).map((r, i) => (
                       <tr
                         key={i}
-                        className={`border-t border-gray-50 ${!r.valid ? 'opacity-40' : ''}`}
+                        className={`border-t border-border ${!r.valid ? 'opacity-40' : ''}`}
                       >
                         <td className="px-3 py-2 text-foreground truncate max-w-[120px]">
                           {r.name || <span className="italic text-muted-foreground">vazio</span>}
@@ -227,7 +227,7 @@ export default function ImportCSVModal({ open, onClose }: ImportCSVModalProps) {
                       </tr>
                     ))}
                     {rows.length > 5 && (
-                      <tr className="border-t border-gray-50">
+                      <tr className="border-t border-border">
                         <td colSpan={3} className="px-3 py-2 text-muted-foreground italic text-center">
                           +{rows.length - 5} linhas adicionais
                         </td>

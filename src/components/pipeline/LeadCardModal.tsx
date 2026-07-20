@@ -423,7 +423,7 @@ export default function LeadCardModal({ lead, stages, onClose, onStageChange }: 
                   {events.map((ev) => {
                     const Icon = EVENT_ICONS[ev.type] ?? StickyNote
                     return (
-                      <div key={ev.id} className="flex items-start gap-3 py-2.5 border-b border-gray-50 last:border-0">
+                      <div key={ev.id} className="flex items-start gap-3 py-2.5 border-b border-border last:border-0">
                         <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center shrink-0 mt-0.5">
                           <Icon className="w-3.5 h-3.5 text-muted-foreground" />
                         </div>

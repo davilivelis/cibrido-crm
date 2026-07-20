@@ -20,7 +20,7 @@ export default function DashboardLoading() {
       {/* Tabela / lista */}
       <div className="bg-card rounded-xl border border-border overflow-hidden">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="px-4 py-3 border-b border-gray-50 flex items-center gap-4">
+          <div key={i} className="px-4 py-3 border-b border-border flex items-center gap-4">
             <div className="h-4 w-32 bg-muted rounded" />
             <div className="h-4 w-24 bg-muted rounded" />
             <div className="h-4 w-16 bg-muted rounded ml-auto" />

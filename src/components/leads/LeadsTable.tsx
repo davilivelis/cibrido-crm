@@ -285,7 +285,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
               filtered.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="border-b border-gray-50 last:border-0 hover:bg-muted/60 transition-colors cursor-pointer"
+                  className="border-b border-border last:border-0 hover:bg-muted/60 transition-colors cursor-pointer"
                   onClick={() => window.location.href = `/leads/${lead.id}`}
                 >
                   <td className="px-4 py-3 font-medium text-foreground">{lead.name}</td>
@@ -303,7 +303,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                       >
                         {lead.stage.name}
                       </span>
-                    ) : <span className="text-gray-300 text-xs">—</span>}
+                    ) : <span className="text-muted-foreground text-xs">—</span>}
                   </td>
                   <td className="hidden lg:table-cell px-4 py-3 text-muted-foreground capitalize text-sm">{lead.source ?? '—'}</td>
                   <td className="px-4 py-3">
@@ -317,7 +317,7 @@ export default function LeadsTable({ leads, stages }: LeadsTableProps) {
                   <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setDeleteTarget(lead)}
-                      className="text-gray-300 hover:text-red-500 transition-colors"
+                      className="text-muted-foreground hover:text-red-500 transition-colors"
                       title="Excluir paciente"
                     >
                       <Trash2 className="w-4 h-4" />
