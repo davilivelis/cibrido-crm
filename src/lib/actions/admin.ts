@@ -62,6 +62,19 @@ export async function toggleClientAccess(clinicId: string, isActive: boolean) {
     .eq('clinic_id', clinicId)
 }
 
+// Define quantos membros a clínica pode ter (modelo comercial por assentos)
+export async function setSeatLimit(clinicId: string, limit: number): Promise<{ ok: boolean; error?: string }> {
+  await assertAdmin()
+  const admin = createAdminClient()
+  const n = Math.max(1, Math.min(100, Math.floor(limit)))
+  const { error } = await admin
+    .from('clinics')
+    .update({ seat_limit: n, updated_at: new Date().toISOString() })
+    .eq('id', clinicId)
+  if (error) return { ok: false, error: error.message }
+  return { ok: true }
+}
+
 // ─── CONVITES ───────────────────────────────────────────────
 
 export async function createInvite(data: {
@@ -119,7 +132,7 @@ export async function getAdminClientDetail(clinicId: string) {
   const [clinicRes, leadsRes, appointmentsRes, notesRes] = await Promise.all([
     admin
       .from('clinics')
-      .select(`id, name, phone, email, address, plan, is_active, created_at, users(id, name, email, role), subscriptions(plan, status, trial_ends_at, paid_until)`)
+      .select(`id, name, phone, email, address, plan, is_active, seat_limit, created_at, users(id, name, email, role), subscriptions(plan, status, trial_ends_at, paid_until)`)
       .eq('id', clinicId)
       .single(),
     admin.from('leads').select('id', { count: 'exact' }).eq('clinic_id', clinicId),

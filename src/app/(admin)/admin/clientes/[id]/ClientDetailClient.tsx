@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Users, CalendarCheck, Clock, Phone, Mail, MapPin, Plus } from 'lucide-react'
-import { toggleClientAccess, createAdminNote } from '@/lib/actions/admin'
+import { Armchair, ArrowLeft, Users, CalendarCheck, Clock, Phone, Mail, MapPin, Plus } from 'lucide-react'
+import { toggleClientAccess, createAdminNote, setSeatLimit as setSeatLimitAction } from '@/lib/actions/admin'
+import { toast } from 'sonner'
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
   trial:     { bg: '#fef9ec', text: '#92400e', label: 'Trial' },
@@ -27,6 +28,22 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
   const owner  = clinic.users?.find((u: { role: string }) => u.role === 'owner') ?? clinic.users?.[0]
   const status = sub?.status ?? (clinic.is_active ? 'active' : 'blocked')
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES.cancelled
+
+  const members = clinic.users?.length ?? 0
+  const [seatLimit, setSeatLimit] = useState<number>(clinic.seat_limit ?? 3)
+  const [savingSeat, setSavingSeat] = useState(false)
+
+  async function handleSaveSeat() {
+    setSavingSeat(true)
+    try {
+      const res = await setSeatLimitAction(clinicId, seatLimit)
+      if (res.ok) toast.success('Assentos atualizados')
+      else toast.error(res.error ?? 'Erro ao salvar')
+      router.refresh()
+    } finally {
+      setSavingSeat(false)
+    }
+  }
 
   function handleToggle() {
     startTransition(async () => {
@@ -254,6 +271,35 @@ export default function ClientDetailClient({ data, clinicId }: { data: any; clin
                   </span>
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Assentos da equipe (modelo comercial por membro) */}
+          <div style={{ background: 'var(--card)', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', padding: 24 }}>
+            <div className="flex items-center gap-2" style={{ marginBottom: 4 }}>
+              <Armchair className="w-4 h-4" style={{ color: 'var(--primary-strong)' }} />
+              <h2 style={{ fontSize: 16, fontWeight: 600, color: 'var(--foreground)' }}>Assentos da equipe</h2>
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--muted-foreground)', marginBottom: 12 }}>
+              {members} de {seatLimit} usado{members !== 1 ? 's' : ''} — o cliente não passa desse limite de membros.
+            </p>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min={1}
+                max={100}
+                value={seatLimit}
+                onChange={(e) => setSeatLimit(Number(e.target.value))}
+                className="w-20 border border-border rounded-lg px-3 py-2 text-sm text-center"
+                style={{ color: 'var(--foreground)', background: 'var(--background)' }}
+              />
+              <button
+                onClick={handleSaveSeat}
+                disabled={savingSeat}
+                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 disabled:opacity-50 transition-opacity"
+              >
+                {savingSeat ? '...' : 'Salvar'}
+              </button>
             </div>
           </div>
         </div>
