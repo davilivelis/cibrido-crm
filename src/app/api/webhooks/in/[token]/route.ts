@@ -101,8 +101,12 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
 
   const phoneRaw = pick(body, ['phone', 'telefone', 'whatsapp', 'celular', 'customer.phone', 'customer.telefone', 'cliente.telefone', 'cliente.celular'])
   const externalIdRaw = pick(body, ['id', 'event_id', 'external_id', 'transaction_id', 'comanda_id', 'venda_id'])
-  // Só string/number vale como id — objeto viraria "[object Object]" e deduparia tudo
-  const externalId = typeof externalIdRaw === 'string' || typeof externalIdRaw === 'number' ? externalIdRaw : undefined
+  // Só string não-vazia/number vale como id — objeto viraria "[object Object]" e
+  // string vazia viraria chave "" compartilhada, deduplicando tudo indevidamente
+  const externalId =
+    (typeof externalIdRaw === 'string' && externalIdRaw.trim() !== '') || typeof externalIdRaw === 'number'
+      ? externalIdRaw
+      : undefined
   const value = parseValue(pick(body, ['value', 'valor', 'amount', 'total', 'price', 'valor_total']))
   const description = pick(body, ['description', 'descricao', 'procedimento', 'servico', 'produto'])
   const occurredRaw = pick(body, ['occurred_at', 'date', 'data', 'created_at', 'data_venda'])
@@ -145,7 +149,7 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
   const payloadHash = createHash('sha256').update(stableStringify(body)).digest('hex').slice(0, 16)
   const dedupId = !synthetic
     ? String(externalId).slice(0, 200)
-    : `syn2:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '') : 'x')}:${occurredAt.slice(0, 10)}:${value}:${payloadHash}`.slice(0, 200)
+    : `syn2:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '').slice(0, 30) : 'x')}:${occurredAt.slice(0, 10)}:${value}:${payloadHash}`.slice(0, 200)
   // Payload trouxe hora DE VERDADE? Sem hora (só data, data inválida, ou "T00:00:00"
   // de meia-noite que APIs usam pra data pura), duas vendas idênticas no mesmo dia
   // são indistinguíveis de um retry — tratadas no conflito abaixo.
