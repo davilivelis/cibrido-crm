@@ -100,7 +100,9 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
   const source = (url.searchParams.get('source') || (body.source as string) || 'webhook').slice(0, 40)
 
   const phoneRaw = pick(body, ['phone', 'telefone', 'whatsapp', 'celular', 'customer.phone', 'customer.telefone', 'cliente.telefone', 'cliente.celular'])
-  const externalId = pick(body, ['id', 'event_id', 'external_id', 'transaction_id', 'comanda_id', 'venda_id'])
+  const externalIdRaw = pick(body, ['id', 'event_id', 'external_id', 'transaction_id', 'comanda_id', 'venda_id'])
+  // Só string/number vale como id — objeto viraria "[object Object]" e deduparia tudo
+  const externalId = typeof externalIdRaw === 'string' || typeof externalIdRaw === 'number' ? externalIdRaw : undefined
   const value = parseValue(pick(body, ['value', 'valor', 'amount', 'total', 'price', 'valor_total']))
   const description = pick(body, ['description', 'descricao', 'procedimento', 'servico', 'produto'])
   const occurredRaw = pick(body, ['occurred_at', 'date', 'data', 'created_at', 'data_venda'])
@@ -122,8 +124,14 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
   }
 
   let occurredAt: string
+  let occurredParsed = false
   try {
-    occurredAt = occurredRaw ? new Date(occurredRaw as string).toISOString() : new Date().toISOString()
+    if (occurredRaw != null) {
+      occurredAt = new Date(occurredRaw as string).toISOString() // lança se inválida
+      occurredParsed = true
+    } else {
+      occurredAt = new Date().toISOString()
+    }
   } catch {
     occurredAt = new Date().toISOString()
   }
@@ -138,9 +146,10 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
   const dedupId = !synthetic
     ? String(externalId).slice(0, 200)
     : `syn2:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '') : 'x')}:${occurredAt.slice(0, 10)}:${value}:${payloadHash}`.slice(0, 200)
-  // Payload trouxe hora? Sem hora (só data, ou sem data), duas vendas idênticas no
-  // mesmo dia são indistinguíveis de um retry — tratadas no conflito abaixo.
-  const hasTime = occurredRaw != null && (typeof occurredRaw !== 'string' || /\d{1,2}:\d{2}/.test(occurredRaw))
+  // Payload trouxe hora DE VERDADE? Sem hora (só data, data inválida, ou "T00:00:00"
+  // de meia-noite que APIs usam pra data pura), duas vendas idênticas no mesmo dia
+  // são indistinguíveis de um retry — tratadas no conflito abaixo.
+  const hasTime = occurredParsed && occurredAt.slice(11, 19) !== '00:00:00'
 
   const row = {
     clinic_id: clinic.id,
@@ -158,22 +167,25 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
     // OU uma 2ª venda legítima idêntica no mesmo dia. Heurística: registro original
     // recente (≤10 min) = retry → descarta; antigo = 2ª venda → grava com sufixo,
     // pra não perder faturamento em silêncio (achado do gate 22/07).
-    const { data: existing } = await admin
+    // Idade do registro MAIS RECENTE do grupo (base + sufixadas) — se olhasse só a
+    // base, o retry de uma 2ª venda sufixada gravada há pouco contaria de novo.
+    const likeBase = dedupId.slice(0, 190).replace(/[\\%_]/g, (m) => `\\${m}`)
+    const { data: matches, count } = await admin
       .from('conversions')
-      .select('created_at')
+      .select('created_at', { count: 'exact' })
       .eq('clinic_id', clinic.id)
-      .eq('external_id', dedupId)
-      .maybeSingle()
-    const ageMs = existing ? Date.now() - new Date(existing.created_at as string).getTime() : 0
-    if (existing && ageMs > 10 * 60 * 1000) {
-      const likeBase = dedupId.slice(0, 190).replace(/[\\%_]/g, (m) => `\\${m}`)
-      const { count } = await admin
-        .from('conversions')
-        .select('id', { count: 'exact', head: true })
-        .eq('clinic_id', clinic.id)
-        .like('external_id', `${likeBase}%`)
-      const suffixed = `${dedupId.slice(0, 190)}:${(count ?? 1) + 1}`
-      insErr = (await admin.from('conversions').insert({ ...row, external_id: suffixed })).error
+      .like('external_id', `${likeBase}%`)
+      .order('created_at', { ascending: false })
+      .limit(1)
+    const newestAgeMs = matches?.[0] ? Date.now() - new Date(matches[0].created_at as string).getTime() : 0
+    if (matches?.[0] && newestAgeMs > 10 * 60 * 1000) {
+      // Sufixo com nova tentativa: dois POSTs simultâneos da 2ª venda podem calcular
+      // o mesmo N — o perdedor do 23505 tenta o próximo em vez de descartar a venda.
+      const base = count ?? 1
+      for (let n = base + 1; n <= base + 3; n++) {
+        insErr = (await admin.from('conversions').insert({ ...row, external_id: `${dedupId.slice(0, 190)}:${n}` })).error
+        if (insErr?.code !== '23505') break
+      }
     }
   }
   if (insErr) {
