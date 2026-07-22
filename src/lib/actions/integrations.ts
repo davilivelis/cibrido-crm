@@ -22,6 +22,20 @@ async function clinicOf(): Promise<string | null> {
   return (clinicId as string) ?? null
 }
 
+// Mutações de integração (rotacionar token, credenciais Meta, webhook de saída)
+// são coisa de DONO — membro não pode matar o N3 nem redirecionar eventos.
+async function ownerClinicOf(): Promise<string | null> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+  const [{ data: clinicId }, { data: role }] = await Promise.all([
+    supabase.rpc('get_user_clinic_id'),
+    supabase.rpc('get_user_role'),
+  ])
+  if (role !== 'owner') return null
+  return (clinicId as string) ?? null
+}
+
 export interface IntegrationConfig {
   inboundUrl: string | null   // URL completa pra dar à plataforma externa
   hasOutbound: boolean
@@ -49,8 +63,8 @@ export async function getIntegrationConfig(): Promise<IntegrationConfig> {
 
 // Gera (ou rotaciona) o token de entrada. Rotacionar invalida o anterior.
 export async function generateInboundToken(): Promise<{ ok: boolean; url?: string; error?: string }> {
-  const clinicId = await clinicOf()
-  if (!clinicId) return { ok: false, error: 'Não autorizado' }
+  const clinicId = await ownerClinicOf()
+  if (!clinicId) return { ok: false, error: 'Apenas o dono da clínica gerencia integrações' }
 
   const token = randomToken()
   const admin = createAdminClient()
@@ -78,8 +92,8 @@ export async function getCloudApiStatus(): Promise<CloudApiStatus> {
 }
 
 export async function saveCloudApi(phoneId: string, token: string): Promise<{ ok: boolean; error?: string }> {
-  const clinicId = await clinicOf()
-  if (!clinicId) return { ok: false, error: 'Não autorizado' }
+  const clinicId = await ownerClinicOf()
+  if (!clinicId) return { ok: false, error: 'Apenas o dono da clínica gerencia integrações' }
   const admin = createAdminClient()
   const { error } = await admin.from('clinics').update({
     wa_cloud_phone_id: phoneId.trim() || null,
@@ -92,8 +106,8 @@ export async function saveCloudApi(phoneId: string, token: string): Promise<{ ok
 
 // Configura a URL de saída (o CRM envia eventos pra lá). Gera o segredo HMAC.
 export async function saveOutboundWebhook(rawUrl: string): Promise<{ ok: boolean; secret?: string; error?: string }> {
-  const clinicId = await clinicOf()
-  if (!clinicId) return { ok: false, error: 'Não autorizado' }
+  const clinicId = await ownerClinicOf()
+  if (!clinicId) return { ok: false, error: 'Apenas o dono da clínica gerencia integrações' }
 
   const url = rawUrl.trim()
   if (url && !isSafeWebhookUrl(url)) {

@@ -47,7 +47,8 @@ export async function fireOutbound(
       headers['X-Livelis-Signature'] = createHmac('sha256', clinic.webhook_out_secret).update(bodyStr).digest('hex')
     }
 
-    await fetch(url, { method: 'POST', headers, body: bodyStr })
+    // redirect:'error' — sem isso um 302 pra host interno burlaria o anti-SSRF
+    await fetch(url, { method: 'POST', headers, body: bodyStr, redirect: 'error' })
   } catch (err) {
     console.error('[Webhook OUT] Erro:', err)
   }

@@ -18,6 +18,13 @@ export async function updateClinic(data: {
   // Verifica clínica via RPC (funciona sem GRANT nas tabelas)
   const { data: clinicId } = await supabase.rpc('get_user_clinic_id')
 
+  // Só o DONO altera dados da clínica (inclui google_calendar_id — um membro
+  // apontar a agenda pra conta dele vazaria dados de paciente)
+  if (clinicId) {
+    const { data: role } = await supabase.rpc('get_user_role')
+    if (role !== 'owner') throw new Error('Apenas o dono da clínica altera estes dados')
+  }
+
   const admin = createAdminClient()
 
   if (!clinicId) {
@@ -114,6 +121,11 @@ export async function inviteUser(data: {
     // Só o dono convida
     const { data: role } = await supabase.rpc('get_user_role')
     if (role !== 'owner') return { error: 'Apenas o dono convida membros da equipe' }
+
+    // Papel do convidado: allowlist — NUNCA 'owner' (escalonamento de privilégio)
+    if (!['atendente', 'gestor'].includes(data.role)) {
+      return { error: 'Papel inválido. Convide como atendente ou gestor.' }
+    }
 
     // Trava de assentos (modelo comercial por membro)
     const adminSeat = createAdminClient()

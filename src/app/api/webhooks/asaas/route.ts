@@ -105,14 +105,16 @@ export async function POST(request: Request) {
       if (sub?.paid_until && new Date(sub.paid_until) > new Date()) {
         return NextResponse.json({ ok: true, skipped: 'overdue ignorado: assinatura paga em dia' })
       }
-      if (clientClinic.is_active) {
-        await admin.from('clinics')
-          .update({ is_active: false, blocked_reason: 'payment_overdue', updated_at: new Date().toISOString() })
-          .eq('id', clientClinic.id)
-        await admin.from('subscriptions')
-          .update({ status: 'blocked', updated_at: new Date().toISOString() })
-          .eq('clinic_id', clientClinic.id)
+      if (!clientClinic.is_active) {
+        // Já estava bloqueada — retry/atraso repetido não vira spam pro Davi
+        return NextResponse.json({ ok: true, skipped: 'já bloqueada' })
       }
+      await admin.from('clinics')
+        .update({ is_active: false, blocked_reason: 'payment_overdue', updated_at: new Date().toISOString() })
+        .eq('id', clientClinic.id)
+      await admin.from('subscriptions')
+        .update({ status: 'blocked', updated_at: new Date().toISOString() })
+        .eq('clinic_id', clientClinic.id)
       const davi = process.env.NOTIFY_PHONE_DAVI
       if (davi) {
         await sendWhatsApp(davi, [

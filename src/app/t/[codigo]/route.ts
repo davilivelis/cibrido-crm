@@ -36,7 +36,8 @@ export async function GET(request: Request, ctx: RouteContext<'/t/[codigo]'>) {
     user_agent: request.headers.get('user-agent')?.slice(0, 300) ?? null,
   })
 
-  const phone = clinic.whatsapp_number.replace(/\D/g, '')
+  let phone = clinic.whatsapp_number.replace(/\D/g, '')
+  if (!phone.startsWith('55') || phone.length < 12) phone = `55${phone}`  // wa.me exige E.164
   const text = encodeURIComponent(`Olá! Vi o anúncio de vocês e quero saber mais 😊 [#${campaign.tracking_code}]`)
   return NextResponse.redirect(`https://wa.me/${phone}?text=${text}`, 302)
 }

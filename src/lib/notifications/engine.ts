@@ -386,10 +386,18 @@ export async function runNotificationEngine(now = new Date()): Promise<EngineRes
         continue
       }
 
-      const sender = getSender(rule.channel, rule.config ?? {}, {
-        phoneId: rule.clinics?.wa_cloud_phone_id,
-        token: rule.clinics?.wa_cloud_token,
-      })
+      // Notificação PROATIVA nunca sai como texto livre pela Cloud API — fora
+      // da janela de 24h a Meta rejeita. Cloud API só entra aqui quando a regra
+      // tiver template de utilidade APROVADO (config.wa_template — futuro
+      // hand-off Meta). Até lá: Evolution, sempre.
+      const hasApprovedTemplate = typeof rule.config?.wa_template === 'string' && rule.config.wa_template !== ''
+      const sender = getSender(
+        rule.channel,
+        rule.config ?? {},
+        hasApprovedTemplate
+          ? { phoneId: rule.clinics?.wa_cloud_phone_id, token: rule.clinics?.wa_cloud_token }
+          : undefined
+      )
       const sendRes = await sender.send(item.phone, item.message)
       if (sendRes.ok) {
         result.sent++

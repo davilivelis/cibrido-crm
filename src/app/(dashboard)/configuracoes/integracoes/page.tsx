@@ -13,6 +13,10 @@ export default async function IntegracoesPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  // Integrações (token de entrada, Meta, webhook de saída) são coisa de DONO
+  const { data: role } = await supabase.rpc('get_user_role')
+  if (role !== 'owner') redirect('/dashboard')
+
   const [config, cloud] = await Promise.all([getIntegrationConfig(), getCloudApiStatus()])
 
   return (

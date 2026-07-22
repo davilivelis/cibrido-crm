@@ -45,8 +45,15 @@ function pick(body: Record<string, unknown>, keys: string[]): unknown {
 function parseValue(v: unknown): number {
   if (typeof v === 'number') return v
   if (typeof v === 'string') {
-    // aceita "1234.56", "1234,56"
-    const n = parseFloat(v.replace(/[^\d,.-]/g, '').replace(',', '.'))
+    // Aceita BR e EN: "1.234,56" · "1234,56" · "1,234.56" · "1234.56".
+    // Regra: o ÚLTIMO separador presente é o decimal; o outro é milhar.
+    const s = v.replace(/[^\d.,-]/g, '')
+    const lastComma = s.lastIndexOf(',')
+    const lastDot = s.lastIndexOf('.')
+    let norm = s
+    if (lastComma > lastDot) norm = s.replace(/\./g, '').replace(',', '.')   // BR: 1.234,56
+    else if (lastDot > lastComma) norm = s.replace(/,/g, '')                  // EN: 1,234.56
+    const n = parseFloat(norm)
     return Number.isFinite(n) ? n : 0
   }
   return 0
@@ -109,13 +116,17 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
     occurredAt = new Date().toISOString()
   }
 
-  // Grava a conversão (dedup por external_id — o mesmo evento nunca conta 2x)
+  // Grava a conversão (dedup por external_id — o mesmo evento nunca conta 2x).
+  // Origem sem id → chave SINTÉTICA estável (retry do mesmo payload não duplica).
+  const dedupId = externalId != null
+    ? String(externalId).slice(0, 200)
+    : `syn:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '') : 'x')}:${occurredAt.slice(0, 16)}:${value}`.slice(0, 200)
   const { error: insErr } = await admin.from('conversions').insert({
     clinic_id: clinic.id,
     lead_id: leadId,
     campaign_id: campaignId,
     source,
-    external_id: externalId != null ? String(externalId).slice(0, 200) : null,
+    external_id: dedupId,
     value,
     description: description != null ? String(description).slice(0, 300) : null,
     occurred_at: occurredAt,
