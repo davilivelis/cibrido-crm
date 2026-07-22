@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createHash } from 'node:crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { fireOutbound } from '@/lib/integrations/outbound'
 
@@ -40,6 +41,17 @@ function pick(body: Record<string, unknown>, keys: string[]): unknown {
     }
   }
   return undefined
+}
+
+// JSON canônico (chaves ordenadas em todos os níveis) → hash estável do payload.
+// Retry manda os mesmos bytes → mesmo hash; venda diferente muda algum campo → hash diferente.
+function stableStringify(v: unknown): string {
+  if (Array.isArray(v)) return `[${v.map(stableStringify).join(',')}]`
+  if (v && typeof v === 'object') {
+    const o = v as Record<string, unknown>
+    return `{${Object.keys(o).sort().map(k => `${JSON.stringify(k)}:${stableStringify(o[k])}`).join(',')}}`
+  }
+  return JSON.stringify(v) ?? 'null'
 }
 
 function parseValue(v: unknown): number {
@@ -117,21 +129,53 @@ export async function POST(request: Request, ctx: RouteContext<'/api/webhooks/in
   }
 
   // Grava a conversão (dedup por external_id — o mesmo evento nunca conta 2x).
-  // Origem sem id → chave SINTÉTICA estável (retry do mesmo payload não duplica).
-  const dedupId = externalId != null
+  // Origem sem id → chave SINTÉTICA: dia + valor + HASH do payload inteiro.
+  // O hash garante que 2 vendas legítimas que diferem em QUALQUER campo (descrição,
+  // hora, item) geram chaves diferentes e contam as duas; e o dia (em vez de minuto)
+  // garante que retry sem campo de data não duplica ao cruzar a fronteira do minuto.
+  const synthetic = externalId == null
+  const payloadHash = createHash('sha256').update(stableStringify(body)).digest('hex').slice(0, 16)
+  const dedupId = !synthetic
     ? String(externalId).slice(0, 200)
-    : `syn:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '') : 'x')}:${occurredAt.slice(0, 16)}:${value}`.slice(0, 200)
-  const { error: insErr } = await admin.from('conversions').insert({
+    : `syn2:${source}:${leadId ?? (typeof phoneRaw === 'string' ? phoneRaw.replace(/\D/g, '') : 'x')}:${occurredAt.slice(0, 10)}:${value}:${payloadHash}`.slice(0, 200)
+  // Payload trouxe hora? Sem hora (só data, ou sem data), duas vendas idênticas no
+  // mesmo dia são indistinguíveis de um retry — tratadas no conflito abaixo.
+  const hasTime = occurredRaw != null && (typeof occurredRaw !== 'string' || /\d{1,2}:\d{2}/.test(occurredRaw))
+
+  const row = {
     clinic_id: clinic.id,
     lead_id: leadId,
     campaign_id: campaignId,
     source,
-    external_id: dedupId,
     value,
     description: description != null ? String(description).slice(0, 300) : null,
     occurred_at: occurredAt,
     raw: body,
-  })
+  }
+  let insErr = (await admin.from('conversions').insert({ ...row, external_id: dedupId })).error
+  if (insErr?.code === '23505' && synthetic && !hasTime) {
+    // Chave sintética SEM hora colidiu: pode ser retry (mesmos bytes, minutos depois)
+    // OU uma 2ª venda legítima idêntica no mesmo dia. Heurística: registro original
+    // recente (≤10 min) = retry → descarta; antigo = 2ª venda → grava com sufixo,
+    // pra não perder faturamento em silêncio (achado do gate 22/07).
+    const { data: existing } = await admin
+      .from('conversions')
+      .select('created_at')
+      .eq('clinic_id', clinic.id)
+      .eq('external_id', dedupId)
+      .maybeSingle()
+    const ageMs = existing ? Date.now() - new Date(existing.created_at as string).getTime() : 0
+    if (existing && ageMs > 10 * 60 * 1000) {
+      const likeBase = dedupId.slice(0, 190).replace(/[\\%_]/g, (m) => `\\${m}`)
+      const { count } = await admin
+        .from('conversions')
+        .select('id', { count: 'exact', head: true })
+        .eq('clinic_id', clinic.id)
+        .like('external_id', `${likeBase}%`)
+      const suffixed = `${dedupId.slice(0, 190)}:${(count ?? 1) + 1}`
+      insErr = (await admin.from('conversions').insert({ ...row, external_id: suffixed })).error
+    }
+  }
   if (insErr) {
     if (insErr.code === '23505') return NextResponse.json({ ok: true, skipped: 'duplicada' })
     console.error('[Webhook IN] Erro gravando conversão:', insErr.message)
